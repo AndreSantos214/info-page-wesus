@@ -57,28 +57,10 @@
       z-index: 20;
     }
 
-    #smoke-transition-container {
-      position: relative;
-      height: 60px;
-      background: #061325;
-      overflow: hidden;
-      margin-bottom: -1px;
-      z-index: 10;
-    }
-
-    .smoke-layer {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(90px);
-      will-change: transform, opacity;
-      transform: translate3d(0, 0, 0);
-    }
-
     /* ── TRANSIÇÃO COMPACTA PRO (Operações ➔ Quem Somos) ── */
-    /* 🔥 FIX: Adicionado background branco sólido por trás do gradiente para blindar e impedir o vazamento de Lisboa */
+    /* 🔥 FIX 1: Transição 100% Sólida para impedir o "vazamento" da imagem fixa do Hero */
     .section-transition-to-dark {
-      background: #ffffff; 
-      background: linear-gradient(180deg, #ffffff 0%, rgba(6, 19, 37, 0.4) 60%, #061325 100%);
+      background: linear-gradient(180deg, #ffffff 0%, #061325 100%);
       height: 90px;
       margin-top: -1px;
       position: relative;
@@ -140,6 +122,7 @@
       100% { left: 125%; }
     }
 
+    /* 🔥 FIX 2: Hero Section com `::before` fixed. Funciona perfeito no iOS */
     #hero {
       position: relative;
       min-height: 100vh;
@@ -217,23 +200,8 @@
       background-position: right center;
     }
 
-    .store-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 1.2rem;
-      border: 1px solid rgba(245, 245, 247, 0.25);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.05);
-      color: rgba(245, 245, 247, 0.8);
-      font-size: 0.7rem;
-      letter-spacing: 0.06em;
-      backdrop-filter: blur(4px);
-      transition: border-color 0.2s, background 0.2s;
-    }
-
     #operacoes {
-      background: #F5F5F7;
+      background: #ffffff; /* Fundo sólido para ocultar a imagem fixed do Hero */
       color: #061325;
       position: relative;
       z-index: 20;
@@ -262,25 +230,6 @@
       padding: 0.25rem 0.75rem;
       border-radius: 9999px;
       display: inline-block;
-    }
-
-    .btn-outline-dark {
-      border: 1px solid #1E497D;
-      color: #1E497D;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.5rem 1.25rem;
-      border-radius: 9999px;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-      background: transparent;
-    }
-
-    .btn-outline-dark:hover {
-      background: #1E497D;
-      color: #fff;
     }
 
     #stats {
@@ -323,40 +272,37 @@
       transform: translate3d(0, 0, 0);
     }
 
-    #aurora-canvas.active {
-      opacity: 1;
+    #aurora-canvas.active { opacity: 1; }
+
+    /* ── FIX 3: CARROSSEL OTIMIZADO PARA IOS ── */
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      overflow-x: auto;
+      padding: 20px 0;
+      -webkit-overflow-scrolling: touch; /* Habilita inércia no scroll do iOS */
+      scroll-behavior: auto !important; /* Desliga o smooth css para o JS não bugar */
     }
 
-    #plataforma {
+    .carousel-track {
+      display: flex;
+      gap: 2rem;
+      width: max-content;
+      will-change: transform;
+    }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* ── SEÇÕES ── */
+    #quem-somos {
       position: relative;
       background: #061325;
-      z-index: 20;
-    }
-
-    .glass-card {
-      background: rgba(30, 73, 125, 0.12);
-      border: 1px solid rgba(197, 160, 89, 0.2);
-      border-radius: 20px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .phone-mockup {
-      width: 220px;
-      border-radius: 36px;
-      border: 2px solid rgba(197, 160, 89, 0.3);
-      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6), 0 0 40px rgba(197, 160, 89, 0.15);
-      overflow: hidden;
-      background: #0d2140;
-    }
-
-    .phone-screen {
-      background: linear-gradient(160deg, #0d2140 0%, #061325 100%);
-      padding: 1.5rem 1rem;
-      min-height: 380px;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+      z-index: 20; 
+      isolation: isolate;
     }
 
     #equipa {
@@ -365,103 +311,18 @@
       z-index: 20;
     }
 
-    .team-avatar {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid rgba(197, 160, 89, 0.4);
-      margin: 0 auto 1rem;
-      display: block;
-      filter: grayscale(20%);
+    #plataforma {
+      position: relative;
+      background: #061325;
+      z-index: 20;
     }
 
     #contactos {
       background: #ffffff;
       color: #061325;
-      padding-top: 8rem;
-      padding-bottom: 8rem;
       position: relative;
       z-index: 20;
     }
-
-    .contact-group h4 {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #C5A059;
-      margin-bottom: 1rem;
-    }
-
-    .contact-link {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.25rem;
-      color: #061325;
-      text-decoration: none;
-      transition: color 0.3s ease;
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-
-    .contact-link:hover {
-      color: #C5A059;
-    }
-
-    .address-text {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.9rem;
-      line-height: 1.6;
-      color: #64748b;
-    }
-
-    .world-map-bg {
-      position: absolute;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 600'%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' font-size='400' fill='%23C5A059' opacity='0.04'%3E🌍%3C/text%3E%3C/svg%3E");
-      background-size: cover;
-      background-position: center;
-      pointer-events: none;
-    }
-
-    .btn-contact-metal {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 1rem 1.5rem;
-      border-radius: 14px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      border: 1px solid rgba(197, 160, 89, 0.3);
-      background: rgba(197, 160, 89, 0.07);
-      color: #E8D08D;
-      text-decoration: none;
-      width: 100%;
-      transition: all 0.25s;
-    }
-
-    .btn-contact-metal:hover {
-      background: rgba(197, 160, 89, 0.15);
-      border-color: rgba(197, 160, 89, 0.6);
-      transform: translateY(-2px);
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(32px);
-      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
 
     footer {
       background: #040e1c;
@@ -483,17 +344,8 @@
       border-radius: 2px;
     }
 
-    .glass-canvas-layer {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .glass-card-content {
-      position: relative;
-      z-index: 2;
-    }
+    .glass-canvas-layer { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+    .glass-card-content { position: relative; z-index: 2; }
 
     #canvas-investment-back {
       position: absolute;
@@ -550,31 +402,6 @@
       z-index: 1;
     }
 
-    /* 🔥 FIX PARA IPHONE: Alteração estrutural do container para permitir o motor de animação rolar em blocos limpos */
-    .carousel-container {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-      padding: 20px 0;
-      display: block;
-    }
-
-    .carousel-track {
-      display: flex;
-      gap: 2rem;
-      width: max-content;
-      will-change: transform;
-    }
-
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-      overflow-x: auto;
-    }
-
-    .avatar-ring { transition: all 0.4s ease; }
-
     .premium-light-card {
       position: relative;
       background: #ffffff;
@@ -627,18 +454,6 @@
       transform: scale(1.03);
     }
 
-    .light-section-glow {
-      position: absolute;
-      width: 800px;
-      height: 350px;
-      background: radial-gradient(ellipse, rgba(30, 73, 125, 0.03) 0%, rgba(197, 160, 89, 0.01) 50%, transparent 80%);
-      top: 35%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      z-index: 1;
-    }
-
     .glow-aura {
       position: absolute;
       width: 400px;
@@ -670,22 +485,19 @@
       border-bottom: 1px solid rgba(197, 160, 89, 0.2);
     }
 
-    #close-menu {
-      z-index: 70;
-      color: #C5A059;
-      transition: transform 0.2s;
-    }
-
+    #close-menu { z-index: 70; color: #C5A059; transition: transform 0.2s; }
     #close-menu:hover { transform: scale(1.1); }
 
-    @media (max-width: 768px) {
-      .carousel-container {
-        overflow-x: hidden !important; /* 🔥 Desativa o scroll manual nativo no iPhone que matava a animação JS */
-      }
-      .carousel-track {
-        gap: 1rem !important;
-      }
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
     }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
   </style>
 </head>
 
@@ -744,7 +556,7 @@
 
   <div class="hero-clean-transition"></div>
 
-  <section id="operacoes" class="pt-0 pb-8 overflow-hidden" style="background: #ffffff;">
+  <section id="operacoes" class="pt-0 pb-8">
     <div class="max-w-6xl mx-auto px-6 md:px-12 lg:px-20 text-center mb-12 reveal mt-12">
       <h2 class="section-title mb-3" style="color:#061325;">Operações Concluídas</h2>
       <div class="gold-line mx-auto mb-4"></div>
@@ -754,7 +566,7 @@
     </div>
 
     <div class="w-full max-w-[1600px] mx-auto px-4 md:px-8 mb-16 project-reveal">
-      <div class="carousel-container">
+      <div class="carousel-container no-scrollbar">
         <div class="carousel-track" id="portfolio-track">
 
           <div class="op-card w-[290px] md:w-[350px] shrink-0">
@@ -849,6 +661,29 @@
             </div>
           </div>
 
+          <div class="op-card w-[290px] md:w-[350px] shrink-0">
+            <div class="relative h-52 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80" alt="" class="w-full h-full object-cover" />
+              <div class="absolute top-3 left-3"><span class="op-card-badge">Concluído</span></div>
+            </div>
+            <div class="p-6 bg-white text-left">
+              <h3 class="font-display font-semibold text-lg mb-1" style="color:#061325;">Vilas do Golfo</h3>
+              <p class="text-xs font-body tracking-wide mb-4" style="color:#1E497D;">Vilamoura, Algarve — Moradias Privadas</p>
+              <div class="flex justify-between items-center mb-4">
+                <div>
+                  <p class="text-xs opacity-50 font-body uppercase tracking-wider" style="color:#061325;">Rentabilidade</p>
+                  <p class="font-display font-bold text-xl" style="color:#C5A059;">10,5% </p>
+                </div>
+                <div class="text-right">
+                  <p class="text-xs opacity-50 font-body uppercase tracking-wider" style="color:#061325;">Duração</p>
+                  <p class="font-semibold text-sm" style="color:#061325;">18 Meses</p>
+                </div>
+              </div>
+              <div class="h-px mb-4" style="background:rgba(6,19,37,0.08);"></div>
+              <div class="flex justify-between items-center"><span class="text-xs font-body" style="color:#061325;opacity:0.5;">Capital Mínimo: €120.000</span></div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -867,7 +702,7 @@
         </div>
         <div class="stat-box reveal reveal-delay-2">
           <p class="stat-value" data-target="12.5" data-suffix="%" data-decimal="1" id="stat-2">0%</p>
-          <div class="gold-line mx-auto my-3; width: 35px; opacity: 0.6;"></div>
+          <div class="gold-line mx-auto my-3" style="width: 35px; opacity: 0.6;"></div>
           <p class="stat-label">Retorno Médio</p>
         </div>
         <div class="stat-box reveal reveal-delay-3">
@@ -881,7 +716,7 @@
 
   <div class="section-transition-to-dark"></div>
 
-  <section id="quem-somos" class="pt-20 pb-40 px-4 md:px-12 lg:px-20 relative overflow-hidden bg-[#061325]" style="z-index: 20; isolation: isolate;">
+  <section id="quem-somos" class="pt-20 pb-40 px-4 md:px-12 lg:px-20 relative overflow-hidden bg-[#061325]">
     <canvas id="canvas-investment-back"></canvas>
 
     <div id="spotlight-left" class="glow-spotlight -top-24 left-[5%] opacity-50"></div>
@@ -1248,4 +1083,133 @@
         if (entries[0].isIntersecting && canvasActive) {
           canvasActive = false; canvas.classList.remove('active'); cancelAnimationFrame(animFrame);
         }
-      }, { threshold: 0.2
+      }, { threshold: 0.2 }).observe(document.getElementById('operacoes'));
+
+      /* ── CARROSSEL OTIMIZADO (Permite Scroll Nativo e Auto-Loop) ── */
+      (function setupInfinitePortfolioCarousel() {
+        const container = document.querySelector('.carousel-container');
+        const track = document.getElementById('portfolio-track');
+        if (!track) return;
+
+        // Clona os elementos garantindo a largura correta
+        const originalCards = Array.from(track.children);
+        originalCards.forEach(card => track.appendChild(card.cloneNode(true)));
+
+        let isPaused = false;
+        let resumeTimer = null;
+        const speed = isIOS ? 0.35 : 0.5;
+
+        function animateCarousel() {
+          if (!isPaused) {
+            container.scrollLeft += speed;
+            if (container.scrollLeft >= (track.scrollWidth / 2)) {
+              container.scrollLeft = 0;
+            }
+          }
+          requestAnimationFrame(animateCarousel);
+        }
+
+        function startResumeTimer() {
+          clearTimeout(resumeTimer);
+          resumeTimer = setTimeout(() => { isPaused = false; }, 500);
+        }
+
+        const pause = () => { isPaused = true; clearTimeout(resumeTimer); };
+        const resume = () => { startResumeTimer(); };
+
+        container.addEventListener('mouseenter', pause);
+        container.addEventListener('mouseleave', resume);
+        
+        // No touch events, pausa a animação e deixa o CSS overflow tratar do swipe!
+        container.addEventListener('touchstart', pause, { passive: true });
+        container.addEventListener('touchmove', pause, { passive: true });
+        container.addEventListener('touchend', resume, { passive: true });
+
+        requestAnimationFrame(animateCarousel);
+      })();
+
+      /* ── 5. VETORES DE CAPITAL DE SEGUNDO PLANO ── */
+      (function setupBackgroundVectorEngine() {
+        const c = document.getElementById('canvas-investment-back');
+        if (!c) return;
+        const cx = c.getContext('2d');
+
+        let w = c.width = c.parentElement.clientWidth;
+        let h = c.height = c.parentElement.clientHeight;
+
+        window.addEventListener('resize', () => {
+          w = c.width = c.parentElement.clientWidth;
+          h = c.height = c.parentElement.clientHeight;
+        }, { passive: true });
+
+        let vectors = [];
+        const vectorCount = isIOS ? 10 : (window.innerWidth < 768 ? 15 : 35);
+
+        for (let i = 0; i < vectorCount; i++) {
+          vectors.push({
+            x: Math.random() * w,
+            y: Math.random() * h + h * 0.2,
+            length: Math.random() * 80 + 40,
+            speed: Math.random() * 0.3 + 0.15,
+            opacity: Math.random() * 0.2 + 0.05,
+            lineWidth: Math.random() * 1.0 + 0.5,
+            angle: -Math.PI / 4 + (Math.random() * 0.05 - 0.025)
+          });
+        }
+
+        function drawBackgroundVectors() {
+          cx.clearRect(0, 0, w, h);
+          vectors.forEach(v => {
+            v.y -= v.speed;
+            v.x += v.speed * Math.tan(Math.abs(v.angle));
+
+            if (v.y < -v.length || v.x > w + v.length) {
+              v.y = h + Math.random() * 40;
+              v.x = Math.random() * w * 0.8;
+            }
+
+            cx.beginPath();
+            cx.moveTo(v.x, v.y);
+            cx.lineTo(v.x + Math.sin(Math.abs(v.angle)) * v.length, v.y + Math.cos(v.angle) * v.length);
+
+            let lineGlow = cx.createLinearGradient(v.x, v.y, v.x, v.y + v.length);
+            lineGlow.addColorStop(0, `rgba(197, 160, 89, ${v.opacity})`);
+            lineGlow.addColorStop(1, 'transparent');
+
+            cx.strokeStyle = lineGlow;
+            cx.lineWidth = v.lineWidth;
+            cx.stroke();
+          });
+          requestAnimationFrame(drawBackgroundVectors);
+        }
+        requestAnimationFrame(drawBackgroundVectors);
+      })();
+    })();
+
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuToggle = document.getElementById('menu-toggle');
+    const menuIcon = document.getElementById('menu-icon');
+    let isMenuOpen = false;
+
+    function toggleMenu() {
+      isMenuOpen = !isMenuOpen;
+      mobileMenu.classList.toggle('hidden', !isMenuOpen);
+      mobileMenu.classList.toggle('flex', isMenuOpen);
+
+      if (isMenuOpen) {
+        menuIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+      } else {
+        menuIcon.setAttribute('d', 'M4 6h16M4 12h16m-7 6h7');
+      }
+    }
+
+    document.addEventListener('click', (event) => {
+      if (isMenuOpen && !mobileMenu.contains(event.target) && !menuToggle.contains(event.target)) {
+        toggleMenu();
+      }
+    });
+
+    menuToggle.addEventListener('click', toggleMenu);
+  </script>
+</body>
+</html>
