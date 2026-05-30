@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>It's Wesus — Consulting & Investment</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -54,33 +54,17 @@
       background: linear-gradient(180deg, #061325 0%, #ffffff 100%);
       margin-top: -1px;
       margin-bottom: -1px;
-      z-index: 10;
-    }
-
-    #smoke-transition-container {
-      position: relative;
-      height: 60px;
-      background: #061325;
-      overflow: hidden;
-      margin-bottom: -1px;
-      z-index: 10;
-    }
-
-    .smoke-layer {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(90px);
-      will-change: transform, opacity;
-      transform: translate3d(0, 0, 0);
+      z-index: 20;
     }
 
     /* ── TRANSIÇÃO COMPACTA PRO (Operações ➔ Quem Somos) ── */
+    /* 🔥 FIX 1: Transição 100% Sólida para impedir o "vazamento" da imagem fixa do Hero */
     .section-transition-to-dark {
-      background: linear-gradient(180deg, #ffffff 0%, rgba(6, 19, 37, 0.4) 60%, #061325 100%);
+      background: linear-gradient(180deg, #ffffff 0%, #061325 100%);
       height: 90px;
       margin-top: -1px;
       position: relative;
-      z-index: 10;
+      z-index: 20;
     }
 
     #navbar {
@@ -133,42 +117,44 @@
     }
 
     @keyframes btnReflect {
-      0% {
-        left: -75%;
-      }
-
-      60% {
-        left: 125%;
-      }
-
-      100% {
-        left: 125%;
-      }
+      0% { left: -75%; }
+      60% { left: 125%; }
+      100% { left: 125%; }
     }
 
+    /* 🔥 FIX 2: Hero Section com `::before` fixed. Funciona perfeito no iOS */
     #hero {
       position: relative;
       min-height: 100vh;
-      background-image: url('./img/lisboa-background.webp');
-      background-size: cover;
-      background-position: center 30%;
-      background-attachment: fixed;
       display: flex;
       align-items: center;
       justify-content: center;
+      background: #061325;
     }
 
     #hero::before {
       content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url('./img/lisboa-background.webp');
+      background-size: cover;
+      background-position: center 30%;
+      background-repeat: no-repeat;
+      z-index: 1;
+      transform: translate3d(0,0,0);
+    }
+
+    #hero::after {
+      content: '';
       position: absolute;
       inset: 0;
       background: linear-gradient(180deg, rgba(6, 19, 37, 0.85) 0%, rgba(30, 73, 125, 0.48) 50%, rgba(6, 19, 37, 0.92) 100%);
-      z-index: 1;
+      z-index: 2;
     }
 
     #hero .hero-content {
       position: relative;
-      z-index: 2;
+      z-index: 3;
     }
 
     .hero-logo {
@@ -214,24 +200,11 @@
       background-position: right center;
     }
 
-    .store-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 1.2rem;
-      border: 1px solid rgba(245, 245, 247, 0.25);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.05);
-      color: rgba(245, 245, 247, 0.8);
-      font-size: 0.7rem;
-      letter-spacing: 0.06em;
-      backdrop-filter: blur(4px);
-      transition: border-color 0.2s, background 0.2s;
-    }
-
     #operacoes {
-      background: #F5F5F7;
+      background: #ffffff; /* Fundo sólido para ocultar a imagem fixed do Hero */
       color: #061325;
+      position: relative;
+      z-index: 20;
     }
 
     .op-card {
@@ -257,25 +230,6 @@
       padding: 0.25rem 0.75rem;
       border-radius: 9999px;
       display: inline-block;
-    }
-
-    .btn-outline-dark {
-      border: 1px solid #1E497D;
-      color: #1E497D;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.5rem 1.25rem;
-      border-radius: 9999px;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-      background: transparent;
-    }
-
-    .btn-outline-dark:hover {
-      background: #1E497D;
-      color: #fff;
     }
 
     #stats {
@@ -315,158 +269,66 @@
       opacity: 0;
       mix-blend-mode: screen;
       transition: opacity 1s ease;
+      transform: translate3d(0, 0, 0);
     }
 
-    #aurora-canvas.active {
-      opacity: 1;
+    #aurora-canvas.active { opacity: 1; }
+
+    /* ── FIX 3: CARROSSEL OTIMIZADO PARA IOS ── */
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      overflow-x: auto;
+      padding: 20px 0;
+      -webkit-overflow-scrolling: touch; /* Habilita inércia no scroll do iOS */
+      scroll-behavior: auto !important; /* Desliga o smooth css para o JS não bugar */
     }
 
-    #plataforma {
+    .carousel-track {
+      display: flex;
+      gap: 2rem;
+      width: max-content;
+      will-change: transform;
+    }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* ── SEÇÕES ── */
+    #quem-somos {
       position: relative;
       background: #061325;
-      z-index: 1;
-    }
-
-    .glass-card {
-      background: rgba(30, 73, 125, 0.12);
-      border: 1px solid rgba(197, 160, 89, 0.2);
-      border-radius: 20px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .phone-mockup {
-      width: 220px;
-      border-radius: 36px;
-      border: 2px solid rgba(197, 160, 89, 0.3);
-      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6), 0 0 40px rgba(197, 160, 89, 0.15);
-      overflow: hidden;
-      background: #0d2140;
-    }
-
-    .phone-screen {
-      background: linear-gradient(160deg, #0d2140 0%, #061325 100%);
-      padding: 1.5rem 1rem;
-      min-height: 380px;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+      z-index: 20; 
+      isolation: isolate;
     }
 
     #equipa {
       position: relative;
       background: linear-gradient(180deg, #061325 0%, #ffffff 60px, #ffffff calc(100% - 60px), #061325 100%);
-      z-index: 5;
+      z-index: 20;
     }
 
-    .team-avatar {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid rgba(197, 160, 89, 0.4);
-      margin: 0 auto 1rem;
-      display: block;
-      filter: grayscale(20%);
+    #plataforma {
+      position: relative;
+      background: #061325;
+      z-index: 20;
     }
 
     #contactos {
       background: #ffffff;
       color: #061325;
-      padding-top: 8rem;
-      padding-bottom: 8rem;
-    }
-
-    .contact-group h4 {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #C5A059;
-      /* Ouro */
-      margin-bottom: 1rem;
-    }
-
-    .contact-link {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.25rem;
-      color: #061325;
-      text-decoration: none;
-      transition: color 0.3s ease;
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-
-    .contact-link:hover {
-      color: #C5A059;
-    }
-
-    .address-text {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.9rem;
-      line-height: 1.6;
-      color: #64748b;
-    }
-
-    .world-map-bg {
-      position: absolute;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 600'%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' font-size='400' fill='%23C5A059' opacity='0.04'%3E🌍%3C/text%3E%3C/svg%3E");
-      background-size: cover;
-      background-position: center;
-      pointer-events: none;
-    }
-
-    .btn-contact-metal {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 1rem 1.5rem;
-      border-radius: 14px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      border: 1px solid rgba(197, 160, 89, 0.3);
-      background: rgba(197, 160, 89, 0.07);
-      color: #E8D08D;
-      text-decoration: none;
-      width: 100%;
-      transition: all 0.25s;
-    }
-
-    .btn-contact-metal:hover {
-      background: rgba(197, 160, 89, 0.15);
-      border-color: rgba(197, 160, 89, 0.6);
-      transform: translateY(-2px);
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(32px);
-      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .reveal-delay-1 {
-      transition-delay: 0.1s;
-    }
-
-    .reveal-delay-2 {
-      transition-delay: 0.2s;
-    }
-
-    .reveal-delay-3 {
-      transition-delay: 0.3s;
+      position: relative;
+      z-index: 20;
     }
 
     footer {
       background: #040e1c;
       border-top: 1px solid rgba(197, 160, 89, 0.1);
+      position: relative;
+      z-index: 20;
     }
 
     .section-title {
@@ -482,19 +344,8 @@
       border-radius: 2px;
     }
 
-    /* Tela interna para os vetores e brilhos rodarem à FRENTE do desfoque */
-    .glass-canvas-layer {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .glass-card-content {
-      position: relative;
-      z-index: 2;
-      /* Mantém o texto acima da animação de investimento */
-    }
+    .glass-canvas-layer { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+    .glass-card-content { position: relative; z-index: 2; }
 
     #canvas-investment-back {
       position: absolute;
@@ -505,7 +356,6 @@
       z-index: 2;
     }
 
-    /* Focos de iluminação reposicionados */
     .glow-spotlight {
       position: absolute;
       width: 650px;
@@ -528,7 +378,6 @@
       box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(197, 160, 89, 0.05);
     }
 
-    /* O filete chanfrado de cristal que rebate a iluminação de fundo */
     .premium-glass-card::before {
       content: '';
       position: absolute;
@@ -553,51 +402,17 @@
       z-index: 1;
     }
 
-    /* ── Engenharia do Carrossel Infinito Suave ── */
-    .carousel-container {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-      padding: 20px 0;
-    }
-
-    .carousel-track {
-      display: flex;
-      gap: 2rem;
-      width: max-content;
-      will-change: transform;
-    }
-
-    /* Ocultar scrollbar mantendo a física de toque */
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-      overflow-x: auto;
-    }
-
-    .avatar-ring {
-      transition: all 0.4s ease;
-    }
-
-    /* ── 🌟 FIX: ALTURA UNIFICADA SÉRIE PRO (h-full + flex) ── */
     .premium-light-card {
       position: relative;
       background: #ffffff;
       border-radius: 1.5rem;
       z-index: 10;
       height: 100%;
-      /* Força todos os cards a terem o mesmo tamanho */
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow:
-        0 4px 30px rgba(6, 19, 37, 0.01),
-        0 25px 55px -15px rgba(6, 19, 37, 0.06);
+      box-shadow: 0 4px 30px rgba(6, 19, 37, 0.01), 0 25px 55px -15px rgba(6, 19, 37, 0.06);
     }
 
     .premium-light-card::before {
@@ -617,12 +432,9 @@
 
     .premium-light-card:hover {
       transform: translate3d(0, -6px, 0);
-      box-shadow:
-        0 12px 25px -5px rgba(6, 19, 37, 0.01),
-        0 35px 75px -15px rgba(6, 19, 37, 0.12);
+      box-shadow: 0 12px 25px -5px rgba(6, 19, 37, 0.01), 0 35px 75px -15px rgba(6, 19, 37, 0.12);
     }
 
-    /* ── 🌟 FIX: UPGRADE PARA OS 250PX SOLICITADOS ── */
     .avatar-container-pro {
       position: relative;
       width: 200px;
@@ -634,7 +446,6 @@
       margin-left: auto;
       margin-right: auto;
       overflow: hidden;
-      /* Garante o corte perfeito do círculo */
       transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       will-change: transform;
     }
@@ -643,19 +454,6 @@
       transform: scale(1.03);
     }
 
-    .light-section-glow {
-      position: absolute;
-      width: 800px;
-      height: 350px;
-      background: radial-gradient(ellipse, rgba(30, 73, 125, 0.03) 0%, rgba(197, 160, 89, 0.01) 50%, transparent 80%);
-      top: 35%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    /* ── AURA DE LUZ (Glow) ── */
     .glow-aura {
       position: absolute;
       width: 400px;
@@ -669,7 +467,6 @@
       pointer-events: none;
     }
 
-    /* ── CONTAINER DO MOCKUP (Sem vidro, apenas destaque) ── */
     .mockup-container {
       position: relative;
       z-index: 1;
@@ -677,18 +474,10 @@
     }
 
     @keyframes floatEffect {
-
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(-15px);
-      }
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
     }
 
-    /* Menu Mobile Translucido (Igual ao Navbar Scrolled) */
     #mobile-menu {
       background: rgba(6, 19, 37, 0.95);
       backdrop-filter: blur(20px);
@@ -696,39 +485,19 @@
       border-bottom: 1px solid rgba(197, 160, 89, 0.2);
     }
 
-    /* Garantir que o botão de fechar fica visível e clicável */
-    #close-menu {
-      z-index: 70;
-      /* Superior ao z-index do menu */
-      color: #C5A059;
-      /* Cor ouro para contraste máximo */
-      transition: transform 0.2s;
+    #close-menu { z-index: 70; color: #C5A059; transition: transform 0.2s; }
+    #close-menu:hover { transform: scale(1.1); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
     }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
 
-    #close-menu:hover {
-      transform: scale(1.1);
-    }
-
-    @media (max-width: 768px) {
-      .carousel-container {
-        overflow-x: auto !important;
-        /* Libera o scroll nativo */
-        scrollbar-width: none;
-        /* Esconde barra no Firefox */
-      }
-
-      .carousel-container::-webkit-scrollbar {
-        display: none;
-      }
-
-      /* Esconde no Chrome/Safari */
-
-      .carousel-track {
-        gap: 1rem !important;
-        transform: none !important;
-        /* Remove o transform para o scroll nativo funcionar */
-      }
-    }
   </style>
 </head>
 
@@ -736,21 +505,18 @@
 
   <canvas id="aurora-canvas"></canvas>
 
-  <!-- NAV CORRIGIDA -->
   <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 px-6 h-16 flex items-center justify-between transition-all duration-300">
     <div class="md:hidden w-8"></div>
     <a href="#hero" class="h-16 flex items-center shrink-0 w-48 justify-center">
       <img src="img/logo-its-wesus-branco.webp" alt="It's Wesus" class="h-36 w-auto object-contain" />
     </a>
 
-    <!-- Ícone Hamburger/X -->
     <button id="menu-toggle" class="md:hidden text-platinum z-[70]">
       <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
       </svg>
     </button>
 
-    <!-- Links Desktop (Visíveis apenas em md+) -->
     <div class="hidden md:flex items-center gap-8">
       <a href="#operacoes" class="text-xs tracking-widest text-platinum/90 hover:text-gold-light uppercase font-body">Operações</a>
       <a href="#quem-somos" class="text-xs tracking-widest text-platinum/90 hover:text-gold-light uppercase font-body">Quem Somos</a>
@@ -763,7 +529,6 @@
     </div>
   </nav>
 
-  <!-- MENU MOBILE ÚNICO (Fixado) -->
   <div id="mobile-menu" class="fixed top-16 left-0 right-0 z-[60] hidden flex-col items-center gap-6 p-8 bg-[#061325]/95 backdrop-blur-md border-b border-gold-base/20">
     <a href="#operacoes" class="text-sm tracking-widest text-platinum hover:text-gold-light uppercase font-body" onclick="toggleMenu()">Operações</a>
     <a href="#quem-somos" class="text-sm tracking-widest text-platinum hover:text-gold-light uppercase font-body" onclick="toggleMenu()">Quem Somos</a>
@@ -789,11 +554,9 @@
     </div>
   </section>
 
-
   <div class="hero-clean-transition"></div>
 
-  <section id="operacoes" class="pt-0 pb-8 overflow-hidden" style="background: #ffffff;">
-
+  <section id="operacoes" class="pt-0 pb-8">
     <div class="max-w-6xl mx-auto px-6 md:px-12 lg:px-20 text-center mb-12 reveal mt-12">
       <h2 class="section-title mb-3" style="color:#061325;">Operações Concluídas</h2>
       <div class="gold-line mx-auto mb-4"></div>
@@ -803,7 +566,7 @@
     </div>
 
     <div class="w-full max-w-[1600px] mx-auto px-4 md:px-8 mb-16 project-reveal">
-      <div class="carousel-container">
+      <div class="carousel-container no-scrollbar">
         <div class="carousel-track" id="portfolio-track">
 
           <div class="op-card w-[290px] md:w-[350px] shrink-0">
@@ -921,121 +684,6 @@
             </div>
           </div>
 
-          <div class="op-card w-[290px] md:w-[350px] shrink-0">
-            <div class="relative h-52 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80" alt="" class="w-full h-full object-cover" />
-              <div class="absolute top-3 left-3"><span class="op-card-badge">Concluído</span></div>
-            </div>
-            <div class="p-6 bg-white text-left">
-              <h3 class="font-display font-semibold text-lg mb-1" style="color:#061325;">Palacete Sottomayor</h3>
-              <p class="text-xs font-body tracking-wide mb-4" style="color:#1E497D;">Braga, Centro Histórico — Residencial</p>
-              <div class="flex justify-between items-center mb-4">
-                <div>
-                  <p class="text-xs opacity-50 font-body uppercase tracking-wider" style="color:#061325;">Rentabilidade</p>
-                  <p class="font-display font-bold text-xl" style="color:#C5A059;">9,8% </p>
-                </div>
-                <div class="text-right">
-                  <p class="text-xs opacity-50 font-body uppercase tracking-wider" style="color:#061325;">Duração</p>
-                  <p class="font-semibold text-sm" style="color:#061325;">14 Meses</p>
-                </div>
-              </div>
-              <div class="h-px mb-4" style="background:rgba(6,19,37,0.08);"></div>
-              <div class="flex justify-between items-center"><span class="text-xs font-body" style="color:#061325;opacity:0.5;">Capital Mínimo: €60.000</span></div>
-            </div>
-          </div>
-
-          <div class="op-card w-[290px] md:w-[350px] shrink-0">
-            <div class="relative h-52 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600&q=80" alt="" class="w-full h-full object-cover" />
-              <div class="absolute top-3 left-3"><span class="op-card-badge">Concluído</span></div>
-            </div>
-            <div class="p-6 bg-white text-left">
-              <h3 class="font-display font-semibold text-lg mb-1" style="color:#061325;">Eco-Lodge Comporta</h3>
-              <p class="text-xs font-body tracking-wide mb-4" style="color:#1E497D;">Comporta, Carvalhal — Turismo Sustentável</p>
-              <div class="flex justify-between items-center mb-4">
-                <div>
-                  <p class="text-xs opacity-50 font-body uppercase tracking-wider" style="color:#061325;">Rentabilidade</p>
-                  <p class="font-display font-bold text-xl" style="color:#C5A059;">11,0% </p>
-                </div>
-                <div class="text-right">
-                  <p class="text-xs opacity-50 font-body uppercase tracking-wider" style="color:#061325;">Duração</p>
-                  <p class="font-semibold text-sm" style="color:#061325;">24 Meses</p>
-                </div>
-              </div>
-              <div class="h-px mb-4" style="background:rgba(6,19,37,0.08);"></div>
-              <div class="flex justify-between items-center"><span class="text-xs font-body" style="color:#061325;opacity:0.5;">Capital Mínimo: €200.000</span></div>
-            </div>
-          </div>
-
-          <div class="op-card w-[290px] md:w-[350px] shrink-0">
-            <div class="relative h-52 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80" alt="" class="w-full h-full object-cover" />
-              <div class="absolute top-3 left-3"><span class="op-card-badge">Concluído</span></div>
-            </div>
-            <div class="p-6 bg-white text-left">
-              <h3 class="font-display font-semibold text-lg mb-1" style="color:#061325;">Residências da Tapada</h3>
-              <p class="text-xs font-body tracking-wide mb-4" style="color:#1E497D;">Sintra, São Pedro — Condomínio Fechado</p>
-              <div class="flex justify-between items-center mb-4">
-                <div>
-                  <p class="text-xs opacity-50 font-body uppercase tracking-wider" style="color:#061325;">Rentabilidade</p>
-                  <p class="font-display font-bold text-xl" style="color:#C5A059;">8,9% </p>
-                </div>
-                <div class="text-right">
-                  <p class="text-xs opacity-50 font-body uppercase tracking-wider" style="color:#061325;">Duração</p>
-                  <p class="font-semibold text-sm" style="color:#061325;">16 Meses</p>
-                </div>
-              </div>
-              <div class="h-px mb-4" style="background:rgba(6,19,37,0.08);"></div>
-              <div class="flex justify-between items-center"><span class="text-xs font-body" style="color:#061325;opacity:0.5;">Capital Mínimo: €90.000</span></div>
-            </div>
-          </div>
-
-          <div class="op-card w-[290px] md:w-[350px] shrink-0">
-            <div class="relative h-52 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=600&q=80" alt="" class="w-full h-full object-cover" />
-              <div class="absolute top-3 left-3"><span class="op-card-badge">Concluído</span></div>
-            </div>
-            <div class="p-6 bg-white text-left">
-              <h3 class="font-display font-semibold text-lg mb-1" style="color:#061325;">Wine Estate Douro</h3>
-              <p class="text-xs font-body tracking-wide mb-4" style="color:#1E497D;">Lamego, Vale do Douro — Quinta de Vinhas</p>
-              <div class="flex justify-between items-center mb-4">
-                <div>
-                  <p class="text-xs opacity-50 font-body uppercase tracking-wider" style="color:#061325;">Rentabilidade</p>
-                  <p class="font-display font-bold text-xl" style="color:#C5A059;">13,2% </p>
-                </div>
-                <div class="text-right">
-                  <p class="text-xs opacity-50 font-body uppercase tracking-wider" style="color:#061325;">Duração</p>
-                  <p class="font-semibold text-sm" style="color:#061325;">48 Meses</p>
-                </div>
-              </div>
-              <div class="h-px mb-4" style="background:rgba(6,19,37,0.08);"></div>
-              <div class="flex justify-between items-center"><span class="text-xs font-body" style="color:#061325;opacity:0.5;">Capital Mínimo: €250.000</span></div>
-            </div>
-          </div>
-
-          <div class="op-card w-[290px] md:w-[350px] shrink-0">
-            <div class="relative h-52 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600&q=80" alt="" class="w-full h-full object-cover" />
-              <div class="absolute top-3 left-3"><span class="op-card-badge">Concluído</span></div>
-            </div>
-            <div class="p-6 bg-white text-left">
-              <h3 class="font-display font-semibold text-lg mb-1" style="color:#061325;">Urban Apartments</h3>
-              <p class="text-xs font-body tracking-wide mb-4" style="color:#1E497D;">Aveiro, Canais — Edifício de Luxo</p>
-              <div class="flex justify-between items-center mb-4">
-                <div>
-                  <p class="text-xs opacity-50 font-body uppercase tracking-wider" style="color:#061325;">Rentabilidade</p>
-                  <p class="font-display font-bold text-xl" style="color:#C5A059;">9,5% </p>
-                </div>
-                <div class="text-right">
-                  <p class="text-xs opacity-50 font-body uppercase tracking-wider" style="color:#061325;">Duração</p>
-                  <p class="font-semibold text-sm" style="color:#061325;">12 Meses</p>
-                </div>
-              </div>
-              <div class="h-px mb-4" style="background:rgba(6,19,37,0.08);"></div>
-              <div class="flex justify-between items-center"><span class="text-xs font-body" style="color:#061325;opacity:0.5;">Capital Mínimo: €45.000</span></div>
-            </div>
-          </div>
-
         </div>
       </div>
     </div>
@@ -1068,23 +716,14 @@
 
   <div class="section-transition-to-dark"></div>
 
-  <!-- ═══════════════════════════════════════════════
-     D. CORE INSTITUCIONAL — Canvas Atmosférico de Fundo (Atrás dos Cards)
-  ═══════════════════════════════════════════════ -->
-  <section id="quem-somos" class="pt-20 pb-40 px-4 md:px-12 lg:px-20 relative overflow-hidden bg-[#061325]" style="z-index: 5; isolation: isolate;">
-
+  <section id="quem-somos" class="pt-20 pb-40 px-4 md:px-12 lg:px-20 relative overflow-hidden bg-[#061325]">
     <canvas id="canvas-investment-back"></canvas>
 
-    <!-- Holofotes de Iluminação Tridimensional -->
     <div id="spotlight-left" class="glow-spotlight -top-24 left-[5%] opacity-50"></div>
     <div id="spotlight-right" class="glow-spotlight bottom-12 right-[5%] opacity-40"></div>
 
     <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-stretch">
-
-      <!-- Monólito 1: Quem Somos -->
       <div id="quem-somos-block" class="premium-glass-card flex flex-col justify-between p-8 lg:p-12 reveal">
-
-        <!-- Imagem de Fundo (coluna-wesus.webp) integrada de forma estática/parallax sutil -->
         <div class="parallax-bg-asset right-0 md:right-4 bottom-0 h-full w-auto opacity-[0.05] flex items-end" id="bg-asset-col">
           <img src="img/coluna-wesus.webp" alt="" class="h-[90%] w-auto object-contain object-right-bottom" loading="lazy" />
         </div>
@@ -1093,7 +732,6 @@
           <div>
             <p class="text-[10px] uppercase tracking-[0.3em] text-gold-base font-semibold mb-3">A Empresa</p>
             <h3 class="font-display font-bold text-3xl text-gold-light tracking-wide uppercase mb-6">Quem Somos</h3>
-
             <p class="text-sm font-body text-platinum/90 leading-relaxed font-light max-w-xl">
               Somos uma rede de ligação estratégica entre investidores e promotores imobiliários, focada em criar oportunidades sólidas e relações de confiança no mercado imobiliário.
             </p>
@@ -1112,10 +750,7 @@
         </div>
       </div>
 
-      <!-- Monólito 2: Missão & Valores -->
       <div id="missao-block" class="premium-glass-card flex flex-col justify-between p-8 lg:p-12 reveal reveal-delay-1">
-
-        <!-- Imagem de Fundo (touro-grafico.webp) -->
         <div class="parallax-bg-asset right-0 bottom-0 h-[85%] w-auto opacity-[0.05] flex items-end" id="bg-asset-bull">
           <img src="img/touro-grafico.webp" alt="" class="h-full w-auto object-contain object-right-bottom" loading="lazy" />
         </div>
@@ -1142,41 +777,29 @@
           </div>
         </div>
       </div>
-
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════
-     E. EQUIPA — Design Simétrico com Fotos Otimizadas a 250px
-  ═══════════════════════════════════════════════ -->
   <section id="equipa" class="pt-36 pb-56 px-6 md:px-12 lg:px-20 relative overflow-hidden">
     <div class="max-w-7xl mx-auto relative z-10">
-
-      <!-- Cabeçalho da Seção -->
       <div class="text-center mb-20 reveal">
         <p class="text-xs tracking-widest text-gold-base uppercase font-body mb-3">Liderança</p>
         <h2 class="section-title mb-3" style="color: #061325;">A Nossa Equipa</h2>
         <div class="gold-line mx-auto"></div>
       </div>
 
-      <!-- Grid com stretch nativo para igualar os tamanhos -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10 items-stretch">
-
-        <!-- Membro 1: Danilson J. Carvalho -->
         <div class="reveal">
           <div class="premium-light-card p-8">
             <div class="w-full flex-grow flex flex-col justify-start">
-              <!-- Avatar 250px com ajuste de foco vertical centralizado para o Danilson -->
               <div class="avatar-container-pro mb-8">
                 <img src="img/danilson-equipa.webp" alt="Danilson J. Carvalho" class="w-full h-full rounded-full object-cover bg-platinum" style="object-position: center 30%;" />
               </div>
-
               <div class="text-center mb-6">
                 <h4 class="font-display font-bold text-2xl mb-1" style="color: #061325;">Danilson J. Carvalho</h4>
                 <p class="text-xs font-body text-gold-base tracking-widest uppercase font-semibold">Managing Director</p>
               </div>
             </div>
-
             <ul class="text-left text-xs font-body text-[#061325]/80 space-y-4 pt-5 border-t border-[#061325]/8 mt-auto">
               <li class="flex items-start gap-2.5">
                 <svg class="w-4 h-4 text-gold-base shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -1190,37 +813,21 @@
                 </svg>
                 <span>CEO da <strong>ATLANTICLIFE REAL ESTATE & PROJECTS</strong>.</span>
               </li>
-              <li class="flex items-start gap-2.5">
-                <svg class="w-4 h-4 text-gold-base shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                  <path d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
-                </svg>
-                <span>Licenciado em Gestão de Empresas pela Universidade Lusófona (2019).</span>
-              </li>
-              <li class="flex items-start gap-2.5">
-                <svg class="w-4 h-4 text-gold-base shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                  <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2" />
-                </svg>
-                <span>Mestre em Avaliação e Gestão de Ativos Imobiliários pela ESAI (2025).</span>
-              </li>
             </ul>
           </div>
         </div>
 
-        <!-- Membro 2: Sara Raquel Soeiro -->
         <div class="reveal reveal-delay-1">
           <div class="premium-light-card p-8">
             <div class="w-full flex-grow flex flex-col justify-start">
-              <!-- Avatar 250px com enquadramento focado na Sara (libera a cadeira alta) -->
               <div class="avatar-container-pro mb-8">
                 <img src="img/sara-equipa.webp" alt="Sara Raquel Soeiro" class="w-full h-full rounded-full object-cover bg-platinum" style="object-position: center 80%;" />
               </div>
-
               <div class="text-center mb-6">
                 <h4 class="font-display font-bold text-2xl mb-1" style="color: #061325;">Sara Raquel Soeiro</h4>
                 <p class="text-xs font-body text-gold-base tracking-widest uppercase font-semibold">Business Development Manager</p>
               </div>
             </div>
-
             <ul class="text-left text-xs font-body text-[#061325]/80 space-y-4 pt-5 border-t border-[#061325]/8 mt-auto">
               <li class="flex items-start gap-2.5">
                 <svg class="w-4 h-4 text-gold-base shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -1228,43 +835,21 @@
                 </svg>
                 <span>Sólida trajetória de mais de meia década na área comercial, focada na expansão de negócios.</span>
               </li>
-              <li class="flex items-start gap-2.5">
-                <svg class="w-4 h-4 text-gold-base shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                  <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                <span>Team Leader na <strong>ATLANTICLIFE REAL ESTATE & PROJECTS</strong>.</span>
-              </li>
-              <li class="flex items-start gap-2.5">
-                <svg class="w-4 h-4 text-gold-base shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                  <path d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
-                </svg>
-                <span>Mestre em Medicina Veterinária (Grau obtido em 2017).</span>
-              </li>
-              <li class="flex items-start gap-2.5">
-                <svg class="w-4 h-4 text-gold-base shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                  <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                </svg>
-                <span>Experiência consolidada na gestão e liderança de equipas internacionais.</span>
-              </li>
             </ul>
           </div>
         </div>
 
-        <!-- Membro 3: Ana Marta Carvalho -->
         <div class="reveal reveal-delay-2">
           <div class="premium-light-card p-8">
             <div class="w-full flex-grow flex flex-col justify-start">
-              <!-- Avatar 250px com foco centralizado para o enquadramento em estúdio da Ana Marta -->
               <div class="avatar-container-pro mb-8">
                 <img src="img/ana-equipa.webp" alt="Ana Marta Carvalho" class="w-full h-full rounded-full object-cover bg-platinum" style="object-position: -100% -80%;" />
               </div>
-
               <div class="text-center mb-6">
                 <h4 class="font-display font-bold text-2xl mb-1" style="color: #061325;">Ana Marta Carvalho</h4>
                 <p class="text-xs font-body text-gold-base tracking-widest uppercase font-semibold">Office & Operations Manager</p>
               </div>
             </div>
-
             <ul class="text-left text-xs font-body text-[#061325]/80 space-y-4 pt-5 border-t border-[#061325]/8 mt-auto">
               <li class="flex items-start gap-2.5">
                 <svg class="w-4 h-4 text-gold-base shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -1272,38 +857,15 @@
                 </svg>
                 <span>Intermediária de Crédito Autorizada pelo <strong>Banco de Portugal</strong>.</span>
               </li>
-              <li class="flex items-start gap-2.5">
-                <svg class="w-4 h-4 text-gold-base shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                  <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M12 16V5" />
-                </svg>
-                <span>CEO e fundadora da firma <strong>Oaks Créditos</strong>.</span>
-              </li>
-              <li class="flex items-start gap-2.5">
-                <svg class="w-4 h-4 text-gold-base shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                  <path d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 009 11.57V10c0-4.331 3.207-7.998 7.432-8.679A10.457 10.457 0 0118 10v1.57c0 2.072.585 4.07 1.674 5.795l.054.09m-3.44-2.04A13.916 13.916 0 0115 11.57V10V5" />
-                </svg>
-                <span>Especialista em Gestão de Património pela ESAI (2025).</span>
-              </li>
-              <li class="flex items-start gap-2.5">
-                <svg class="w-4 h-4 text-gold-base shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                  <path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                </svg>
-                <span>Licenciatura em Engenharia Bioquímica obtida pela Universidade Nova de Lisboa.</span>
-              </li>
             </ul>
           </div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════
-     F. PLATAFORMA EXCLUSIVA — Alinhamentos Pro e Geometria Corrigida
-  ═══════════════════════════════════════════════ -->
   <section id="plataforma" class="py-32 px-6 md:px-12 lg:px-20 relative overflow-hidden bg-[#061325]">
     <div class="max-w-6xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-
       <div class="lg:col-span-6 flex justify-center relative reveal">
         <div class="glow-aura"></div>
         <div class="mockup-container">
@@ -1311,18 +873,13 @@
         </div>
       </div>
 
-      <!-- 🌟 FIX: Alterado para text-center no mobile e lg:text-left no desktop -->
       <div class="lg:col-span-6 text-center lg:text-left flex flex-col items-center lg:items-start justify-center reveal reveal-delay-1">
-
         <h2 class="font-display font-bold text-white leading-tight uppercase mb-4" style="font-size: clamp(2.2rem, 4.5vw, 3.2rem); letter-spacing: 0.05em;">
           Acompanhe os<br />seus resultados.
         </h2>
-
         <p class="text-lg text-platinum/70 font-body font-light tracking-wide mb-10 max-w-lg">
           Aceda ao seu portfólio privado em tempo real através da nossa plataforma exclusiva. Total blindagem patrimonial com transparência absoluta.
         </p>
-
-        <!-- 🌟 FIX: justify-center no mobile e lg:justify-start no desktop -->
         <div class="flex items-center gap-4 mt-8 justify-center lg:justify-start">
           <a href="#" class="btn-download transition-all duration-300 hover:scale-105 hover:opacity-90">
             <img src="img/app-store-badge.webp" alt="Download na App Store" class="h-12 md:h-14 w-auto" />
@@ -1335,40 +892,26 @@
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════
-     G. CONTACTOS — Layout Corporativo em 4 Colunas
-  ═══════════════════════════════════════════════ -->
   <section id="contactos" class="py-32 px-6 md:px-12 lg:px-20 bg-[#ffffff]">
     <div class="max-w-7xl mx-auto reveal">
-
-      <!-- Cabeçalho -->
       <div class="text-center mb-20">
         <h2 class="section-title text-[#061325] mb-4">Fale Connosco</h2>
         <div class="gold-line mx-auto"></div>
       </div>
 
-      <!-- Grid de 4 colunas -->
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 text-center md:text-left">
-
-        <!-- Danilson -->
         <div class="contact-group">
           <h4>Danilson J. Carvalho</h4>
           <a href="tel:+351968228919" class="contact-link text-lg font-display">+351 968 228 919</a>
         </div>
-
-        <!-- Sara -->
         <div class="contact-group">
           <h4>Sara Raquel Soeiro</h4>
           <a href="tel:+351919398983" class="contact-link text-lg font-display">+351 919 398 983</a>
         </div>
-
-        <!-- Email -->
         <div class="contact-group">
           <h4>Email Corporativo</h4>
           <a href="mailto:geral@itwesus.com" class="contact-link text-lg font-display">geral@itwesus.com</a>
         </div>
-
-        <!-- Morada -->
         <div class="contact-group">
           <h4>Sede</h4>
           <p class="address-text leading-relaxed">
@@ -1377,13 +920,11 @@
             <span class="block mt-1 font-semibold text-[#061325]">Portugal</span>
           </p>
         </div>
-
       </div>
     </div>
   </section>
 
   <footer class="py-10 px-6 md:px-12">
-    <!-- 🌟 FIX: Alterado de 'justify-between' para 'justify-center' para centralizar o texto -->
     <div class="max-w-6xl mx-auto flex flex-col items-center justify-center gap-4">
       <p class="font-display text-xs tracking-widest text-platinum/70 uppercase text-center">
         © 2026 It's Wesus — Consulting & Investment. Todos os direitos reservados.
@@ -1400,32 +941,27 @@
   </div>
 
   <script>
-
     const modal = document.getElementById('modal-not-available');
-    const modalText = modal.querySelector('p'); // Seleciona o parágrafo dentro do modal
+    const modalText = modal.querySelector('p');
 
     function closeModal() {
       modal.classList.remove('flex');
       modal.classList.add('hidden');
     }
 
-    // Função genérica para abrir modal
     function openModal(message) {
-      modalText.textContent = message; // Altera o texto dinamicamente
+      modalText.textContent = message;
       modal.classList.remove('hidden');
       modal.classList.add('flex');
     }
 
-    // 1. Lógica do Painel (Desktop vs Mobile)
-    // 1. Lógica do Painel (Agora unificada para Desktop e Mobile)
     document.querySelectorAll('.btn-painel').forEach(btn => {
       btn.addEventListener('click', function (e) {
-        e.preventDefault(); // Impede qualquer navegação
+        e.preventDefault();
         openModal("Essa funcionalidade será liberada em breve.");
       });
     });
 
-    // 2. Lógica dos Botões de Download (Sempre mostra modal)
     document.querySelectorAll('.btn-download').forEach(btn => {
       btn.addEventListener('click', function (e) {
         e.preventDefault();
@@ -1433,10 +969,10 @@
       });
     });
 
-    // Fecha se clicar fora do modal
     modal.addEventListener('click', (e) => {
       if (e.target === modal) closeModal();
     });
+
     (function () {
       'use strict';
 
@@ -1491,7 +1027,10 @@
       /* 4. Canvas Geral Purpurina */
       const canvas = document.getElementById('aurora-canvas');
       const ctx = canvas.getContext('2d');
-      const PARTICLE_COUNT = window.innerWidth < 768 ? 40 : 120;
+      
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      const PARTICLE_COUNT = isIOS ? 20 : (window.innerWidth < 768 ? 40 : 120);
+      
       let particles = [];
       let animFrame;
       let canvasActive = false;
@@ -1505,8 +1044,8 @@
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
           size: Math.random() * 1.5 + 0.3,
-          speedX: (Math.random() - 0.5) * 0.25,
-          speedY: (Math.random() - 0.5) * 0.25,
+          speedX: (Math.random() - 0.5) * 0.15,
+          speedY: (Math.random() - 0.5) * 0.15,
           opacity: Math.random() * 0.5 + 0.1,
           opacityDir: Math.random() > 0.5 ? 1 : -1,
           opacitySpeed: Math.random() * 0.004 + 0.002,
@@ -1546,24 +1085,23 @@
         }
       }, { threshold: 0.2 }).observe(document.getElementById('operacoes'));
 
+      /* ── CARROSSEL OTIMIZADO (Permite Scroll Nativo e Auto-Loop) ── */
       (function setupInfinitePortfolioCarousel() {
         const container = document.querySelector('.carousel-container');
         const track = document.getElementById('portfolio-track');
         if (!track) return;
 
-        // Clona os elementos
+        // Clona os elementos garantindo a largura correta
         const originalCards = Array.from(track.children);
         originalCards.forEach(card => track.appendChild(card.cloneNode(true)));
 
         let isPaused = false;
         let resumeTimer = null;
-        const speed = 0.5; // Velocidade de scroll
+        const speed = isIOS ? 0.35 : 0.5;
 
         function animateCarousel() {
           if (!isPaused) {
             container.scrollLeft += speed;
-
-            // Quando o scroll chega ao fim da primeira metade, volta ao início (loop infinito)
             if (container.scrollLeft >= (track.scrollWidth / 2)) {
               container.scrollLeft = 0;
             }
@@ -1576,21 +1114,21 @@
           resumeTimer = setTimeout(() => { isPaused = false; }, 500);
         }
 
-        // Eventos de pausa (seja mouse ou touch)
         const pause = () => { isPaused = true; clearTimeout(resumeTimer); };
         const resume = () => { startResumeTimer(); };
 
         container.addEventListener('mouseenter', pause);
         container.addEventListener('mouseleave', resume);
+        
+        // No touch events, pausa a animação e deixa o CSS overflow tratar do swipe!
         container.addEventListener('touchstart', pause, { passive: true });
+        container.addEventListener('touchmove', pause, { passive: true });
         container.addEventListener('touchend', resume, { passive: true });
 
-        // Inicia
         requestAnimationFrame(animateCarousel);
       })();
 
-
-      /* ── 5. NOVO MOTOR CINEMÁTICO: VETORES DE CAPITAL DE SEGUNDO PLANO ── */
+      /* ── 5. VETORES DE CAPITAL DE SEGUNDO PLANO ── */
       (function setupBackgroundVectorEngine() {
         const c = document.getElementById('canvas-investment-back');
         if (!c) return;
@@ -1604,25 +1142,23 @@
           h = c.height = c.parentElement.clientHeight;
         }, { passive: true });
 
-        // Estrutura de vetores lineares que sobem em diagonal (alta de mercado)
         let vectors = [];
-        const vectorCount = window.innerWidth < 768 ? 15 : 35;
+        const vectorCount = isIOS ? 10 : (window.innerWidth < 768 ? 15 : 35);
 
         for (let i = 0; i < vectorCount; i++) {
           vectors.push({
             x: Math.random() * w,
             y: Math.random() * h + h * 0.2,
             length: Math.random() * 80 + 40,
-            speed: Math.random() * 0.4 + 0.15,
-            opacity: Math.random() * 0.3 + 0.1,
-            lineWidth: Math.random() * 1.2 + 0.5,
+            speed: Math.random() * 0.3 + 0.15,
+            opacity: Math.random() * 0.2 + 0.05,
+            lineWidth: Math.random() * 1.0 + 0.5,
             angle: -Math.PI / 4 + (Math.random() * 0.05 - 0.025)
           });
         }
 
         function drawBackgroundVectors() {
           cx.clearRect(0, 0, w, h);
-
           vectors.forEach(v => {
             v.y -= v.speed;
             v.x += v.speed * Math.tan(Math.abs(v.angle));
@@ -1644,7 +1180,6 @@
             cx.lineWidth = v.lineWidth;
             cx.stroke();
           });
-
           requestAnimationFrame(drawBackgroundVectors);
         }
         requestAnimationFrame(drawBackgroundVectors);
@@ -1658,11 +1193,9 @@
 
     function toggleMenu() {
       isMenuOpen = !isMenuOpen;
-
       mobileMenu.classList.toggle('hidden', !isMenuOpen);
       mobileMenu.classList.toggle('flex', isMenuOpen);
 
-      // Troca o ícone
       if (isMenuOpen) {
         menuIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
       } else {
@@ -1670,9 +1203,7 @@
       }
     }
 
-    // Adiciona listener para fechar ao clicar fora
     document.addEventListener('click', (event) => {
-      // Se o menu está aberto, e o clique não foi no botão de toggle nem dentro do menu
       if (isMenuOpen && !mobileMenu.contains(event.target) && !menuToggle.contains(event.target)) {
         toggleMenu();
       }
@@ -1680,7 +1211,5 @@
 
     menuToggle.addEventListener('click', toggleMenu);
   </script>
-
 </body>
-
 </html>
