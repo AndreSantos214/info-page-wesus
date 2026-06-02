@@ -36,19 +36,21 @@
       overflow-x: hidden;
     }
 
+    /* --- VITRIFICAÇÃO ULTRA PREMIUM (SILK PLATINUM & CHAMPAGNE EDGE) --- */
+    /* --- CAMADA DE PREENCHIMENTO MAIS RÍGIDA CONTRA ABSORÇÃO DE LUZ --- */
     .hero-card-crystal {
       position: relative;
       backdrop-filter: blur(30px) saturate(220%) !important;
       -webkit-backdrop-filter: blur(30px) saturate(220%) !important;
       border-radius: 1.5rem;
 
-      /* Adiciona estas duas linhas abaixo para blindar o Safari */
       overflow: hidden !important;
       isolation: isolate !important;
 
       border: 2px solid transparent !important;
+      /* Ajustado: Opacidade aumentada (0.95 / 0.98 / 0.93) para tornar o fundo mais firme e opaco */
       background:
-        linear-gradient(135deg, rgba(11, 31, 58, 0.85), rgba(7, 19, 38, 0.95) 50%, rgba(11, 31, 58, 0.80)) padding-box,
+        linear-gradient(135deg, rgba(9, 25, 46, 0.95), rgba(6, 15, 31, 0.98) 50%, rgba(9, 25, 46, 0.93)) padding-box,
         linear-gradient(145deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.05) 35%, rgba(197, 160, 89, 0.15) 70%, rgba(232, 208, 141, 0.45) 100%) border-box !important;
 
       box-shadow:
@@ -57,17 +59,21 @@
       transform: translateZ(0);
     }
 
-    /* --- REFLEXO DIAGONAL REFINADO (MAIS SUTIL) --- */
+    /* --- REFRAÇÃO DE LUZ DINÂMICA CORRIGIDA (SEM O ERRO DE SINTAXE) --- */
     .hero-card-crystal::after {
       content: "" !important;
       position: absolute !important;
       inset: 0 !important;
       background: linear-gradient(115deg,
-          transparent 30%,
-          rgba(255, 255, 255, 0.01) 42%,
-          rgba(255, 255, 255, 0.04) 50%,
-          rgba(255, 255, 255, 0.01) 58%,
-          transparent 70%) !important;
+          transparent 0%,
+          rgba(255, 255, 255, 0.01) 35%,
+          /* Corrigido de 30. para 35% */
+          rgba(255, 255, 255, 0.08) 50%,
+          rgba(255, 255, 255, 0.01) 70%,
+          /* Corrigido de 70. para 70% */
+          transparent 100%) no-repeat !important;
+      background-size: 200% 100% !important;
+      background-position: var(--shine-x, -50%) 0% !important;
       pointer-events: none !important;
       z-index: 2 !important;
     }
@@ -223,22 +229,48 @@
       box-shadow: 0 0 15px rgba(197, 160, 89, 0.08) !important;
     }
 
+    /* --- RETORNO À CONTRALUZ FIRME E VIVIDA (OVERLAPPING LIGHT BAR EFFECT) --- */
     .card-backlight-gold {
       position: absolute;
-      inset: -30px;
-      background: radial-gradient(circle at 25% 30%, rgba(197, 160, 89, 0.22) 0%, rgba(0, 163, 255, 0.08) 50%, transparent 70%);
-      filter: blur(35px);
+      inset: -60px;
+      /* Distância perfeita para a fusão entre os cards */
+      background: radial-gradient(circle at 35% 35%,
+          rgba(232, 208, 141, 0.35) 0%,
+          /* Cor firme e dourada da versão anterior */
+          rgba(197, 160, 89, 0.18) 35%,
+          rgba(0, 163, 255, 0.08) 70%,
+          transparent 100%);
+      filter: blur(55px);
+      /* Desfoque original focado que se mistura nas colunas */
       pointer-events: none;
       z-index: 0;
+      opacity: 0;
+      transition: opacity 2s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity;
     }
 
     .card-backlight-blue {
       position: absolute;
-      inset: -30px;
-      background: radial-gradient(circle at 75% 70%, rgba(0, 163, 255, 0.18) 0%, rgba(197, 160, 89, 0.05) 50%, transparent 70%);
-      filter: blur(35px);
+      inset: -60px;
+      background: radial-gradient(circle at 65% 65%,
+          rgba(0, 163, 255, 0.35) 0%,
+          /* Azul vibrante original recuperado */
+          rgba(0, 78, 255, 0.15) 45%,
+          rgba(197, 160, 89, 0.06) 75%,
+          transparent 100%);
+      filter: blur(55px);
+      /* Desfoque original focado */
       pointer-events: none;
       z-index: 0;
+      opacity: 0;
+      transition: opacity 2s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity;
+    }
+
+    /* Ativação por scroll mantida para dar o efeito de ignição premium */
+    .apple-reveal.is-visible .card-backlight-gold,
+    .apple-reveal.is-visible .card-backlight-blue {
+      opacity: 1;
     }
 
     /* --- AURA DE KI SUAVE E DESACELERADA --- */
@@ -262,16 +294,13 @@
       position: absolute;
       width: 140%;
       height: 140%;
-      background: radial-gradient(circle at center,
-          rgba(0, 163, 255, 0.45) 0%,
-          rgba(197, 160, 89, 0.2) 35%,
-          transparent 65%);
+      background: radial-gradient(circle at center, rgba(0, 163, 255, 0.45) 0%, rgba(197, 160, 89, 0.2) 35%, transparent 65%);
       pointer-events: none;
       z-index: 0;
       animation: aura-energy-pulse 5.5s infinite ease-in-out;
     }
 
-    /* --- RISCOS DE COMETAS DIAGONAIS (CORRIGIDO: SUBINDO COMO ESTRELA CADENTE REAL) --- */
+    /* --- RISCOS DE COMETAS DIAGONAIS --- */
     @keyframes saiyan-comet {
       0% {
         transform: translate(100px, 100px) scaleX(0);
@@ -294,20 +323,17 @@
       }
     }
 
-    /* --- RISCOS DE COMETAS (MAIS INCLINADOS E LENTOS) --- */
     .space-comet {
       position: absolute;
       height: 1.5px;
       background: linear-gradient(to right, transparent, rgba(197, 160, 89, 0.4), #ffffff);
       transform-origin: left center;
-      /* Ajuste 1: Ângulo mais íngreme (mais para cima) */
       rotate: -65deg;
       pointer-events: none;
       z-index: 1;
       will-change: transform, opacity;
     }
 
-    /* Ajuste 2: Duração dobrada para reduzir drasticamente a velocidade */
     .comet-1 {
       width: 120px;
       bottom: 20%;
@@ -355,25 +381,20 @@
       cursor: pointer;
     }
 
-    /* Garantir que o header sempre tenha a borda na estrutura, mas invisível inicialmente */
+    /* --- ESTADOS DO HEADER --- */
     #mainHeader {
       transition: background 0.5s ease, border-color 0.5s ease;
       border-bottom: 1px solid transparent;
-      /* Ocupa o espaço mas é invisível */
     }
 
-    /* Quando estiver scrolled */
     #mainHeader.scrolled {
       background-color: rgba(6, 19, 37, 0.9) !important;
       backdrop-filter: blur(15px);
       border-bottom-color: rgba(255, 255, 255, 0.05);
-      /* Aparece suavemente */
     }
 
-    /* Estilo para quando o link estiver ativo */
     .nav-link.active {
       color: #e8d08d !important;
-      /* Dourado */
       font-weight: 700 !important;
     }
 
@@ -382,8 +403,9 @@
        ========================================================================= */
     .apple-reveal {
       opacity: 0;
-      transform: translateY(40px) scale(0.99);
-      transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(20px);
+      /* Suavizado para mitigar lag e saltos no iOS WebKit */
+      transition: opacity 1.2s cubic-bezier(0.15, 1, 0.3, 1), transform 1.2s cubic-bezier(0.15, 1, 0.3, 1);
       will-change: transform, opacity;
     }
 
@@ -392,7 +414,6 @@
       transform: translateY(0) scale(1);
     }
 
-    /* Efeito de escalonamento suave e sequencial (Staggered Delays) */
     .delay-100 {
       transition-delay: 100ms;
     }
@@ -413,20 +434,69 @@
       transition-delay: 500ms;
     }
 
+    /* --- CONTROLO INTELIGENTE DE ALTURA CONTRA COLISÃO NA HERO --- */
     @media (max-height: 760px) {
       .scroll-indicator-hint {
         display: none !important;
       }
+    }
+
+    /* --- PILAR MAJESTOSO ADAPTATIVO (DESKTOP / BACKGROUND MOBILE) --- */
+    .pilar-scroll-effect {
+      transition: transform 2.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 2.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      will-change: transform, opacity;
+    }
+
+    /* Estado inicial global */
+    .apple-reveal .pilar-scroll-effect {
+      opacity: 0 !important;
+      transform: translateY(30px) scale(0.95) translateZ(0) !important;
+    }
+
+    /* Modo Desktop (Acima de 1200px): Posicionado imponente na lateral esquerda */
+    .apple-reveal.is-visible .pilar-scroll-effect {
+      opacity: 0.16 !important;
+      transform: translateY(0) scale(1) translateZ(0) !important;
+    }
+
+    /* Modo Mobile/Notebook (Abaixo de 1200px): Vira fundo suave centralizado atrás do texto */
+    @media (max-width: 1200px) {
+      .apple-reveal .pilar-scroll-effect {
+        opacity: 0 !important;
+        transform: scale(1.1) translateZ(0) !important;
+      }
+
+      .apple-reveal.is-visible .pilar-scroll-effect {
+        opacity: 0.05 !important;
+        /* Opacidade reduzida para garantir 100% de leitura do texto */
+        transform: scale(1.25) translateZ(0) !important;
+        /* Levemente maior para preencher o fundo */
+      }
+    }
+
+    /* --- BLINDAGEM ANTI-BLEEDING EXCLUSIVA PARA A SARA --- */
+    .card-sara-rigid {
+      /* Fundo ultra denso que funciona como um escudo heráldico contra o ouro vizinho */
+      background:
+        linear-gradient(135deg, rgba(5, 16, 31, 0.99), rgba(3, 10, 20, 1.0) 50%, rgba(5, 16, 31, 0.99)) padding-box,
+        /* Borda recalibrada puramente com azul e platina, eliminando reflexos dourados */
+        linear-gradient(145deg,
+          rgba(255, 255, 255, 0.40) 0%,
+          rgba(255, 255, 255, 0.02) 35%,
+          rgba(0, 163, 255, 0.25) 70%,
+          rgba(0, 163, 255, 0.45) 100%) border-box !important;
     }
   </style>
 </head>
 
 <body class="text-white select-none antialiased">
 
+  <!-- HEADER PRINCIPAL -->
   <header id="mainHeader" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-transparent py-4 border-b border-transparent">
     <div class="max-w-7xl mx-auto px-6 h-12 flex items-center justify-between relative">
 
-      <a id="headerLogo" href="#" class="flex items-center group max-md:absolute max-md:left-1/2 max-md:top-1/2 max-md:-translate-x-1/2 max-md:-translate-y-1/2 transition-all duration-500" aria-label="It's Wesus Home">
+      <!-- Corrigido: Oculto no mobile em estado inicial antes do scroll -->
+      <a id="headerLogo" href="#" class="flex items-center group max-md:absolute max-md:left-1/2 max-md:top-1/2 max-md:-translate-x-1/2 max-md:-translate-y-1/2 max-md:opacity-0 max-md:pointer-events-none transition-all duration-500" aria-label="It's Wesus Home">
         <img src="img/logo-its-wesus-branco.webp" alt="It's Wesus" class="h-[200px] w-auto object-contain transition-transform duration-300 filter drop-shadow-sm" />
       </a>
 
@@ -467,9 +537,11 @@
     </div>
   </header>
 
+  <!-- SEÇÃO HERO STAGE -->
   <section id="hero-stage" class="relative w-full h-[100dvh] flex items-center justify-center overflow-hidden z-10 bg-[#061325]">
 
     <div class="absolute inset-0 z-0 w-full h-full pointer-events-none select-none overflow-hidden">
+      <!-- Corrigido: Poster estático .webp blindando o carregamento contra falhas no iOS -->
       <video autoplay loop muted playsinline fetchpriority="high" poster="img/hero-fallback-poster.webp" class="w-full h-full object-cover scale-105" aria-hidden="true">
         <source src="img/video-hero-2.webm" type="video/webm">
         <source src="img/video-hero-2.webm" type="video/mp4">
@@ -482,7 +554,8 @@
 
     <div class="relative z-20 w-full max-w-5xl mx-auto px-6 flex flex-col items-center text-center gap-[2.5vh] pt-20 apple-reveal is-visible">
 
-      <div class="w-64 h-64 sm:w-80 sm:h-80 lg:w-[55vh] lg:h-[55vh] -mt-6 -mb-6 lg:-mt-[14vh] lg:-mb-[10vh] flex items-center justify-center transform transition-transform duration-700 select-none" aria-hidden="true">
+      <!-- Corrigido: Dimensões ampliadas e fluídas para máxima imponência do brasão principal no Mobile -->
+      <div class="w-[75vw] h-[75vw] max-w-[500px] sm:w-96 sm:h-96 lg:w-[55vh] lg:h-[55vh] -mt-4 -mb-4 lg:-mt-[14vh] lg:-mb-[10vh] flex items-center justify-center transform transition-transform duration-700 select-none" aria-hidden="true">
         <img src="img/svg-logo-hero.svg" alt="It's Wesus Consulting & Investment" class="w-full h-full object-contain filter drop-shadow-[0_12px_30px_rgba(197,160,89,0.25)] max-lg:scale-110 lg:scale-125" />
       </div>
 
@@ -514,6 +587,7 @@
     </div>
   </section>
 
+  <!-- PALCO PRINCIPAL DE CONTEÚDO -->
   <div class="relative w-full overflow-hidden">
 
     <div class="ambient-section-orb w-[600px] h-[600px] bg-[#c5a059] top-0 -left-32" aria-hidden="true"></div>
@@ -521,61 +595,71 @@
     <div class="ambient-section-orb w-[650px] h-[650px] bg-[#c5a059] top-[55%] -left-40" aria-hidden="true"></div>
     <div class="ambient-section-orb w-[800px] h-[800px] bg-[#00a3ff] bottom-0 -right-32" aria-hidden="true"></div>
 
-    <section id="quem-somos" class="relative max-w-7xl mx-auto px-6 py-24 grid grid-cols-1 md:grid-cols-2 gap-12 z-20">
+    <!-- SEÇÃO QUEM SOMOS -->
+    <section id="quem-somos" class="relative max-w-7xl mx-auto px-6 py-24 grid grid-cols-1 min-[1200px]:grid-cols-2 gap-12 z-20 items-stretch">
 
-      <div class="relative w-full z-10 apple-reveal">
-        <div class="card-backlight-gold"></div>
+      <!-- CARD 1: QUEM SOMOS -->
+      <div class="relative w-full z-10 apple-reveal flex max-w-[680px] mx-auto min-[1200px]:max-w-full">
+        <div class="card-backlight-gold"></div> <!-- A luz emana por trás daqui -->
 
-        <article class="hero-card-crystal p-8 md:p-12 flex flex-col min-h-[520px] justify-between relative overflow-hidden">
-          <div class="w-full relative z-10">
-            <p class="text-[10px] uppercase tracking-[0.2em] text-[#c5a059] font-bold mb-2">A Empresa</p>
-            <h2 class="font-playfair text-3xl font-bold tracking-wide uppercase text-white/90 mb-6">
-              Quem <span class="text-gold-liquid">Somos</span>
-            </h2>
+        <article class="hero-card-crystal p-8 md:p-12 flex flex-col h-full justify-between relative overflow-hidden w-full min-h-[540px]">
+          <div class="absolute inset-0 flex items-center justify-center min-[1200px]:items-end min-[1200px]:justify-start overflow-hidden select-none pointer-events-none z-0
+                  max-[1200px]:top-0 max-[1200px]:left-0 max-[1200px]:w-full
+                  min-[1200px]:-left-[15%] min-[1200px]:-bottom-3 min-[1200px]:top-28 min-[1200px]:w-[100%]">
+            <img src="img/pilar.svg" alt="Pilar Estrutural" class="pilar-scroll-effect h-[98%] w-full object-contain max-[1200px]:object-center min-[1200px]:object-left-bottom mix-blend-screen" />
           </div>
 
-          <div class="relative w-full flex-1 flex items-center min-h-[300px]">
-            <div class="absolute inset-0 max-md:flex max-md:items-center max-md:justify-center md:-left-24 md:-bottom-16 md:top-0 md:w-[100%] flex items-center justify-start pointer-events-none select-none z-0">
-              <img src="img/pilar.svg" alt="Pilar Estrutural" class="max-md:scale-[1.45] max-md:opacity-[0.06] md:max-h-[26rem] md:object-contain opacity-[0.15] mix-blend-screen" />
-            </div>
-
-            <div class="w-full md:w-[60%] ml-auto relative z-10">
-              <p class="text-xs sm:text-sm text-white/80 font-inter leading-[1.85]">
+          <div class="relative z-10 w-full min-[1200px]:w-[65%] min-[1200px]:ml-auto flex flex-col justify-between flex-1 gap-6">
+            <div class="space-y-6 text-left">
+              <div class="w-full relative z-10 mb-6 transition-all duration-500 text-left">
+                <p class="text-[10px] uppercase tracking-[0.2em] text-[#c5a059] font-bold mb-2">A Empresa</p>
+                <h2 class="font-playfair text-3xl font-bold tracking-wide uppercase text-white/90">
+                  Quem <span class="text-gold-liquid">Somos</span>
+                </h2>
+              </div>
+              <h4 class="font-playfair text-base sm:text-lg lg:text-xl font-semibold text-white/95 leading-relaxed tracking-wide">
+                Conectando capital estratégico a <span class="text-gold-liquid">oportunidades de alto padrão</span>.
+              </h4>
+              <div class="w-12 h-px bg-gradient-to-r from-[#c5a059]/40 to-transparent" aria-hidden="true"></div>
+              <p class="text-xs sm:text-sm text-white/70 font-inter leading-[1.85] tracking-wide">
                 Somos uma rede de ligação estratégica entre investidores e promotores imobiliários, focada em criar oportunidades sólidas e relações de confiança no mercado imobiliário.
               </p>
+            </div>
+            <div class="grid grid-cols-2 gap-6 pt-6 border-t border-white/5 mt-auto text-left">
+              <div>
+                <p class="font-playfair text-[9px] uppercase tracking-[0.2em] text-[#c5a059] font-bold mb-1.5">Abordagem</p>
+                <p class="text-[11px] text-white/50 font-inter leading-relaxed">Segurança jurídica e blindagem patrimonial absoluta.</p>
+              </div>
+              <div>
+                <p class="font-playfair text-[9px] uppercase tracking-[0.2em] text-[#c5a059] font-bold mb-1.5">Network</p>
+                <p class="text-[11px] text-white/50 font-inter leading-relaxed">Ligação direta com os principais promotores de Portugal.</p>
+              </div>
             </div>
           </div>
         </article>
       </div>
 
-      <div class="relative w-full z-10 apple-reveal delay-100">
-        <div class="card-backlight-blue"></div>
+      <!-- CARD 2: MISSÃO E VALORES -->
+      <div class="relative w-full z-10 apple-reveal delay-100 flex max-w-[680px] mx-auto min-[1200px]:max-w-full">
+        <div class="card-backlight-blue"></div> <!-- A luz emana por trás daqui -->
 
-        <article id="missao" class="hero-card-crystal p-8 md:p-12 flex flex-col justify-center min-h-[520px] relative overflow-hidden">
+        <article id="missao" class="hero-card-crystal p-8 md:p-12 flex flex-col justify-between h-full relative overflow-hidden w-full min-h-[540px]">
           <img src="img/touro-grafico.webp" alt="" class="absolute right-[-5%] bottom-[-5%] h-[85%] w-auto object-contain opacity-[0.24] mix-blend-screen pointer-events-none select-none filter drop-shadow-[0_0_25px_rgba(0,163,255,0.95)] drop-shadow-[0_0_15px_rgba(232,208,141,0.05)] mask-touro-fade" onerror="this.src='img/svg-logo-hero.svg'; this.style.opacity='0.02'" aria-hidden="true" />
-
-          <div class="flex flex-col gap-8 relative z-10 h-full justify-between">
-            <div class="space-y-3">
+          <div class="flex flex-col gap-6 relative z-10 h-full justify-between">
+            <div class="space-y-2">
               <p class="text-[10px] uppercase tracking-[0.2em] text-[#c5a059] font-bold">Propósito</p>
-              <h3 class="font-playfair text-2xl font-bold tracking-wide uppercase text-white/90">
-                Missão
-              </h3>
+              <h3 class="font-playfair text-2xl font-bold tracking-wide uppercase text-white/90">Missão</h3>
               <p class="text-xs sm:text-sm text-white/70 font-inter leading-relaxed max-w-md">
                 A nossa missão é conectar investidores e promotores imobiliários através de soluções transparentes, seguras e estratégicas, criando oportunidades sustentáveis e relações de confiança no setor imobiliário.
               </p>
             </div>
-
             <div class="w-full h-px bg-gradient-to-r from-white/5 via-white/10 to-transparent"></div>
-
             <div class="space-y-4">
-              <h3 class="font-playfair text-2xl font-bold tracking-wide uppercase text-white/90">
-                Valores
-              </h3>
+              <h3 class="font-playfair text-2xl font-bold tracking-wide uppercase text-white/90">Valores</h3>
               <p class="text-xs sm:text-sm text-white/70 font-inter leading-relaxed max-w-md">
                 Acreditamos que relações sólidas são construídas com transparência, confiança e compromisso. Valorizamos a proximidade com investidores e parceiros, atuando sempre com integridade, profissionalismo e foco em oportunidades sustentáveis que gerem segurança e crescimento para todos os envolvidos.
               </p>
-
-              <div class="flex flex-wrap gap-2 pt-2 select-none">
+              <div class="flex flex-wrap gap-2 pt-1 select-none">
                 <span class="text-[9px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/80 backdrop-blur-sm">Transparência</span>
                 <span class="text-[9px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/80 backdrop-blur-sm">Confiança</span>
                 <span class="text-[9px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/80 backdrop-blur-sm">Compromisso</span>
@@ -587,6 +671,7 @@
 
     </section>
 
+    <!-- SEÇÃO EQUIPA (CORRIGIDO ALINHAMENTO DE IMAGENS) -->
     <section id="equipa" class="relative max-w-7xl mx-auto px-6 py-20 z-20">
       <div class="text-center space-y-2 mb-16 apple-reveal">
         <h2 class="font-playfair text-3xl font-bold tracking-wide uppercase">
@@ -599,138 +684,149 @@
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
 
-        <div class="hero-card-crystal p-6 md:p-8 flex flex-col items-center group transition-all duration-300 h-full apple-reveal">
-          <div class="w-44 h-44 rounded-full border-2 border-[#c5a059] p-1.5 overflow-hidden shrink-0 shadow-2xl mb-5 bg-[#071326]">
-            <img src="img/danilson-photo.webp" alt="Danilson J. Carvalho" class="w-full h-full object-cover object-[50%_15%] rounded-full" style="image-rendering: -webkit-optimize-contrast; transform: translateZ(0);" />
-          </div>
-
-          <div class="text-center mb-6">
-            <h3 class="font-playfair font-bold text-lg text-white/95">Danilson J. Carvalho</h3>
-            <p class="text-[11px] text-gold-liquid font-bold uppercase tracking-[0.15em] mt-1">Managing Director</p>
-          </div>
-
-          <div class="w-full space-y-4 font-inter text-xs text-white/75 border-t border-white/5 pt-5 flex-1">
-            <div class="flex items-start gap-3">
-              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m3 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5" />
-                </svg></div>
-              <p class="leading-relaxed">Mais de 12 anos de experiência em gestão de empresas e gestão de projetos imobiliários.</p>
+        <!-- MEMBRO 1: DANILSON (AURA GOLD) -->
+        <div class="relative w-full z-10 apple-reveal flex">
+          <div class="card-backlight-gold"></div>
+          <article class="hero-card-crystal p-6 md:p-8 flex flex-col items-center group transition-all duration-300 h-full w-full relative overflow-hidden">
+            <div class="w-44 h-44 rounded-full border-2 border-[#c5a059] p-1.5 overflow-hidden shrink-0 shadow-2xl mb-5 bg-[#071326]">
+              <img src="img/danilson-photo.webp" alt="Danilson J. Carvalho" class="w-full h-full object-cover object-[50%_15%] rounded-full" style="image-rendering: -webkit-optimize-contrast; transform: translateZ(0);" />
             </div>
-            <div class="flex items-start gap-3">
-              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg></div>
-              <p class="leading-relaxed font-semibold text-white/90">CEO da ATLANTICLIFE REAL ESTATE & PROJECTS.</p>
+            <div class="text-center mb-6">
+              <h3 class="font-playfair font-bold text-lg text-white/95">Danilson J. Carvalho</h3>
+              <p class="text-[11px] text-gold-liquid font-bold uppercase tracking-[0.15em] mt-1">Managing Director</p>
             </div>
-            <div class="flex items-start gap-3">
-              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M12 14l9-5-9-5-9 5 9 5z" />
-                  <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                </svg></div>
-              <p class="leading-relaxed">Licenciado em Gestão de Empresas pela Universidade Lusófona (2019).</p>
+            <div class="w-full space-y-4 font-inter text-xs text-white/75 border-t border-white/5 pt-5 flex-1">
+              <div class="flex items-start gap-3">
+                <div class="w-6 h-6 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#c5a059] shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg></div>
+                <p class="leading-relaxed">Mais de 12 anos de experiência em gestão de empresas e gestão de projetos imobiliários.</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-6 h-6 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#c5a059] shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m3 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5" />
+                  </svg></div>
+                <p class="leading-relaxed font-semibold text-white/90">CEO da ATLANTICLIFE REAL ESTATE & PROJECTS.</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-6 h-6 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#c5a059] shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                    <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                  </svg></div>
+                <p class="leading-relaxed">Licenciado em Gestão de Empresas pela Universidade Lusófona (2019).</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-6 h-6 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#c5a059] shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                    <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                  </svg></div>
+                <p class="leading-relaxed">Mestre em Avaliação e Gestão de Ativos Imobiliários pela Escola Superior de Atividades Imobiliárias (2025).</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-6 h-6 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#c5a059] shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg></div>
+                <p class="leading-relaxed">Experiência internacional em liderança e coordenação de equipas, tendo dirigido mais de 200 voluntários em Fortaleza, Brasil, entre 2013 e 2015.</p>
+              </div>
             </div>
-            <div class="flex items-start gap-3">
-              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.168.477 4 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4 1.253" />
-                </svg></div>
-              <p class="leading-relaxed">Mestre em Avaliação e Gestão de Ativos Imobiliários pela Escola Superior de Atividades Imobiliárias (2025).</p>
-            </div>
-            <div class="flex items-start gap-3">
-              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9" />
-                </svg></div>
-              <p class="leading-relaxed">Experiência internacional em liderança e coordenação de equipas, tendo dirigido mais de 200 voluntários em Fortaleza, Brasil, entre 2013 e 2015.</p>
-            </div>
-          </div>
+          </article>
         </div>
 
-        <div class="hero-card-crystal p-6 md:p-8 flex flex-col items-center group transition-all duration-300 h-full apple-reveal delay-100">
-          <div class="w-44 h-44 rounded-full border-2 border-[#c5a059] p-1.5 overflow-hidden shrink-0 shadow-2xl mb-5 bg-[#071326]">
-            <img src="img/sara-photo.webp" alt="Sara Raquel Soeiro" class="w-full h-full object-cover rounded-full" style="image-rendering: -webkit-optimize-contrast; transform: translateZ(0);" />
-          </div>
+        <!-- MEMBRO 2: SARA RAQUEL (AURA BLUE COM BLINDAGEM ANTI-OURO) -->
+        <div class="relative w-full z-10 apple-reveal delay-100 flex">
+          <div class="card-backlight-blue"></div>
 
-          <div class="text-center mb-6">
-            <h3 class="font-playfair font-bold text-lg text-white/95">Sara Raquel Soeiro</h3>
-            <p class="text-[11px] text-gold-liquid font-bold uppercase tracking-[0.15em] mt-1">Business Development Manager</p>
-          </div>
-
-          <div class="w-full space-y-4 font-inter text-xs text-white/75 border-t border-white/5 pt-5 flex-1">
-            <div class="flex items-start gap-3">
-              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M7 12l3-3 3 3M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                </svg></div>
-              <p class="leading-relaxed">Sólida trajetória de mais de meia década na área comercial, focada na expansão de negócios.</p>
+          <!-- Injetada a classe card-sara-rigid para isolar completamente o bloco -->
+          <article class="hero-card-crystal card-sara-rigid p-6 md:p-8 flex flex-col items-center group transition-all duration-300 h-full w-full relative overflow-hidden">
+            <div class="w-44 h-44 rounded-full border-2 border-[#c5a059] p-1.5 overflow-hidden shrink-0 shadow-2xl mb-5 bg-[#071326]">
+              <img src="img/sara-photo.webp" alt="Sara Raquel Soeiro" class="w-full h-full object-cover rounded-full" style="image-rendering: -webkit-optimize-contrast; transform: translateZ(0);" />
             </div>
-            <div class="flex items-start gap-3">
-              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg></div>
-              <p class="leading-relaxed font-semibold text-white/90">Team Leader na ATLANTICLIFE REAL ESTATE & PROJECTS.</p>
+            <div class="text-center mb-6">
+              <h3 class="font-playfair font-bold text-lg text-white/95">Sara Raquel Soeiro</h3>
+              <p class="text-[11px] text-gold-liquid font-bold uppercase tracking-[0.15em] mt-1">Business Development Manager</p>
             </div>
-            <div class="flex items-start gap-3">
-              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M12 14l9-5-9-5-9 5 9 5z" />
-                  <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                </svg></div>
-              <p class="leading-relaxed">Mestre em Medicina Veterinária (2017).</p>
+            <div class="w-full space-y-4 font-inter text-xs text-white/75 border-t border-white/5 pt-5 flex-1">
+              <div class="flex items-start gap-3">
+                <div class="w-6 h-6 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#c5a059] shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg></div>
+                <p class="leading-relaxed">Sólida trajetória de mais de meia década na área comercial, focada na expansão de negócios.</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-6 h-6 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#c5a059] shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m3 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5" />
+                  </svg></div>
+                <p class="leading-relaxed font-semibold text-white/90">Team Leader na ATLANTICLIFE REAL ESTATE & PROJECTS.</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-6 h-6 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#c5a059] shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                    <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                  </svg></div>
+                <p class="leading-relaxed">Mestre em Medicina Veterinária (2017).</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-6 h-6 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#c5a059] shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg></div>
+                <p class="leading-relaxed">Experiência consolidada na gestão de equipa feminina internacional, com histórico comprovado na liderança e orientação de mais de 20 colaboradores em projetos sociais em Curitiba, Brasil (2014).</p>
+              </div>
             </div>
-            <div class="flex items-start gap-3">
-              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 002 2h2a2.5 2.5 0 002.5-2.5V9a2 2 0 00-2-2h-1.5a2 2 0 01-2-2V4.305M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg></div>
-              <p class="leading-relaxed">Experiência consolidada na gestão de equipa feminina internacional, com histórico comprovado na liderança e orientação de mais de 20 colaboradores em projetos sociais em Curitiba, Brasil (2014).</p>
-            </div>
-          </div>
+          </article>
         </div>
 
-        <div class="hero-card-crystal p-6 md:p-8 flex flex-col items-center group transition-all duration-300 h-full apple-reveal delay-200">
-          <div class="w-44 h-44 rounded-full border-2 border-[#c5a059] p-1.5 overflow-hidden shrink-0 shadow-2xl mb-5 bg-[#071326]">
-            <img src="img/ana-photo.webp" alt="Ana Marta Carvalho" class="w-full h-full object-cover object-[35%_center] rounded-full" style="image-rendering: -webkit-optimize-contrast; transform: translateZ(0);" />
-          </div>
-
-          <div class="text-center mb-6">
-            <h3 class="font-playfair font-bold text-lg text-white/95">Ana Marta Carvalho</h3>
-            <p class="text-[11px] text-gold-liquid font-bold uppercase tracking-[0.15em] mt-1">Office & Operations Manager</p>
-          </div>
-
-          <div class="w-full space-y-4 font-inter text-xs text-white/75 border-t border-white/5 pt-5 flex-1">
-            <div class="flex items-start gap-3">
-              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M12 16V5" />
-                </svg></div>
-              <p class="leading-relaxed">Intermediária de Crédito Autorizado pelo banco de Portugal.</p>
+        <!-- MEMBRO 3: ANA MARTA (AURA GOLD) -->
+        <div class="relative w-full z-10 apple-reveal delay-200 flex">
+          <div class="card-backlight-gold"></div>
+          <article class="hero-card-crystal p-6 md:p-8 flex flex-col items-center group transition-all duration-300 h-full w-full relative overflow-hidden">
+            <div class="w-44 h-44 rounded-full border-2 border-[#c5a059] p-1.5 overflow-hidden shrink-0 shadow-2xl mb-5 bg-[#071326]">
+              <img src="img/ana-photo.webp" alt="Ana Marta Carvalho" class="w-full h-full object-cover object-[35%_center] rounded-full" style="image-rendering: -webkit-optimize-contrast; transform: translateZ(0);" />
             </div>
-            <div class="flex items-start gap-3">
-              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg></div>
-              <p class="leading-relaxed font-semibold text-white/90">CEO Oaks Créditos.</p>
+            <div class="text-center mb-6">
+              <h3 class="font-playfair font-bold text-lg text-white/95">Ana Marta Carvalho</h3>
+              <p class="text-[11px] text-gold-liquid font-bold uppercase tracking-[0.15em] mt-1">Office & Operations Manager</p>
             </div>
-            <div class="flex items-start gap-3">
-              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01m-.01 4h.01" />
-                </svg></div>
-              <p class="leading-relaxed">Especialista em Gestão de Património pela ESAI (2025).</p>
+            <div class="w-full space-y-4 font-inter text-xs text-white/75 border-t border-white/5 pt-5 flex-1">
+              <div class="flex items-start gap-3">
+                <div class="w-6 h-6 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#c5a059] shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M3 10h18M3 14h18m-9-4v4M5 6h14a1 1 0 011-1h5v3H4V7a1 1 0 011-1zM4 18h16a1 1 0 011 1v1H3v-1a1 1 0 011-1z" />
+                  </svg></div>
+                <p class="leading-relaxed">Intermediária de Crédito Autorizado pelo banco de Portugal.</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-6 h-6 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#c5a059] shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m3 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5" />
+                  </svg></div>
+                <p class="leading-relaxed font-semibold text-white/90">CEO Oaks Créditos.</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-6 h-6 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#c5a059] shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                    <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                  </svg></div>
+                <p class="leading-relaxed">Especialista em Gestão de Património pela ESAI (2025).</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-6 h-6 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#c5a059] shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                    <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                  </svg></div>
+                <p class="leading-relaxed">Licenciatura em Engenharia Bioquímica pela Universidade Nova de Lisboa.</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-6 h-6 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#c5a059] shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg></div>
+                <p class="leading-relaxed">Liderança internacional em Cabo Verde, coordenando e orientando uma equipa de mais de 20 colaboradores em projetos sociais de impacto (2013-2014).</p>
+              </div>
             </div>
-            <div class="flex items-start gap-3">
-              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M12 14l9-5-9-5-9 5 9 5z" />
-                  <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                </svg></div>
-              <p class="leading-relaxed">Licenciatura em Engenharia Bioquímica pela Universidade Nova de Lisboa.</p>
-            </div>
-            <div class="flex items-start gap-3">
-              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg></div>
-              <p class="leading-relaxed">Liderança internacional em Cabo Verde, coordenando e orientando uma equipa de mais de 20 colaboradores em projetos sociais de impacto (2013-2014).</p>
-            </div>
-          </div>
+          </article>
         </div>
 
       </div>
     </section>
 
+    <!-- SEÇÃO PLATAFORMA APP -->
     <section id="plataforma" class="py-32 px-6 md:px-12 lg:px-20 relative overflow-hidden bg-[#061325] border-t border-white/5 w-full">
 
       <canvas id="plataformaGoldDustCanvas" class="absolute inset-0 z-10 pointer-events-none w-full h-full opacity-60 mix-blend-screen" aria-hidden="true"></canvas>
@@ -746,22 +842,18 @@
 
         <div class="lg:col-span-6 flex justify-center relative select-none mockup-saiyan-float apple-reveal">
           <div class="glow-aura-nebula transform -translate-y-6"></div>
-
           <div class="relative z-10 max-w-[320px] sm:max-w-[420px] lg:max-w-[460px]">
             <img src="img/phone-mockup-app.webp" alt="It's Wesus App" class="w-full h-auto object-contain filter drop-shadow-[0_45px_50px_rgba(0,0,0,0.9)]" onerror="this.src='img/danilson-photo.webp'; this.style.borderRadius='24px';" />
           </div>
         </div>
 
         <div class="lg:col-span-6 text-center lg:text-left flex flex-col items-center lg:items-start justify-center apple-reveal delay-200">
-
           <h2 class="font-playfair font-bold text-white leading-[1.15] uppercase mb-6" style="font-size: clamp(2rem, 4vw, 3rem); letter-spacing: 0.02em;">
             Acompanhe os seus<br /> <span class="text-gold-liquid">resultados em tempo real</span>
           </h2>
-
           <p class="text-xs sm:text-sm text-white/70 font-inter font-normal leading-[1.85] tracking-wide mb-10 max-w-lg">
             Aceda ao seu portfólio privado em tempo real através da nossa plataforma exclusiva. Total blindagem patrimonial com transparência absoluta e consolidação de auditorias estáticas para investidores validados.
           </p>
-
           <div class="flex items-center gap-4 justify-center lg:justify-start select-none w-full sm:w-auto">
             <a href="#" class="transition-all duration-300 hover:scale-103 hover:brightness-110" aria-label="Descarregar na App Store">
               <img src="img/app-store-badge.webp" alt="Download na App Store" class="h-11 md:h-12 w-auto object-contain filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.4)]" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg'" />
@@ -775,8 +867,8 @@
       </div>
     </section>
 
+    <!-- SEÇÃO CONTACTOS -->
     <section id="contactos" class="relative max-w-7xl mx-auto px-6 py-24 z-20">
-
       <div class="text-center mb-20 apple-reveal">
         <h2 class="font-playfair text-3xl md:text-4xl font-bold uppercase tracking-widest text-white/90">
           Fale <span class="text-gold-liquid">Connosco</span>
@@ -785,35 +877,26 @@
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-10">
-
         <div class="flex flex-col items-center space-y-3 apple-reveal delay-100">
           <span class="text-[9px] uppercase tracking-[0.2em] text-[#c5a059] font-bold">Linha 01</span>
           <a href="tel:+351968228919" class="text-sm text-white/80 font-inter hover:text-[#c5a059] transition-colors">+351 968 228 919</a>
         </div>
-
         <div class="flex flex-col items-center space-y-3 apple-reveal delay-200">
           <span class="text-[9px] uppercase tracking-[0.2em] text-[#c5a059] font-bold">Linha 02</span>
           <a href="tel:+351919398983" class="text-sm text-white/80 font-inter hover:text-[#c5a059] transition-colors">+351 919 398 983</a>
         </div>
-
         <div class="flex flex-col items-center space-y-3 apple-reveal delay-300">
           <span class="text-[9px] uppercase tracking-[0.2em] text-[#c5a059] font-bold">Linha 03</span>
           <a href="tel:+351214320086" class="text-sm text-white/80 font-inter hover:text-[#c5a059] transition-colors">+351 214 320 086</a>
         </div>
-
         <div class="flex flex-col items-center space-y-3 apple-reveal delay-400">
           <span class="text-[9px] uppercase tracking-[0.2em] text-[#c5a059] font-bold">E-mail</span>
           <a href="mailto:geral@itswesus.com" class="text-sm text-white/80 font-inter hover:text-[#c5a059] transition-colors">geral@itswesus.com</a>
         </div>
-
         <div class="flex flex-col items-center space-y-3 apple-reveal delay-500">
           <span class="text-[9px] uppercase tracking-[0.2em] text-[#c5a059] font-bold">Sede</span>
-          <address class="text-sm text-white/80 font-inter not-italic text-center">
-            Av. dos Bons Amigos 77,<br>
-            2735-080, Agualva Cacém
-          </address>
+          <address class="text-sm text-white/80 font-inter not-italic text-center">Av. dos Bons Amigos 77,<br>2735-080, Agualva Cacém</address>
         </div>
-
       </div>
     </section>
 
@@ -823,6 +906,7 @@
 
   </div>
 
+  <!-- CORE LOGIC SCRIPTS -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       // --- CONTROLE DINÂMICO DO HEADER (SCROLL) ---
@@ -838,7 +922,6 @@
           headerLogo.classList.add("max-md:opacity-0", "max-md:pointer-events-none");
         }
       }
-
       window.addEventListener("scroll", handleScroll);
 
       // --- LÓGICA DO MENU HAMBÚRGUER ---
@@ -871,7 +954,7 @@
         });
       }
 
-      // --- ENGINE DE PARTÍCULAS COMPARTILHADO (DUPLO ELEMENTO SIMULTÂNEO) ---
+      // --- ENGINE DE PARTÍCULAS COMPARTILHADO ---
       const canvasHero = document.getElementById("wesusGoldDustCanvas");
       const canvasApp = document.getElementById("plataformaGoldDustCanvas");
 
@@ -938,14 +1021,12 @@
         }
       }
 
-      // Alimenta os arrays individuais para cada viewport rodar sua instância
       for (let i = 0; i < particleCount; i++) {
         particlesHero.push(new DustParticle(canvasHero));
         particlesApp.push(new DustParticle(canvasApp));
       }
 
       function animate() {
-        // Limpa e renderiza o Canvas da Hero
         ctxHero.clearRect(0, 0, canvasHero.width, canvasHero.height);
         ctxHero.shadowBlur = 0;
         for (let i = 0; i < particlesHero.length; i++) {
@@ -953,34 +1034,29 @@
           particlesHero[i].draw(ctxHero);
         }
 
-        // Limpa e renderiza o Canvas da Plataforma
         ctxApp.clearRect(0, 0, canvasApp.width, canvasApp.height);
         ctxApp.shadowBlur = 0;
         for (let i = 0; i < particlesApp.length; i++) {
           particlesApp[i].update();
           particlesApp[i].draw(ctxApp);
         }
-
         requestAnimationFrame(animate);
       }
       animate();
 
-      // =========================================================================
-      // O SEGREDO DO "ESTILO APPLE": INTERSECTION OBSERVER COM CURVA PREMIUM
-      // =========================================================================
+      // --- INTERSECTION OBSERVER OTIMIZADO PARA DISPARO INSTANTÂNEO NO SAFARI ---
       const revealElements = document.querySelectorAll('.apple-reveal');
 
       const revealOptions = {
-        root: null, // monitoriza o viewport global
-        rootMargin: "0px 0px -8% 0px", // ativa ligeiramente antes do elemento chegar totalmente à tela
-        threshold: 0.08 // exige que pelo menos 8% do componente esteja visível para disparar
+        root: null,
+        rootMargin: "0px 0px -4% 0px",
+        threshold: 0.01
       };
 
       const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('is-visible');
-            // Desativa a observação do elemento após animar uma vez (padrão estrito da Apple)
             observer.unobserve(entry.target);
           }
         });
@@ -989,9 +1065,26 @@
       revealElements.forEach(element => {
         revealObserver.observe(element);
       });
+
+      // --- ENGINE DE REFRAÇÃO DE LUZ CRISTALINA VIA SCROLL (CEREJA DO BOLO) ---
+      function updateGlassRefraction() {
+        const crystalCards = document.querySelectorAll('.hero-card-crystal');
+        const viewHeight = window.innerHeight;
+
+        crystalCards.forEach(card => {
+          const rect = card.getBoundingClientRect();
+          if (rect.top < viewHeight && rect.bottom > 0) {
+            const progress = (viewHeight - rect.top) / (viewHeight + rect.height);
+            const shineX = (progress * 200) - 60; // Deslocamento fluído milimétrico
+            card.style.setProperty('--shine-x', `${shineX}%`);
+          }
+        });
+      }
+      window.addEventListener('scroll', updateGlassRefraction, { passive: true });
+      updateGlassRefraction();
     });
 
-    // --- ENGINE DE SCROLLSPY (ATIVA O LINK CONFORME A SEÇÃO) ---
+    // --- ENGINE DE SCROLLSPY ---
     const sections = document.querySelectorAll("section[id]");
     const navLinks = document.querySelectorAll(".nav-link");
 
