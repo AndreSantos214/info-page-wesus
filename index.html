@@ -1,1215 +1,1023 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt" class="dark scroll-smooth">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>It's Wesus — Consulting & Investment</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>It's Wesus – Consulting & Investment</title>
+  <meta name="description" content="A tradição da gestão patrimonial encontra a inovação tecnológica. Conheça a It's Wesus Consulting & Investment." />
+
+  <link rel="icon" type="image/webp" href="img/favicon.webp" />
+  <link rel="apple-touch-icon" href="img/favicon.webp" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
- <!-- Novo -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          colors: {
-            sapphire: { dark: '#061325', mid: '#1E497D', light: '#2A5F9E' },
-            gold: { base: '#C5A059', light: '#E8D08D', bright: '#F0D898' },
-            platinum: '#F5F5F7',
-          },
           fontFamily: {
-            display: ['Playfair Display', 'serif'],
-            body: ['Inter', 'sans-serif'],
-          },
-        },
-      },
+            playfair: ['Playfair Display', 'serif'],
+            inter: ['Inter', 'sans-serif'],
+          }
+        }
+      }
     }
   </script>
 
   <style>
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
-      background: #061325;
-      color: #F5F5F7;
+      background-color: #061325 !important;
       font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
 
-    /* ── TRANSIÇÃO INSTITUCIONAL LIMPA (Hero ➔ Operações) ── */
-    .hero-clean-transition {
+    .hero-card-crystal {
       position: relative;
-      height: 60px;
-      background: linear-gradient(180deg, #061325 0%, #ffffff 100%);
-      margin-top: -1px;
-      margin-bottom: -1px;
-      z-index: 20;
+      backdrop-filter: blur(30px) saturate(220%) !important;
+      -webkit-backdrop-filter: blur(30px) saturate(220%) !important;
+      border-radius: 1.5rem;
+
+      /* Adiciona estas duas linhas abaixo para blindar o Safari */
+      overflow: hidden !important;
+      isolation: isolate !important;
+
+      border: 2px solid transparent !important;
+      background:
+        linear-gradient(135deg, rgba(11, 31, 58, 0.85), rgba(7, 19, 38, 0.95) 50%, rgba(11, 31, 58, 0.80)) padding-box,
+        linear-gradient(145deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.05) 35%, rgba(197, 160, 89, 0.15) 70%, rgba(232, 208, 141, 0.45) 100%) border-box !important;
+
+      box-shadow:
+        0 40px 80px -20px rgba(0, 0, 0, 0.9),
+        inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
+      transform: translateZ(0);
     }
 
-    /* ── TRANSIÇÃO COMPACTA PRO (Operações ➔ Quem Somos) ── */
-    /* 🔥 FIX 1: Transição 100% Sólida para impedir o "vazamento" da imagem fixa do Hero */
-    .section-transition-to-dark {
-      background: linear-gradient(180deg, #ffffff 0%, #061325 100%);
-      height: 90px;
-      margin-top: -1px;
-      position: relative;
-      z-index: 20;
+    /* --- REFLEXO DIAGONAL REFINADO (MAIS SUTIL) --- */
+    .hero-card-crystal::after {
+      content: "" !important;
+      position: absolute !important;
+      inset: 0 !important;
+      background: linear-gradient(115deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.01) 42%,
+          rgba(255, 255, 255, 0.04) 50%,
+          rgba(255, 255, 255, 0.01) 58%,
+          transparent 70%) !important;
+      pointer-events: none !important;
+      z-index: 2 !important;
     }
 
-    #navbar {
-      transition: background 0.4s ease, backdrop-filter 0.4s ease;
+    .ambient-section-orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(160px);
+      opacity: 0.08;
     }
 
-    #navbar.scrolled {
-      background: rgba(6, 19, 37, 0.88);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(197, 160, 89, 0.15);
+    /* --- MÁSCARA DE OPACIDADE EM GRADIENTE PARA O TOURO GRAFICO --- */
+    .mask-touro-fade {
+      -webkit-mask-image: linear-gradient(135deg, black 25%, rgba(0, 0, 0, 0.4) 55%, transparent 90%);
+      mask-image: linear-gradient(135deg, black 25%, rgba(0, 0, 0, 0.4) 55%, transparent 90%);
     }
 
-    .btn-gold {
-      background: linear-gradient(135deg, #8b6a2e 0%, #c5a059 45%, #e8d08d 55%, #c5a059 100%);
-      background-size: 200% auto;
-      color: #ffffff !important;
-      text-shadow: 0 1px 2px rgba(6, 19, 37, 0.3);
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      border-radius: 0.5rem !important;
-      padding: 0.8rem 2rem;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      cursor: pointer;
-      border: 1px solid rgba(232, 208, 141, 0.25);
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 4px 20px rgba(197, 160, 89, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    .text-gold-liquid {
+      background: linear-gradient(135deg, #ffffff 0%, #f5e3b5 35%, #c5a059 70%, #8a662d 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 2px 15px rgba(197, 160, 89, 0.3));
+    }
+
+    @keyframes gold-shine {
+      0% {
+        left: -150%;
+      }
+
+      30% {
+        left: 150%;
+      }
+
+      100% {
+        left: 150%;
+      }
+    }
+
+    .btn-nav-cta {
       position: relative;
       overflow: hidden;
+      background: transparent;
+      border: 1px solid #C5A059;
+      color: #C5A059;
+      padding: 0.6rem 1.4rem;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      border-radius: 0.5rem;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .btn-gold::after {
+    .btn-nav-cta::after {
       content: '';
       position: absolute;
       top: 0;
       left: -150%;
-      width: 50%;
+      width: 60%;
       height: 100%;
-      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.35), transparent);
+      background: linear-gradient(to right,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.25) 50%,
+          rgba(255, 255, 255, 0) 100%);
       transform: skewX(-25deg);
-      animation: btnReflect 6s infinite cubic-bezier(0.25, 1, 0.5, 1);
+      animation: gold-shine 5.5s infinite ease-in-out;
+      animation-delay: 2s;
     }
 
-    .btn-gold:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 32px rgba(197, 160, 89, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-      background-position: right center;
+    .btn-nav-cta:hover {
+      background: linear-gradient(135deg, #8b6a2e 0%, #c5a059 100%);
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3);
     }
 
-    @keyframes btnReflect {
-      0% { left: -75%; }
-      60% { left: 125%; }
-      100% { left: 125%; }
-    }
-
-    /* 🔥 FIX 2: Hero Section com `::before` fixed. Funciona perfeito no iOS */
-    #hero {
+    .btn-hero-main {
       position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #061325;
-    }
-
-    #hero::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url('./img/lisboa-background.webp');
-      background-size: cover;
-      background-position: center 30%;
-      background-repeat: no-repeat;
-      z-index: 1;
-      transform: translate3d(0,0,0);
-    }
-
-    #hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(6, 19, 37, 0.85) 0%, rgba(30, 73, 125, 0.48) 50%, rgba(6, 19, 37, 0.92) 100%);
-      z-index: 2;
-    }
-
-    #hero .hero-content {
-      position: relative;
-      z-index: 3;
-    }
-
-    .hero-logo {
-      width: 500px;
-      height: 500px;
-      object-fit: contain;
-      filter: drop-shadow(0 0 24px rgba(197, 160, 89, 0.5));
-    }
-
-    .btn-hero-primary {
+      overflow: hidden;
       background: linear-gradient(135deg, #8b6a2e 0%, #c5a059 45%, #e8d08d 55%, #c5a059 100%);
       background-size: 200% auto;
       color: #ffffff;
       font-weight: 700;
       font-size: 0.75rem;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      padding: 1.1rem 2.8rem;
+      padding: 1.1rem 3rem;
       border-radius: 0.6rem;
-      border: 1px solid rgba(232, 208, 141, 0.3);
+      border: 1px solid rgba(232, 208, 141, 0.4);
       cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 6px 24px rgba(197, 160, 89, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      display: inline-block;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 8px 25px rgba(197, 160, 89, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
     }
 
-    .btn-hero-primary::after {
+    .btn-hero-main::after {
       content: '';
       position: absolute;
       top: 0;
       left: -150%;
       width: 50%;
       height: 100%;
-      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.35), transparent);
+      background: linear-gradient(to right,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.4) 50%,
+          rgba(255, 255, 255, 0) 100%);
       transform: skewX(-25deg);
-      animation: btnReflect 6s infinite cubic-bezier(0.25, 1, 0.5, 1);
+      animation: gold-shine 5.5s infinite ease-in-out;
     }
 
-    .btn-hero-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 36px rgba(197, 160, 89, 0.4);
+    .btn-hero-main:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(197, 160, 89, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4);
       background-position: right center;
     }
 
-    #operacoes {
-      background: #ffffff; /* Fundo sólido para ocultar a imagem fixed do Hero */
-      color: #061325;
-      position: relative;
-      z-index: 20;
-    }
-
-    .op-card {
-      background: #fff;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 4px 24px rgba(6, 19, 37, 0.08);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .op-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 48px rgba(6, 19, 37, 0.15);
-    }
-
-    .op-card-badge {
-      background: linear-gradient(135deg, #C5A059, #E8D08D);
-      color: #061325;
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
+    .btn-gold-lingot {
+      background: linear-gradient(135deg, #a38349 0%, #c5a059 45%, #8f764b 75%, #463722 100%) !important;
+      color: #071326 !important;
+      font-weight: 700 !important;
+      font-size: 11px !important;
       text-transform: uppercase;
-      padding: 0.25rem 0.75rem;
-      border-radius: 9999px;
-      display: inline-block;
+      letter-spacing: 0.12em;
+      padding: 1.1rem 2.5rem !important;
+      border-radius: 0.85rem !important;
+      border: 1px solid rgba(70, 55, 34, 0.5) !important;
+      box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.6), 0 4px 12px -2px rgba(70, 55, 34, 0.4), inset 0 1.5px 1.5px rgba(255, 255, 255, 0.45), inset 0 -1.5px 2px rgba(0, 0, 0, 0.35) !important;
+      transition: all 300ms cubic-bezier(0.25, 1, 0.5, 1) !important;
     }
 
-    #stats {
-      border-top: 1px solid rgba(6, 19, 37, 0.06);
-      border-bottom: 1px solid rgba(6, 19, 37, 0.06);
+    .btn-gold-lingot:hover {
+      filter: brightness(1.06) drop-shadow(0 0 14px rgba(197, 160, 89, 0.35));
+      transform: translateY(-2px) scale(1.01) translateZ(0);
     }
 
-    .stat-box {
-      padding: 1.5rem 0.5rem;
-      transition: transform 0.3s ease;
+    .premium-field-input {
+      width: 100% !important;
+      padding: 0.95rem 1.2rem !important;
+      border-radius: 0.85rem !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      background: rgba(7, 19, 38, 0.4) !important;
+      color: #ffffff !important;
+      font-size: 0.85rem !important;
+      font-family: 'Inter', sans-serif !important;
+      transition: all 0.25s ease !important;
     }
 
-    .stat-value {
-      font-family: 'Inter', sans-serif;
-      font-size: clamp(2.2rem, 5.5vw, 3.6rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      color: #061325;
-      line-height: 1;
+    .premium-field-input:focus {
+      outline: none !important;
+      border-color: rgba(197, 160, 89, 0.4) !important;
+      background: rgba(7, 19, 38, 0.7) !important;
+      box-shadow: 0 0 15px rgba(197, 160, 89, 0.08) !important;
     }
 
-    .stat-label {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.68rem !important;
-      font-weight: 600 !important;
-      letter-spacing: 0.22em !important;
-      text-transform: uppercase;
-      color: #64748b;
-      margin-top: 0.75rem;
-    }
-
-    #aurora-canvas {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 40;
-      opacity: 0;
-      mix-blend-mode: screen;
-      transition: opacity 1s ease;
-      transform: translate3d(0, 0, 0);
-    }
-
-    #aurora-canvas.active { opacity: 1; }
-
-    /* ── FIX 3: CARROSSEL OTIMIZADO PARA IOS ── */
-    .carousel-container {
-      position: relative;
-      width: 100%;
-      overflow-x: auto;
-      padding: 20px 0;
-      -webkit-overflow-scrolling: touch; /* Habilita inércia no scroll do iOS */
-      scroll-behavior: auto !important; /* Desliga o smooth css para o JS não bugar */
-    }
-
-    .carousel-track {
-      display: flex;
-      gap: 2rem;
-      width: max-content;
-      will-change: transform;
-    }
-
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-
-    /* ── SEÇÕES ── */
-    #quem-somos {
-      position: relative;
-      background: #061325;
-      z-index: 20; 
-      isolation: isolate;
-    }
-
-    #equipa {
-      position: relative;
-      background: linear-gradient(180deg, #061325 0%, #ffffff 60px, #ffffff calc(100% - 60px), #061325 100%);
-      z-index: 20;
-    }
-
-    #plataforma {
-      position: relative;
-      background: #061325;
-      z-index: 20;
-    }
-
-    #contactos {
-      background: #ffffff;
-      color: #061325;
-      position: relative;
-      z-index: 20;
-    }
-
-    footer {
-      background: #040e1c;
-      border-top: 1px solid rgba(197, 160, 89, 0.1);
-      position: relative;
-      z-index: 20;
-    }
-
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 700;
-    }
-
-    .gold-line {
-      width: 60px;
-      height: 2px;
-      background: linear-gradient(90deg, #C5A059, #E8D08D);
-      border-radius: 2px;
-    }
-
-    .glass-canvas-layer { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-    .glass-card-content { position: relative; z-index: 2; }
-
-    #canvas-investment-back {
+    .card-backlight-gold {
       position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      inset: -30px;
+      background: radial-gradient(circle at 25% 30%, rgba(197, 160, 89, 0.22) 0%, rgba(0, 163, 255, 0.08) 50%, transparent 70%);
+      filter: blur(35px);
       pointer-events: none;
-      z-index: 2;
+      z-index: 0;
     }
 
-    .glow-spotlight {
+    .card-backlight-blue {
       position: absolute;
-      width: 650px;
-      height: 650px;
-      background: radial-gradient(circle, rgba(197, 160, 89, 0.35) 0%, rgba(30, 73, 125, 0.1) 50%, transparent 70%);
-      filter: blur(60px);
+      inset: -30px;
+      background: radial-gradient(circle at 75% 70%, rgba(0, 163, 255, 0.18) 0%, rgba(197, 160, 89, 0.05) 50%, transparent 70%);
+      filter: blur(35px);
       pointer-events: none;
-      z-index: 3;
+      z-index: 0;
+    }
+
+    /* --- AURA DE KI SUAVE E DESACELERADA --- */
+    @keyframes aura-energy-pulse {
+
+      0%,
+      100% {
+        transform: scale(1) translateZ(0);
+        opacity: 0.65;
+        filter: blur(55px);
+      }
+
+      50% {
+        transform: scale(1.08) translateZ(0);
+        opacity: 0.9;
+        filter: blur(45px);
+      }
+    }
+
+    .glow-aura-nebula {
+      position: absolute;
+      width: 140%;
+      height: 140%;
+      background: radial-gradient(circle at center,
+          rgba(0, 163, 255, 0.45) 0%,
+          rgba(197, 160, 89, 0.2) 35%,
+          transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+      animation: aura-energy-pulse 5.5s infinite ease-in-out;
+    }
+
+    /* --- RISCOS DE COMETAS DIAGONAIS (CORRIGIDO: SUBINDO COMO ESTRELA CADENTE REAL) --- */
+    @keyframes saiyan-comet {
+      0% {
+        transform: translate(100px, 100px) scaleX(0);
+        opacity: 0;
+      }
+
+      15% {
+        transform: translate(60px, 60px) scaleX(1.5);
+        opacity: 1;
+      }
+
+      70% {
+        transform: translate(-100px, -100px) scaleX(1.5);
+        opacity: 0.3;
+      }
+
+      100% {
+        transform: translate(-220px, -220px) scaleX(0);
+        opacity: 0;
+      }
+    }
+
+    /* --- RISCOS DE COMETAS (MAIS INCLINADOS E LENTOS) --- */
+    .space-comet {
+      position: absolute;
+      height: 1.5px;
+      background: linear-gradient(to right, transparent, rgba(197, 160, 89, 0.4), #ffffff);
+      transform-origin: left center;
+      /* Ajuste 1: Ângulo mais íngreme (mais para cima) */
+      rotate: -65deg;
+      pointer-events: none;
+      z-index: 1;
       will-change: transform, opacity;
     }
 
-    .premium-glass-card {
-      position: relative;
-      background: linear-gradient(135deg, rgba(6, 19, 37, 0.72) 0%, rgba(15, 38, 69, 0.4) 100%);
-      backdrop-filter: blur(32px) saturate(210%);
-      -webkit-backdrop-filter: blur(32px) saturate(210%);
-      border-radius: 1.5rem;
-      z-index: 10;
-      overflow: hidden;
-      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(197, 160, 89, 0.05);
+    /* Ajuste 2: Duração dobrada para reduzir drasticamente a velocidade */
+    .comet-1 {
+      width: 120px;
+      bottom: 20%;
+      right: 15%;
+      animation: saiyan-comet 10s infinite linear;
     }
 
-    .premium-glass-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 1.5rem;
-      padding: 1.5px;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(197, 160, 89, 0.55) 30%, transparent 65%);
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      pointer-events: none;
-      z-index: 5;
+    .comet-2 {
+      width: 160px;
+      bottom: 50%;
+      left: 20%;
+      animation: saiyan-comet 14s infinite linear;
+      animation-delay: 3s;
     }
 
-    .parallax-bg-asset {
-      position: absolute;
-      pointer-events: none;
-      user-select: none;
-      mix-blend-mode: screen;
-      will-change: transform;
-      z-index: 1;
+    .comet-3 {
+      width: 90px;
+      top: 15%;
+      right: 35%;
+      animation: saiyan-comet 8s infinite linear;
+      animation-delay: 5s;
     }
 
-    .premium-light-card {
-      position: relative;
-      background: #ffffff;
-      border-radius: 1.5rem;
-      z-index: 10;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 4px 30px rgba(6, 19, 37, 0.01), 0 25px 55px -15px rgba(6, 19, 37, 0.06);
+    /* --- ANIMAÇÃO: FLUTUAÇÃO DO TELEMÓVEL MODO SAYAJIN --- */
+    @keyframes saiyan-float {
+
+      0%,
+      100% {
+        transform: translateY(0px) scale(1) translateZ(0);
+      }
+
+      50% {
+        transform: translateY(-16px) scale(1.01) translateZ(0);
+      }
     }
 
-    .premium-light-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 1.5rem;
-      padding: 1px;
-      background: linear-gradient(135deg, rgba(197, 160, 89, 0.35) 0%, rgba(6, 19, 37, 0.03) 50%, transparent 100%);
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      pointer-events: none;
-      z-index: 3;
-    }
-
-    .premium-light-card:hover {
-      transform: translate3d(0, -6px, 0);
-      box-shadow: 0 12px 25px -5px rgba(6, 19, 37, 0.01), 0 35px 75px -15px rgba(6, 19, 37, 0.12);
-    }
-
-    .avatar-container-pro {
-      position: relative;
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      padding: 5px;
-      background: linear-gradient(135deg, #C5A059 0%, #E8D08D 50%, rgba(197, 160, 89, 0.15) 100%);
-      box-shadow: 0 10px 26px rgba(6, 19, 37, 0.05);
-      margin-left: auto;
-      margin-right: auto;
-      overflow: hidden;
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    .mockup-saiyan-float {
+      animation: saiyan-float 4s infinite ease-in-out;
       will-change: transform;
     }
 
-    .premium-light-card:hover .avatar-container-pro {
-      transform: scale(1.03);
+    .contact-item-hover:hover {
+      color: #c5a059 !important;
+      transition: color 0.3s ease;
+      cursor: pointer;
     }
 
-    .glow-aura {
-      position: absolute;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(197, 160, 89, 0.15) 0%, transparent 70%);
-      filter: blur(80px);
-      z-index: 0;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
+    /* Garantir que o header sempre tenha a borda na estrutura, mas invisível inicialmente */
+    #mainHeader {
+      transition: background 0.5s ease, border-color 0.5s ease;
+      border-bottom: 1px solid transparent;
+      /* Ocupa o espaço mas é invisível */
     }
 
-    .mockup-container {
-      position: relative;
-      z-index: 1;
-      animation: floatEffect 6s ease-in-out infinite;
+    /* Quando estiver scrolled */
+    #mainHeader.scrolled {
+      background-color: rgba(6, 19, 37, 0.9) !important;
+      backdrop-filter: blur(15px);
+      border-bottom-color: rgba(255, 255, 255, 0.05);
+      /* Aparece suavemente */
     }
 
-    @keyframes floatEffect {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
+    /* Estilo para quando o link estiver ativo */
+    .nav-link.active {
+      color: #e8d08d !important;
+      /* Dourado */
+      font-weight: 700 !important;
     }
 
-    #mobile-menu {
-      background: rgba(6, 19, 37, 0.95);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(197, 160, 89, 0.2);
-    }
-
-    #close-menu { z-index: 70; color: #C5A059; transition: transform 0.2s; }
-    #close-menu:hover { transform: scale(1.1); }
-
-    .reveal {
+    /* =========================================================================
+       ARCHITECTURE OF APPLE-STYLE REVEAL ANIMATIONS (SCROLL-DRIVEN REVEALS)
+       ========================================================================= */
+    .apple-reveal {
       opacity: 0;
-      transform: translateY(32px);
-      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      transform: translateY(40px) scale(0.99);
+      transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform, opacity;
     }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
 
+    .apple-reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* Efeito de escalonamento suave e sequencial (Staggered Delays) */
+    .delay-100 {
+      transition-delay: 100ms;
+    }
+
+    .delay-200 {
+      transition-delay: 200ms;
+    }
+
+    .delay-300 {
+      transition-delay: 300ms;
+    }
+
+    .delay-400 {
+      transition-delay: 400ms;
+    }
+
+    .delay-500 {
+      transition-delay: 500ms;
+    }
+
+    @media (max-height: 760px) {
+      .scroll-indicator-hint {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 
-<body>
+<body class="text-white select-none antialiased">
 
-  <canvas id="aurora-canvas"></canvas>
+  <header id="mainHeader" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-transparent py-4 border-b border-transparent">
+    <div class="max-w-7xl mx-auto px-6 h-12 flex items-center justify-between relative">
 
-  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 px-6 h-16 flex items-center justify-between transition-all duration-300">
-    <div class="md:hidden w-8"></div>
-    <a href="#hero" class="h-16 flex items-center shrink-0 w-48 justify-center">
-      <img src="img/logo-its-wesus-branco.webp" alt="It's Wesus" class="h-36 w-auto object-contain" />
-    </a>
+      <a id="headerLogo" href="#" class="flex items-center group max-md:absolute max-md:left-1/2 max-md:top-1/2 max-md:-translate-x-1/2 max-md:-translate-y-1/2 transition-all duration-500" aria-label="It's Wesus Home">
+        <img src="img/logo-its-wesus-branco.webp" alt="It's Wesus" class="h-[200px] w-auto object-contain transition-transform duration-300 filter drop-shadow-sm" />
+      </a>
 
-    <button id="menu-toggle" class="md:hidden text-platinum z-[70]">
-      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-      </svg>
-    </button>
+      <nav class="hidden md:flex items-center gap-10 text-[13px] font-semibold tracking-widest uppercase text-white/75" aria-label="Navegação Principal">
+        <a href="#quem-somos" class="nav-link hover:text-white transition-colors duration-200">Quem Somos</a>
+        <a href="#equipa" class="nav-link hover:text-white transition-colors duration-200">Equipa</a>
+        <a href="#plataforma" class="nav-link hover:text-white transition-colors duration-200">Plataforma</a>
+        <a href="#contactos" class="nav-link hover:text-white transition-colors duration-200">Contactos</a>
+      </nav>
 
-    <div class="hidden md:flex items-center gap-8">
-      <a href="#operacoes" class="text-xs tracking-widest text-platinum/90 hover:text-gold-light uppercase font-body">Operações</a>
-      <a href="#quem-somos" class="text-xs tracking-widest text-platinum/90 hover:text-gold-light uppercase font-body">Quem Somos</a>
-      <a href="#equipa" class="text-xs tracking-widest text-platinum/90 hover:text-gold-light uppercase font-body">Equipa</a>
-      <a href="#contactos" class="text-xs tracking-widest text-platinum/90 hover:text-gold-light uppercase font-body">Contactos</a>
-    </div>
-
-    <div class="hidden md:block">
-      <button class="btn-gold btn-painel text-xs">Aceder ao Painel</button>
-    </div>
-  </nav>
-
-  <div id="mobile-menu" class="fixed top-16 left-0 right-0 z-[60] hidden flex-col items-center gap-6 p-8 bg-[#061325]/95 backdrop-blur-md border-b border-gold-base/20">
-    <a href="#operacoes" class="text-sm tracking-widest text-platinum hover:text-gold-light uppercase font-body" onclick="toggleMenu()">Operações</a>
-    <a href="#quem-somos" class="text-sm tracking-widest text-platinum hover:text-gold-light uppercase font-body" onclick="toggleMenu()">Quem Somos</a>
-    <a href="#equipa" class="text-sm tracking-widest text-platinum hover:text-gold-light uppercase font-body" onclick="toggleMenu()">Equipa</a>
-    <a href="#contactos" class="text-sm tracking-widest text-platinum hover:text-gold-light uppercase font-body" onclick="toggleMenu()">Contactos</a>
-    <button class="btn-gold text-xs mt-2" onclick="location.href='#hero'; toggleMenu()">Aceder ao Painel</button>
-  </div>
-
-  <section id="hero">
-    <div class="hero-content text-center px-6 max-w-4xl mx-auto">
-      <img src="img/logo-hero-branco.png" alt="It's Wesus" class="hero-logo mx-auto lg:-mb-24 lg:-mt-20 -mb-32 -mt-28" />
-      <h1 class="font-display text-white max-w-4xl mx-auto mb-4 tracking-wide font-medium leading-tight" style="font-size: clamp(2rem, 4.5vw, 3.2rem);">
-        Maximize o seu Património com Investimento Inteligente e Exclusividade.
-      </h1>
-      <p class="font-body text-platinum/90 text-sm md:text-base max-w-2xl mx-auto mb-12 tracking-wide font-light">
-        Acesso Privado aos Ativos Mais Rentáveis de Portugal. Total Transparência.
-      </p>
-      <div class="flex flex-col items-center gap-6 -mt-8">
-        <button class="btn-hero-primary btn-painel !rounded-lg transition-transform duration-300 hover:scale-[1.01]" onclick="location.href='#hero'">
-          Aceder ao Painel
-        </button>
+      <div class="hidden md:flex items-center">
+        <a href="https://andresantos214.github.io/its-wesus-app/www/index.html" class="btn-nav-cta">
+          Portal do Cliente
+        </a>
       </div>
-    </div>
-  </section>
 
-  <div class="hero-clean-transition"></div>
+      <button id="mobileMenuBtn" class="md:hidden ml-auto p-2 text-white/80 hover:text-white focus:outline-none z-50" aria-label="Abrir menu de navegação">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path id="hamburgerIcon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          <path id="closeIcon" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
 
-  <section id="operacoes" class="pt-0 pb-8">
-    <div class="max-w-6xl mx-auto px-6 md:px-12 lg:px-20 text-center mb-12 reveal mt-12">
-      <h2 class="section-title mb-3" style="color:#061325;">Operações Concluídas</h2>
-      <div class="gold-line mx-auto mb-4"></div>
-      <p class="text-sm text-sapphire-dark/60 max-w-xl mx-auto font-body tracking-wide">
-        Activos imobiliários premium seleccionados com rigor, entregando retornos acima do mercado com total transparência patrimonial.
-      </p>
-    </div>
-
-    <div class="w-full max-w-[1600px] mx-auto px-4 md:px-8 mb-16 project-reveal">
-      <div class="carousel-container no-scrollbar">
-        <div class="carousel-track" id="portfolio-track">
-
-          <div class="op-card w-[290px] md:w-[350px] shrink-0">
-            <div class="relative h-52 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80" alt="" class="w-full h-full object-cover" />
-              <div class="absolute top-3 left-3"><span class="op-card-badge">Concluído</span></div>
-            </div>
-            <div class="p-6 bg-white text-left">
-              <h3 class="font-display font-semibold text-lg mb-1" style="color:#061325;">Reabilitação Pombalina</h3>
-              <p class="text-xs font-body tracking-wide mb-4" style="color:#1E497D;">Lisboa, Chiado — Edifício do Séc. XVIII</p>
-              <div class="flex justify-between items-center mb-4">
-                <div>
-                  <p class="text-xs opacity-50 font-body uppercase tracking-wider" style="color:#061325;">Rentabilidade</p>
-                  <p class="font-display font-bold text-xl" style="color:#C5A059;">9,2% </p>
-                </div>
-                <div class="text-right">
-                  <p class="text-xs opacity-50 font-body uppercase tracking-wider" style="color:#061325;">Duração</p>
-                  <p class="font-semibold text-sm" style="color:#061325;">12 Meses</p>
-                </div>
-              </div>
-              <div class="h-px mb-4" style="background:rgba(6,19,37,0.08);"></div>
-              <div class="flex justify-between items-center"><span class="text-xs font-body" style="color:#061325;opacity:0.5;">Capital Mínimo: €50.000</span></div>
-            </div>
-          </div>
-
-          <div class="op-card w-[290px] md:w-[350px] shrink-0">
-            <div class="relative h-52 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80" alt="" class="w-full h-full object-cover" />
-              <div class="absolute top-3 left-3"><span class="op-card-badge">Concluído</span></div>
-            </div>
-            <div class="p-6 bg-white text-left">
-              <h3 class="font-display font-semibold text-lg mb-1" style="color:#061325;">Boutique Hotel Porto</h3>
-              <p class="text-xs font-body tracking-wide mb-4" style="color:#1E497D;">Porto, Ribeira — 5 Estrelas</p>
-              <div class="flex justify-between items-center mb-4">
-                <div>
-                  <p class="text-xs opacity-50 font-body uppercase tracking-wider" style="color:#061325;">Rentabilidade</p>
-                  <p class="font-display font-bold text-xl" style="color:#C5A059;">11,4% </p>
-                </div>
-                <div class="text-right">
-                  <p class="text-xs opacity-50 font-body uppercase tracking-wider" style="color:#061325;">Duração</p>
-                  <p class="font-semibold text-sm" style="color:#061325;">18 Meses</p>
-                </div>
-              </div>
-              <div class="h-px mb-4" style="background:rgba(6,19,37,0.08);"></div>
-              <div class="flex justify-between items-center"><span class="text-xs font-body" style="color:#061325;opacity:0.5;">Capital Mínimo: €100.000</span></div>
-            </div>
-          </div>
-
-          <div class="op-card w-[290px] md:w-[350px] shrink-0">
-            <div class="relative h-52 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80" alt="" class="w-full h-full object-cover" />
-              <div class="absolute top-3 left-3"><span class="op-card-badge">Concluído</span></div>
-            </div>
-            <div class="p-6 bg-white text-left">
-              <h3 class="font-display font-semibold text-lg mb-1" style="color:#061325;">Condomínio Premium Cascais</h3>
-              <p class="text-xs font-body tracking-wide mb-4" style="color:#1E497D;">Cascais, Linha de Estoril — Frente-Mar</p>
-              <div class="flex justify-between items-center mb-4">
-                <div>
-                  <p class="text-xs opacity-50 font-body uppercase tracking-wider" style="color:#061325;">Rentabilidade</p>
-                  <p class="font-display font-bold text-xl" style="color:#C5A059;">8,7% </p>
-                </div>
-                <div class="text-right">
-                  <p class="text-xs opacity-50 font-body uppercase tracking-wider" style="color:#061325;">Duração</p>
-                  <p class="font-semibold text-sm" style="color:#061325;">24 Meses</p>
-                </div>
-              </div>
-              <div class="h-px mb-4" style="background:rgba(6,19,37,0.08);"></div>
-              <div class="flex justify-between items-center"><span class="text-xs font-body" style="color:#061325;opacity:0.5;">Capital Mínimo: €75.000</span></div>
-            </div>
-          </div>
-
-          <div class="op-card w-[290px] md:w-[350px] shrink-0">
-            <div class="relative h-52 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&q=80" alt="" class="w-full h-full object-cover" />
-              <div class="absolute top-3 left-3"><span class="op-card-badge">Concluído</span></div>
-            </div>
-            <div class="p-6 bg-white text-left">
-              <h3 class="font-display font-semibold text-lg mb-1" style="color:#061325;">Luxury Resort Algarve</h3>
-              <p class="text-xs font-body tracking-wide mb-4" style="color:#1E497D;">Albufeira, Quinta do Lago — Frente Golfe</p>
-              <div class="flex justify-between items-center mb-4">
-                <div>
-                  <p class="text-xs opacity-50 font-body uppercase tracking-wider" style="color:#061325;">Rentabilidade</p>
-                  <p class="font-display font-bold text-xl" style="color:#C5A059;">12,1% </p>
-                </div>
-                <div class="text-right">
-                  <p class="text-xs opacity-50 font-body uppercase tracking-wider" style="color:#061325;">Duração</p>
-                  <p class="font-semibold text-sm" style="color:#061325;">36 Meses</p>
-                </div>
-              </div>
-              <div class="h-px mb-4" style="background:rgba(6,19,37,0.08);"></div>
-              <div class="flex justify-between items-center"><span class="text-xs font-body" style="color:#061325;opacity:0.5;">Capital Mínimo: €150.000</span></div>
-            </div>
-          </div>
-
-          <div class="op-card w-[290px] md:w-[350px] shrink-0">
-            <div class="relative h-52 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80" alt="" class="w-full h-full object-cover" />
-              <div class="absolute top-3 left-3"><span class="op-card-badge">Concluído</span></div>
-            </div>
-            <div class="p-6 bg-white text-left">
-              <h3 class="font-display font-semibold text-lg mb-1" style="color:#061325;">Vilas do Golfo</h3>
-              <p class="text-xs font-body tracking-wide mb-4" style="color:#1E497D;">Vilamoura, Algarve — Moradias Privadas</p>
-              <div class="flex justify-between items-center mb-4">
-                <div>
-                  <p class="text-xs opacity-50 font-body uppercase tracking-wider" style="color:#061325;">Rentabilidade</p>
-                  <p class="font-display font-bold text-xl" style="color:#C5A059;">10,5% </p>
-                </div>
-                <div class="text-right">
-                  <p class="text-xs opacity-50 font-body uppercase tracking-wider" style="color:#061325;">Duração</p>
-                  <p class="font-semibold text-sm" style="color:#061325;">18 Meses</p>
-                </div>
-              </div>
-              <div class="h-px mb-4" style="background:rgba(6,19,37,0.08);"></div>
-              <div class="flex justify-between items-center"><span class="text-xs font-body" style="color:#061325;opacity:0.5;">Capital Mínimo: €120.000</span></div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-    <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
-      <div id="stats" class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center py-10 my-12">
-        <div class="stat-box reveal">
-          <p class="stat-value" data-target="280" data-suffix="M" data-prefix="€" id="stat-0">€0M</p>
-          <div class="gold-line mx-auto my-3" style="width: 35px; opacity: 0.6;"></div>
-          <p class="stat-label">Capital Gerido</p>
-        </div>
-        <div class="stat-box reveal reveal-delay-1">
-          <p class="stat-value" data-target="300" data-suffix="+" id="stat-1">0+</p>
-          <div class="gold-line mx-auto my-3" style="width: 35px; opacity: 0.6;"></div>
-          <p class="stat-label">Operações</p>
-        </div>
-        <div class="stat-box reveal reveal-delay-2">
-          <p class="stat-value" data-target="12.5" data-suffix="%" data-decimal="1" id="stat-2">0%</p>
-          <div class="gold-line mx-auto my-3" style="width: 35px; opacity: 0.6;"></div>
-          <p class="stat-label">Retorno Médio</p>
-        </div>
-        <div class="stat-box reveal reveal-delay-3">
-          <p class="stat-value" data-target="100" data-suffix="%" id="stat-3">0%</p>
-          <div class="gold-line mx-auto my-3" style="width: 35px; opacity: 0.6;"></div>
-          <p class="stat-label">Taxa de Sucesso</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="section-transition-to-dark"></div>
-
-  <section id="quem-somos" class="pt-20 pb-40 px-4 md:px-12 lg:px-20 relative overflow-hidden bg-[#061325]">
-    <canvas id="canvas-investment-back"></canvas>
-
-    <div id="spotlight-left" class="glow-spotlight -top-24 left-[5%] opacity-50"></div>
-    <div id="spotlight-right" class="glow-spotlight bottom-12 right-[5%] opacity-40"></div>
-
-    <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-stretch">
-      <div id="quem-somos-block" class="premium-glass-card flex flex-col justify-between p-8 lg:p-12 reveal">
-        <div class="parallax-bg-asset right-0 md:right-4 bottom-0 h-full w-auto opacity-[0.05] flex items-end" id="bg-asset-col">
-          <img src="img/coluna-wesus.webp" alt="" class="h-[90%] w-auto object-contain object-right-bottom" loading="lazy" />
-        </div>
-
-        <div class="relative z-10 flex flex-col justify-between h-full">
-          <div>
-            <p class="text-[10px] uppercase tracking-[0.3em] text-gold-base font-semibold mb-3">A Empresa</p>
-            <h3 class="font-display font-bold text-3xl text-gold-light tracking-wide uppercase mb-6">Quem Somos</h3>
-            <p class="text-sm font-body text-platinum/90 leading-relaxed font-light max-w-xl">
-              Somos uma rede de ligação estratégica entre investidores e promotores imobiliários, focada em criar oportunidades sólidas e relações de confiança no mercado imobiliário.
-            </p>
-          </div>
-
-          <div class="mt-10 pt-8 border-t border-white/5 grid grid-cols-2 gap-6">
-            <div class="p-4 rounded-xl bg-white/[0.02] border border-white/5">
-              <p class="text-[9px] uppercase tracking-widest text-gold-base font-semibold mb-1">Foco de Atuação</p>
-              <p class="text-xs text-platinum/90 font-body font-medium">Ligações Estratégicas</p>
-            </div>
-            <div class="p-4 rounded-xl bg-white/[0.02] border border-white/5">
-              <p class="text-[9px] uppercase tracking-widest text-gold-base font-semibold mb-1">Ecossistema</p>
-              <p class="text-xs text-platinum/90 font-body font-medium">Oportunidades Sólidas</p>
-            </div>
-          </div>
+      <div id="mobileMenu" class="hidden absolute top-20 right-6 w-64 bg-[#0a1c33] border border-white/10 rounded-xl shadow-2xl p-6 flex flex-col gap-6 text-[13px] font-semibold tracking-widest uppercase text-white/75 md:hidden z-40">
+        <nav class="flex flex-col gap-4">
+          <a href="#quem-somos" class="hover:text-white transition-colors duration-200 py-2 border-b border-white/5">Quem Somos</a>
+          <a href="#equipa" class="hover:text-white transition-colors duration-200 py-2 border-b border-white/5">Equipa</a>
+          <a href="#plataforma" class="nav-link hover:text-white transition-colors duration-200">Plataforma</a>
+          <a href="#contactos" class="hover:text-white transition-colors duration-200 py-2">Contactos</a>
+        </nav>
+        <div class="pt-2 border-t border-white/10 w-full text-center">
+          <a href="#" class="btn-nav-cta inline-block w-full text-center">
+            Portal do Cliente
+          </a>
         </div>
       </div>
 
-      <div id="missao-block" class="premium-glass-card flex flex-col justify-between p-8 lg:p-12 reveal reveal-delay-1">
-        <div class="parallax-bg-asset right-0 bottom-0 h-[85%] w-auto opacity-[0.05] flex items-end" id="bg-asset-bull">
-          <img src="img/touro-grafico.webp" alt="" class="h-full w-auto object-contain object-right-bottom" loading="lazy" />
-        </div>
-
-        <div class="relative z-10 space-y-10">
-          <div>
-            <p class="text-[10px] uppercase tracking-[0.3em] text-gold-base font-semibold mb-2">Propósito</p>
-            <h3 class="font-display font-bold text-2xl text-gold-light tracking-wide uppercase mb-4">Missão</h3>
-            <p class="text-sm font-body text-platinum/90 leading-relaxed font-light max-w-xl">
-              A nossa missão é conectar investidores e promotores imobiliários através de soluções transparentes, seguras e estratégicas, criando oportunidades sustentáveis e relações de confiança no setor imobiliário.
-            </p>
-          </div>
-
-          <div class="pt-8 border-t border-white/5">
-            <h3 class="font-display font-bold text-2xl text-gold-light tracking-wide uppercase mb-4">Valores</h3>
-            <p class="text-sm font-body text-platinum/90 leading-relaxed font-light max-w-xl mb-6">
-              Acreditamos que relações sólidas são construídas com transparência, confiança e compromisso. Valorizamos a proximidade com investidores e parceiros, atuando sempre com integridade, profissionalismo e foco em oportunidades sustentáveis que gerem segurança e crescimento para todos os envolvidos.
-            </p>
-            <div class="flex flex-wrap gap-2.5">
-              <span class="text-[9px] uppercase tracking-widest px-4 py-2 rounded-full bg-white/[0.04] border border-white/10 text-platinum/90 font-semibold backdrop-blur-sm">Transparência</span>
-              <span class="text-[9px] uppercase tracking-widest px-4 py-2 rounded-full bg-white/[0.04] border border-white/10 text-platinum/90 font-semibold backdrop-blur-sm">Confiança</span>
-              <span class="text-[9px] uppercase tracking-wider px-4 py-2 rounded-full bg-white/[0.04] border border-white/10 text-platinum/90 font-semibold backdrop-blur-sm">Compromisso</span>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-  </section>
+  </header>
 
-  <section id="equipa" class="pt-36 pb-56 px-6 md:px-12 lg:px-20 relative overflow-hidden">
-    <div class="max-w-7xl mx-auto relative z-10">
-      <div class="text-center mb-20 reveal">
-        <p class="text-xs tracking-widest text-gold-base uppercase font-body mb-3">Liderança</p>
-        <h2 class="section-title mb-3" style="color: #061325;">A Nossa Equipa</h2>
-        <div class="gold-line mx-auto"></div>
-      </div>
+  <section id="hero-stage" class="relative w-full h-[100dvh] flex items-center justify-center overflow-hidden z-10 bg-[#061325]">
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10 items-stretch">
-        <div class="reveal">
-          <div class="premium-light-card p-8">
-            <div class="w-full flex-grow flex flex-col justify-start">
-              <div class="avatar-container-pro mb-8">
-                <img src="img/danilson-equipa.webp" alt="Danilson J. Carvalho" class="w-full h-full rounded-full object-cover bg-platinum" style="object-position: center 30%;" />
-              </div>
-              <div class="text-center mb-6">
-                <h4 class="font-display font-bold text-2xl mb-1" style="color: #061325;">Danilson J. Carvalho</h4>
-                <p class="text-xs font-body text-gold-base tracking-widest uppercase font-semibold">Managing Director</p>
-              </div>
-            </div>
-            <ul class="text-left text-xs font-body text-[#061325]/80 space-y-4 pt-5 border-t border-[#061325]/8 mt-auto">
-              <li class="flex items-start gap-2.5">
-                <svg class="w-4 h-4 text-gold-base shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span>Mais de 12 anos de experiência em gestão de empresas e projetos imobiliários.</span>
-              </li>
-              <li class="flex items-start gap-2.5">
-                <svg class="w-4 h-4 text-gold-base shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                  <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                </svg>
-                <span>CEO da <strong>ATLANTICLIFE REAL ESTATE & PROJECTS</strong>.</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="reveal reveal-delay-1">
-          <div class="premium-light-card p-8">
-            <div class="w-full flex-grow flex flex-col justify-start">
-              <div class="avatar-container-pro mb-8">
-                <img src="img/sara-equipa.webp" alt="Sara Raquel Soeiro" class="w-full h-full rounded-full object-cover bg-platinum" style="object-position: center 80%;" />
-              </div>
-              <div class="text-center mb-6">
-                <h4 class="font-display font-bold text-2xl mb-1" style="color: #061325;">Sara Raquel Soeiro</h4>
-                <p class="text-xs font-body text-gold-base tracking-widest uppercase font-semibold">Business Development Manager</p>
-              </div>
-            </div>
-            <ul class="text-left text-xs font-body text-[#061325]/80 space-y-4 pt-5 border-t border-[#061325]/8 mt-auto">
-              <li class="flex items-start gap-2.5">
-                <svg class="w-4 h-4 text-gold-base shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                  <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                </svg>
-                <span>Sólida trajetória de mais de meia década na área comercial, focada na expansão de negócios.</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="reveal reveal-delay-2">
-          <div class="premium-light-card p-8">
-            <div class="w-full flex-grow flex flex-col justify-start">
-              <div class="avatar-container-pro mb-8">
-                <img src="img/ana-equipa.webp" alt="Ana Marta Carvalho" class="w-full h-full rounded-full object-cover bg-platinum" style="object-position: -100% -80%;" />
-              </div>
-              <div class="text-center mb-6">
-                <h4 class="font-display font-bold text-2xl mb-1" style="color: #061325;">Ana Marta Carvalho</h4>
-                <p class="text-xs font-body text-gold-base tracking-widest uppercase font-semibold">Office & Operations Manager</p>
-              </div>
-            </div>
-            <ul class="text-left text-xs font-body text-[#061325]/80 space-y-4 pt-5 border-t border-[#061325]/8 mt-auto">
-              <li class="flex items-start gap-2.5">
-                <svg class="w-4 h-4 text-gold-base shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                  <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-                <span>Intermediária de Crédito Autorizada pelo <strong>Banco de Portugal</strong>.</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
+    <div class="absolute inset-0 z-0 w-full h-full pointer-events-none select-none overflow-hidden">
+      <video autoplay loop muted playsinline fetchpriority="high" poster="img/hero-fallback-poster.webp" class="w-full h-full object-cover scale-105" aria-hidden="true">
+        <source src="img/video-hero-2.webm" type="video/webm">
+        <source src="img/video-hero-2.webm" type="video/mp4">
+      </video>
+      <div class="absolute inset-0 bg-[#041124]/45 mix-blend-multiply z-10" aria-hidden="true"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-[#041124]/30 via-[#061325]/70 to-[#061325] z-10" aria-hidden="true"></div>
     </div>
-  </section>
 
-  <section id="plataforma" class="py-32 px-6 md:px-12 lg:px-20 relative overflow-hidden bg-[#061325]">
-    <div class="max-w-6xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-      <div class="lg:col-span-6 flex justify-center relative reveal">
-        <div class="glow-aura"></div>
-        <div class="mockup-container">
-          <img src="img/wesus-mockup.webp" alt="It's Wesus App" class="w-full max-w-[500px] h-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]" />
-        </div>
+    <canvas id="wesusGoldDustCanvas" class="absolute inset-0 z-10 pointer-events-none w-full h-full opacity-80 mix-blend-screen" aria-hidden="true"></canvas>
+
+    <div class="relative z-20 w-full max-w-5xl mx-auto px-6 flex flex-col items-center text-center gap-[2.5vh] pt-20 apple-reveal is-visible">
+
+      <div class="w-64 h-64 sm:w-80 sm:h-80 lg:w-[55vh] lg:h-[55vh] -mt-6 -mb-6 lg:-mt-[14vh] lg:-mb-[10vh] flex items-center justify-center transform transition-transform duration-700 select-none" aria-hidden="true">
+        <img src="img/svg-logo-hero.svg" alt="It's Wesus Consulting & Investment" class="w-full h-full object-contain filter drop-shadow-[0_12px_30px_rgba(197,160,89,0.25)] max-lg:scale-110 lg:scale-125" />
       </div>
 
-      <div class="lg:col-span-6 text-center lg:text-left flex flex-col items-center lg:items-start justify-center reveal reveal-delay-1">
-        <h2 class="font-display font-bold text-white leading-tight uppercase mb-4" style="font-size: clamp(2.2rem, 4.5vw, 3.2rem); letter-spacing: 0.05em;">
-          Acompanhe os<br />seus resultados.
-        </h2>
-        <p class="text-lg text-platinum/70 font-body font-light tracking-wide mb-10 max-w-lg">
-          Aceda ao seu portfólio privado em tempo real através da nossa plataforma exclusiva. Total blindagem patrimonial com transparência absoluta.
+      <div class="space-y-3">
+        <h1 class="font-playfair text-3xl sm:text-5xl lg:text-5xl xl:text-[64px] font-bold text-white leading-[1.15] lg:leading-[1.1] tracking-tighter max-w-4xl mx-auto drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+          A Escolha Inteligente para<br class="hidden sm:block"> <span class="text-gold-liquid">Evoluir o seu Capital</span>
+        </h1>
+
+        <p class="text-[11px] sm:text-sm font-inter font-bold tracking-[0.28em] uppercase text-white/70 max-w-xl mx-auto px-2">
+          Gestão Patrimonial Inteligente e Soluções de Alto Padrão
         </p>
-        <div class="flex items-center gap-4 mt-8 justify-center lg:justify-start">
-          <a href="#" class="btn-download transition-all duration-300 hover:scale-105 hover:opacity-90">
-            <img src="img/app-store-badge.webp" alt="Download na App Store" class="h-12 md:h-14 w-auto" />
-          </a>
-          <a href="#" class="btn-download transition-all duration-300 hover:scale-105 hover:opacity-90">
-            <img src="img/google-play-badge.webp" alt="Download no Google Play" class="h-12 md:h-14 w-auto" />
-          </a>
-        </div>
       </div>
+
+      <div class="w-32 h-px bg-gradient-to-r from-transparent via-[#c5a059]/40 to-transparent" aria-hidden="true"></div>
+
+      <div class="pt-[1vh] select-none">
+        <a href="#quem-somos" class="btn-hero-main">
+          Quem Somos
+        </a>
+      </div>
+
+    </div>
+
+    <div class="scroll-indicator-hint absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 opacity-30 animate-pulse text-[9px] tracking-[0.2em] uppercase font-medium">
+      <span>Deslize para Explorar</span>
+      <svg class="w-3 h-3 text-[#e8d08d]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7-7-7" />
+      </svg>
     </div>
   </section>
 
-  <section id="contactos" class="py-32 px-6 md:px-12 lg:px-20 bg-[#ffffff]">
-    <div class="max-w-7xl mx-auto reveal">
-      <div class="text-center mb-20">
-        <h2 class="section-title text-[#061325] mb-4">Fale Connosco</h2>
-        <div class="gold-line mx-auto"></div>
+  <div class="relative w-full overflow-hidden">
+
+    <div class="ambient-section-orb w-[600px] h-[600px] bg-[#c5a059] top-0 -left-32" aria-hidden="true"></div>
+    <div class="ambient-section-orb w-[700px] h-[700px] bg-[#00a3ff] top-[25%] -right-48" aria-hidden="true"></div>
+    <div class="ambient-section-orb w-[650px] h-[650px] bg-[#c5a059] top-[55%] -left-40" aria-hidden="true"></div>
+    <div class="ambient-section-orb w-[800px] h-[800px] bg-[#00a3ff] bottom-0 -right-32" aria-hidden="true"></div>
+
+    <section id="quem-somos" class="relative max-w-7xl mx-auto px-6 py-24 grid grid-cols-1 md:grid-cols-2 gap-12 z-20">
+
+      <div class="relative w-full z-10 apple-reveal">
+        <div class="card-backlight-gold"></div>
+
+        <article class="hero-card-crystal p-8 md:p-12 flex flex-col min-h-[520px] justify-between relative overflow-hidden">
+          <div class="w-full relative z-10">
+            <p class="text-[10px] uppercase tracking-[0.2em] text-[#c5a059] font-bold mb-2">A Empresa</p>
+            <h2 class="font-playfair text-3xl font-bold tracking-wide uppercase text-white/90 mb-6">
+              Quem <span class="text-gold-liquid">Somos</span>
+            </h2>
+          </div>
+
+          <div class="relative w-full flex-1 flex items-center min-h-[300px]">
+            <div class="absolute inset-0 max-md:flex max-md:items-center max-md:justify-center md:-left-24 md:-bottom-16 md:top-0 md:w-[100%] flex items-center justify-start pointer-events-none select-none z-0">
+              <img src="img/pilar.svg" alt="Pilar Estrutural" class="max-md:scale-[1.45] max-md:opacity-[0.06] md:max-h-[26rem] md:object-contain opacity-[0.15] mix-blend-screen" />
+            </div>
+
+            <div class="w-full md:w-[60%] ml-auto relative z-10">
+              <p class="text-xs sm:text-sm text-white/80 font-inter leading-[1.85]">
+                Somos uma rede de ligação estratégica entre investidores e promotores imobiliários, focada em criar oportunidades sólidas e relações de confiança no mercado imobiliário.
+              </p>
+            </div>
+          </div>
+        </article>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 text-center md:text-left">
-        <div class="contact-group">
-          <h4>Danilson J. Carvalho</h4>
-          <a href="tel:+351968228919" class="contact-link text-lg font-display">+351 968 228 919</a>
+      <div class="relative w-full z-10 apple-reveal delay-100">
+        <div class="card-backlight-blue"></div>
+
+        <article id="missao" class="hero-card-crystal p-8 md:p-12 flex flex-col justify-center min-h-[520px] relative overflow-hidden">
+          <img src="img/touro-grafico.webp" alt="" class="absolute right-[-5%] bottom-[-5%] h-[85%] w-auto object-contain opacity-[0.24] mix-blend-screen pointer-events-none select-none filter drop-shadow-[0_0_25px_rgba(0,163,255,0.95)] drop-shadow-[0_0_15px_rgba(232,208,141,0.05)] mask-touro-fade" onerror="this.src='img/svg-logo-hero.svg'; this.style.opacity='0.02'" aria-hidden="true" />
+
+          <div class="flex flex-col gap-8 relative z-10 h-full justify-between">
+            <div class="space-y-3">
+              <p class="text-[10px] uppercase tracking-[0.2em] text-[#c5a059] font-bold">Propósito</p>
+              <h3 class="font-playfair text-2xl font-bold tracking-wide uppercase text-white/90">
+                Missão
+              </h3>
+              <p class="text-xs sm:text-sm text-white/70 font-inter leading-relaxed max-w-md">
+                A nossa missão é conectar investidores e promotores imobiliários através de soluções transparentes, seguras e estratégicas, criando oportunidades sustentáveis e relações de confiança no setor imobiliário.
+              </p>
+            </div>
+
+            <div class="w-full h-px bg-gradient-to-r from-white/5 via-white/10 to-transparent"></div>
+
+            <div class="space-y-4">
+              <h3 class="font-playfair text-2xl font-bold tracking-wide uppercase text-white/90">
+                Valores
+              </h3>
+              <p class="text-xs sm:text-sm text-white/70 font-inter leading-relaxed max-w-md">
+                Acreditamos que relações sólidas são construídas com transparência, confiança e compromisso. Valorizamos a proximidade com investidores e parceiros, atuando sempre com integridade, profissionalismo e foco em oportunidades sustentáveis que gerem segurança e crescimento para todos os envolvidos.
+              </p>
+
+              <div class="flex flex-wrap gap-2 pt-2 select-none">
+                <span class="text-[9px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/80 backdrop-blur-sm">Transparência</span>
+                <span class="text-[9px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/80 backdrop-blur-sm">Confiança</span>
+                <span class="text-[9px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/80 backdrop-blur-sm">Compromisso</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+    </section>
+
+    <section id="equipa" class="relative max-w-7xl mx-auto px-6 py-20 z-20">
+      <div class="text-center space-y-2 mb-16 apple-reveal">
+        <h2 class="font-playfair text-3xl font-bold tracking-wide uppercase">
+          Nossa <span class="text-gold-liquid">Equipa</span>
+        </h2>
+        <p class="text-[10px] text-white/40 font-inter tracking-widest uppercase max-w-xl mx-auto">
+          Governança, Conexão Estratégica e Histórico de Alto Padrão
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
+
+        <div class="hero-card-crystal p-6 md:p-8 flex flex-col items-center group transition-all duration-300 h-full apple-reveal">
+          <div class="w-44 h-44 rounded-full border-2 border-[#c5a059] p-1.5 overflow-hidden shrink-0 shadow-2xl mb-5 bg-[#071326]">
+            <img src="img/danilson-photo.webp" alt="Danilson J. Carvalho" class="w-full h-full object-cover object-[50%_15%] rounded-full" style="image-rendering: -webkit-optimize-contrast; transform: translateZ(0);" />
+          </div>
+
+          <div class="text-center mb-6">
+            <h3 class="font-playfair font-bold text-lg text-white/95">Danilson J. Carvalho</h3>
+            <p class="text-[11px] text-gold-liquid font-bold uppercase tracking-[0.15em] mt-1">Managing Director</p>
+          </div>
+
+          <div class="w-full space-y-4 font-inter text-xs text-white/75 border-t border-white/5 pt-5 flex-1">
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m3 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5" />
+                </svg></div>
+              <p class="leading-relaxed">Mais de 12 anos de experiência em gestão de empresas e gestão de projetos imobiliários.</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg></div>
+              <p class="leading-relaxed font-semibold text-white/90">CEO da ATLANTICLIFE REAL ESTATE & PROJECTS.</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                  <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                </svg></div>
+              <p class="leading-relaxed">Licenciado em Gestão de Empresas pela Universidade Lusófona (2019).</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.168.477 4 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4 1.253" />
+                </svg></div>
+              <p class="leading-relaxed">Mestre em Avaliação e Gestão de Ativos Imobiliários pela Escola Superior de Atividades Imobiliárias (2025).</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9" />
+                </svg></div>
+              <p class="leading-relaxed">Experiência internacional em liderança e coordenação de equipas, tendo dirigido mais de 200 voluntários em Fortaleza, Brasil, entre 2013 e 2015.</p>
+            </div>
+          </div>
         </div>
-        <div class="contact-group">
-          <h4>Sara Raquel Soeiro</h4>
-          <a href="tel:+351919398983" class="contact-link text-lg font-display">+351 919 398 983</a>
+
+        <div class="hero-card-crystal p-6 md:p-8 flex flex-col items-center group transition-all duration-300 h-full apple-reveal delay-100">
+          <div class="w-44 h-44 rounded-full border-2 border-[#c5a059] p-1.5 overflow-hidden shrink-0 shadow-2xl mb-5 bg-[#071326]">
+            <img src="img/sara-photo.webp" alt="Sara Raquel Soeiro" class="w-full h-full object-cover rounded-full" style="image-rendering: -webkit-optimize-contrast; transform: translateZ(0);" />
+          </div>
+
+          <div class="text-center mb-6">
+            <h3 class="font-playfair font-bold text-lg text-white/95">Sara Raquel Soeiro</h3>
+            <p class="text-[11px] text-gold-liquid font-bold uppercase tracking-[0.15em] mt-1">Business Development Manager</p>
+          </div>
+
+          <div class="w-full space-y-4 font-inter text-xs text-white/75 border-t border-white/5 pt-5 flex-1">
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M7 12l3-3 3 3M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg></div>
+              <p class="leading-relaxed">Sólida trajetória de mais de meia década na área comercial, focada na expansão de negócios.</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg></div>
+              <p class="leading-relaxed font-semibold text-white/90">Team Leader na ATLANTICLIFE REAL ESTATE & PROJECTS.</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                  <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                </svg></div>
+              <p class="leading-relaxed">Mestre em Medicina Veterinária (2017).</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 002 2h2a2.5 2.5 0 002.5-2.5V9a2 2 0 00-2-2h-1.5a2 2 0 01-2-2V4.305M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg></div>
+              <p class="leading-relaxed">Experiência consolidada na gestão de equipa feminina internacional, com histórico comprovado na liderança e orientação de mais de 20 colaboradores em projetos sociais em Curitiba, Brasil (2014).</p>
+            </div>
+          </div>
         </div>
-        <div class="contact-group">
-          <h4>Email Corporativo</h4>
-          <a href="mailto:geral@itwesus.com" class="contact-link text-lg font-display">geral@itwesus.com</a>
+
+        <div class="hero-card-crystal p-6 md:p-8 flex flex-col items-center group transition-all duration-300 h-full apple-reveal delay-200">
+          <div class="w-44 h-44 rounded-full border-2 border-[#c5a059] p-1.5 overflow-hidden shrink-0 shadow-2xl mb-5 bg-[#071326]">
+            <img src="img/ana-photo.webp" alt="Ana Marta Carvalho" class="w-full h-full object-cover object-[35%_center] rounded-full" style="image-rendering: -webkit-optimize-contrast; transform: translateZ(0);" />
+          </div>
+
+          <div class="text-center mb-6">
+            <h3 class="font-playfair font-bold text-lg text-white/95">Ana Marta Carvalho</h3>
+            <p class="text-[11px] text-gold-liquid font-bold uppercase tracking-[0.15em] mt-1">Office & Operations Manager</p>
+          </div>
+
+          <div class="w-full space-y-4 font-inter text-xs text-white/75 border-t border-white/5 pt-5 flex-1">
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M12 16V5" />
+                </svg></div>
+              <p class="leading-relaxed">Intermediária de Crédito Autorizado pelo banco de Portugal.</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg></div>
+              <p class="leading-relaxed font-semibold text-white/90">CEO Oaks Créditos.</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01m-.01 4h.01" />
+                </svg></div>
+              <p class="leading-relaxed">Especialista em Gestão de Património pela ESAI (2025).</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                  <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                </svg></div>
+              <p class="leading-relaxed">Licenciatura em Engenharia Bioquímica pela Universidade Nova de Lisboa.</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0 mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg></div>
+              <p class="leading-relaxed">Liderança internacional em Cabo Verde, coordenando e orientando uma equipa de mais de 20 colaboradores em projetos sociais de impacto (2013-2014).</p>
+            </div>
+          </div>
         </div>
-        <div class="contact-group">
-          <h4>Sede</h4>
-          <p class="address-text leading-relaxed">
-            Av. dos Bons Amigos 77,<br />
-            2735-080, Agualva Cacém<br />
-            <span class="block mt-1 font-semibold text-[#061325]">Portugal</span>
+
+      </div>
+    </section>
+
+    <section id="plataforma" class="py-32 px-6 md:px-12 lg:px-20 relative overflow-hidden bg-[#061325] border-t border-white/5 w-full">
+
+      <canvas id="plataformaGoldDustCanvas" class="absolute inset-0 z-10 pointer-events-none w-full h-full opacity-60 mix-blend-screen" aria-hidden="true"></canvas>
+
+      <div class="space-comet comet-1"></div>
+      <div class="space-comet comet-2"></div>
+      <div class="space-comet comet-3"></div>
+
+      <div class="ambient-section-orb w-[500px] h-[500px] bg-[#00a3ff] top-12 -left-48" style="opacity: 0.04;" aria-hidden="true"></div>
+      <div class="ambient-section-orb w-[600px] h-[600px] bg-[#c5a059] -bottom-20 -right-32" style="opacity: 0.05;" aria-hidden="true"></div>
+
+      <div class="max-w-6xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+
+        <div class="lg:col-span-6 flex justify-center relative select-none mockup-saiyan-float apple-reveal">
+          <div class="glow-aura-nebula transform -translate-y-6"></div>
+
+          <div class="relative z-10 max-w-[320px] sm:max-w-[420px] lg:max-w-[460px]">
+            <img src="img/phone-mockup-app.webp" alt="It's Wesus App" class="w-full h-auto object-contain filter drop-shadow-[0_45px_50px_rgba(0,0,0,0.9)]" onerror="this.src='img/danilson-photo.webp'; this.style.borderRadius='24px';" />
+          </div>
+        </div>
+
+        <div class="lg:col-span-6 text-center lg:text-left flex flex-col items-center lg:items-start justify-center apple-reveal delay-200">
+
+          <h2 class="font-playfair font-bold text-white leading-[1.15] uppercase mb-6" style="font-size: clamp(2rem, 4vw, 3rem); letter-spacing: 0.02em;">
+            Acompanhe os seus<br /> <span class="text-gold-liquid">resultados em tempo real</span>
+          </h2>
+
+          <p class="text-xs sm:text-sm text-white/70 font-inter font-normal leading-[1.85] tracking-wide mb-10 max-w-lg">
+            Aceda ao seu portfólio privado em tempo real através da nossa plataforma exclusiva. Total blindagem patrimonial com transparência absoluta e consolidação de auditorias estáticas para investidores validados.
           </p>
+
+          <div class="flex items-center gap-4 justify-center lg:justify-start select-none w-full sm:w-auto">
+            <a href="#" class="transition-all duration-300 hover:scale-103 hover:brightness-110" aria-label="Descarregar na App Store">
+              <img src="img/app-store-badge.webp" alt="Download na App Store" class="h-11 md:h-12 w-auto object-contain filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.4)]" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg'" />
+            </a>
+            <a href="#" class="transition-transform duration-300 hover:scale-103 hover:brightness-110" aria-label="Descarregar no Google Play">
+              <img src="img/google-play-badge.webp" alt="Download no Google Play" class="h-11 md:h-12 w-auto object-contain filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.4)]" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg'" />
+            </a>
+          </div>
         </div>
+
       </div>
-    </div>
-  </section>
+    </section>
 
-  <footer class="py-10 px-6 md:px-12">
-    <div class="max-w-6xl mx-auto flex flex-col items-center justify-center gap-4">
-      <p class="font-display text-xs tracking-widest text-platinum/70 uppercase text-center">
-        © 2026 It's Wesus — Consulting & Investment. Todos os direitos reservados.
-      </p>
-    </div>
-  </footer>
+    <section id="contactos" class="relative max-w-7xl mx-auto px-6 py-24 z-20">
 
-  <div id="modal-not-available" class="fixed inset-0 z-[100] hidden items-center justify-center bg-[#061325]/90 backdrop-blur-sm p-6">
-    <div class="bg-[#0b1b30] border border-gold-base/30 p-8 rounded-2xl max-w-sm w-full text-center shadow-2xl">
-      <h3 class="font-display text-white text-xl mb-4">Atenção</h3>
-      <p class="font-body text-platinum/80 mb-8 leading-relaxed">Ops, este recurso ainda não está disponível na versão mobile.</p>
-      <button onclick="closeModal()" class="btn-gold w-full text-center">Entendido</button>
-    </div>
+      <div class="text-center mb-20 apple-reveal">
+        <h2 class="font-playfair text-3xl md:text-4xl font-bold uppercase tracking-widest text-white/90">
+          Fale <span class="text-gold-liquid">Connosco</span>
+        </h2>
+        <div class="w-16 h-px bg-[#c5a059] mx-auto mt-8"></div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-10">
+
+        <div class="flex flex-col items-center space-y-3 apple-reveal delay-100">
+          <span class="text-[9px] uppercase tracking-[0.2em] text-[#c5a059] font-bold">Linha 01</span>
+          <a href="tel:+351968228919" class="text-sm text-white/80 font-inter hover:text-[#c5a059] transition-colors">+351 968 228 919</a>
+        </div>
+
+        <div class="flex flex-col items-center space-y-3 apple-reveal delay-200">
+          <span class="text-[9px] uppercase tracking-[0.2em] text-[#c5a059] font-bold">Linha 02</span>
+          <a href="tel:+351919398983" class="text-sm text-white/80 font-inter hover:text-[#c5a059] transition-colors">+351 919 398 983</a>
+        </div>
+
+        <div class="flex flex-col items-center space-y-3 apple-reveal delay-300">
+          <span class="text-[9px] uppercase tracking-[0.2em] text-[#c5a059] font-bold">Linha 03</span>
+          <a href="tel:+351214320086" class="text-sm text-white/80 font-inter hover:text-[#c5a059] transition-colors">+351 214 320 086</a>
+        </div>
+
+        <div class="flex flex-col items-center space-y-3 apple-reveal delay-400">
+          <span class="text-[9px] uppercase tracking-[0.2em] text-[#c5a059] font-bold">E-mail</span>
+          <a href="mailto:geral@itswesus.com" class="text-sm text-white/80 font-inter hover:text-[#c5a059] transition-colors">geral@itswesus.com</a>
+        </div>
+
+        <div class="flex flex-col items-center space-y-3 apple-reveal delay-500">
+          <span class="text-[9px] uppercase tracking-[0.2em] text-[#c5a059] font-bold">Sede</span>
+          <address class="text-sm text-white/80 font-inter not-italic text-center">
+            Av. dos Bons Amigos 77,<br>
+            2735-080, Agualva Cacém
+          </address>
+        </div>
+
+      </div>
+    </section>
+
+    <footer class="relative w-full py-8 text-center text-[10px] text-white/75 font-inter tracking-widest uppercase bg-[#061325] border-t border-white/5 z-20">
+      &copy; 2026 It's Wesus Consulting & Investment. Todos os direitos reservados.
+    </footer>
+
   </div>
 
   <script>
-    const modal = document.getElementById('modal-not-available');
-    const modalText = modal.querySelector('p');
+    document.addEventListener("DOMContentLoaded", () => {
+      // --- CONTROLE DINÂMICO DO HEADER (SCROLL) ---
+      const header = document.getElementById("mainHeader");
+      const headerLogo = document.getElementById("headerLogo");
 
-    function closeModal() {
-      modal.classList.remove('flex');
-      modal.classList.add('hidden');
-    }
-
-    function openModal(message) {
-      modalText.textContent = message;
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-    }
-
-    document.querySelectorAll('.btn-painel').forEach(btn => {
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        openModal("Essa funcionalidade será liberada em breve.");
-      });
-    });
-
-    document.querySelectorAll('.btn-download').forEach(btn => {
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        openModal("Ops, essa funcionalidade ainda não foi liberada.");
-      });
-    });
-
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal();
-    });
-
-    (function () {
-      'use strict';
-
-      /* 1. Navbar */
-      const navbar = document.getElementById('navbar');
-      window.addEventListener('scroll', () => {
-        navbar.classList.toggle('scrolled', window.scrollY > 60);
-      }, { passive: true });
-
-      /* 2. Reveal */
-      const revealEls = document.querySelectorAll('.reveal');
-      const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) entry.target.classList.add('visible');
-          else entry.target.classList.remove('visible');
-        });
-      }, { threshold: 0.12 });
-      revealEls.forEach(el => revealObserver.observe(el));
-
-      /* 3. Contagem Stats */
-      const statEls = document.querySelectorAll('[data-target]');
-      let statsAnimated = false;
-      function animateStat(el) {
-        const target = parseFloat(el.dataset.target);
-        const suffix = el.dataset.suffix || '';
-        const prefix = el.dataset.prefix || '';
-        const decimal = parseInt(el.dataset.decimal || '0');
-        const duration = 1800;
-        const start = performance.now();
-        function step(now) {
-          const elapsed = now - start;
-          const progress = Math.min(elapsed / duration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          const current = eased * target;
-          el.textContent = prefix + (decimal > 0 ? current.toFixed(decimal) : Math.round(current)) + suffix;
-          if (progress < 1) requestAnimationFrame(step);
+      function handleScroll() {
+        if (window.scrollY > 50) {
+          header.classList.add("scrolled");
+          headerLogo.classList.remove("max-md:opacity-0", "max-md:pointer-events-none");
+        } else {
+          header.classList.remove("scrolled");
+          headerLogo.classList.add("max-md:opacity-0", "max-md:pointer-events-none");
         }
-        requestAnimationFrame(step);
       }
-      const statsSection = document.getElementById('stats');
-      const statsObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting && !statsAnimated) {
-            statsAnimated = true;
-            statEls.forEach(animateStat);
-            statsObserver.unobserve(statsSection);
+
+      window.addEventListener("scroll", handleScroll);
+
+      // --- LÓGICA DO MENU HAMBÚRGUER ---
+      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+      const hamburgerIcon = document.getElementById("hamburgerIcon");
+      const closeIcon = document.getElementById("closeIcon");
+
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener("click", () => {
+          const isMenuHidden = mobileMenu.classList.contains("hidden");
+          if (isMenuHidden) {
+            mobileMenu.classList.remove("hidden");
+            hamburgerIcon.classList.add("hidden");
+            closeIcon.classList.remove("hidden");
+          } else {
+            mobileMenu.classList.add("hidden");
+            hamburgerIcon.classList.remove("hidden");
+            closeIcon.classList.add("hidden");
           }
         });
-      }, { threshold: 0.3 });
-      statsObserver.observe(statsSection);
 
-      /* 4. Canvas Geral Purpurina */
-      const canvas = document.getElementById('aurora-canvas');
-      const ctx = canvas.getContext('2d');
-      
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-      const PARTICLE_COUNT = isIOS ? 20 : (window.innerWidth < 768 ? 40 : 120);
-      
-      let particles = [];
-      let animFrame;
-      let canvasActive = false;
-
-      function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-      resizeCanvas();
-      window.addEventListener('resize', resizeCanvas, { passive: true });
-
-      function createParticle() {
-        return {
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          size: Math.random() * 1.5 + 0.3,
-          speedX: (Math.random() - 0.5) * 0.15,
-          speedY: (Math.random() - 0.5) * 0.15,
-          opacity: Math.random() * 0.5 + 0.1,
-          opacityDir: Math.random() > 0.5 ? 1 : -1,
-          opacitySpeed: Math.random() * 0.004 + 0.002,
-          hue: Math.random() * 15 + 35,
-        };
-      }
-      for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(createParticle());
-
-      function drawParticles() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => {
-          p.opacity += p.opacityDir * p.opacitySpeed;
-          if (p.opacity > 0.6 || p.opacity < 0.05) p.opacityDir *= -1;
-          p.x += p.speedX; p.y += p.speedY;
-          if (p.x < -5) p.x = canvas.width + 5; if (p.x > canvas.width + 5) p.x = -5;
-          if (p.y < -5) p.y = canvas.height + 5; if (p.y > canvas.height + 5) p.y = -5;
-          ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-          ctx.fillStyle = `hsla(${p.hue}, 65%, 70%, ${p.opacity})`; ctx.fill();
+        const mobileLinks = mobileMenu.querySelectorAll("a");
+        mobileLinks.forEach(link => {
+          link.addEventListener("click", () => {
+            mobileMenu.classList.add("hidden");
+            hamburgerIcon.classList.remove("hidden");
+            closeIcon.classList.add("hidden");
+          });
         });
-        animFrame = requestAnimationFrame(drawParticles);
       }
 
-      ['quem-somos', 'equipa', 'plataforma', 'contactos'].forEach(id => {
-        const s = document.getElementById(id);
-        if (s) {
-          new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting && !canvasActive) {
-              canvasActive = true; canvas.classList.add('active'); drawParticles();
-            }
-          }, { threshold: 0.05 }).observe(s);
+      // --- ENGINE DE PARTÍCULAS COMPARTILHADO (DUPLO ELEMENTO SIMULTÂNEO) ---
+      const canvasHero = document.getElementById("wesusGoldDustCanvas");
+      const canvasApp = document.getElementById("plataformaGoldDustCanvas");
+
+      if (!canvasHero || !canvasApp) return;
+
+      const ctxHero = canvasHero.getContext("2d");
+      const ctxApp = canvasApp.getContext("2d");
+
+      let particlesHero = [];
+      let particlesApp = [];
+      const particleCount = window.innerWidth < 1024 ? 25 : 55;
+
+      function resize() {
+        canvasHero.width = canvasHero.offsetWidth;
+        canvasHero.height = canvasHero.offsetHeight;
+        canvasApp.width = canvasApp.offsetWidth;
+        canvasApp.height = canvasApp.offsetHeight;
+      }
+      window.addEventListener("resize", resize);
+      resize();
+
+      const goldColors = ["rgba(197, 160, 89,", "rgba(232, 208, 141,", "rgba(245, 227, 181,"];
+
+      class DustParticle {
+        constructor(targetCanvas) {
+          this.canvas = targetCanvas;
+          this.reset();
+          this.y = Math.random() * this.canvas.height;
         }
-      });
-
-      new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && canvasActive) {
-          canvasActive = false; canvas.classList.remove('active'); cancelAnimationFrame(animFrame);
+        reset() {
+          this.x = Math.random() * this.canvas.width;
+          this.y = this.canvas.height + Math.random() * 20;
+          this.size = Math.random() * 1.8 + 0.4;
+          this.speedY = -(Math.random() * 0.4 + 0.1);
+          this.speedX = Math.random() * 0.2 - 0.1;
+          this.baseColor = goldColors[Math.floor(Math.random() * goldColors.length)];
+          this.alpha = 0;
+          this.maxAlpha = Math.random() * 0.5 + 0.15;
+          this.fadeSpeed = Math.random() * 0.005 + 0.002;
         }
-      }, { threshold: 0.2 }).observe(document.getElementById('operacoes'));
+        update() {
+          this.y += this.speedY;
+          this.x += this.speedX;
 
-      /* ── CARROSSEL OTIMIZADO (Permite Scroll Nativo e Auto-Loop) ── */
-      (function setupInfinitePortfolioCarousel() {
-        const container = document.querySelector('.carousel-container');
-        const track = document.getElementById('portfolio-track');
-        if (!track) return;
-
-        // Clona os elementos garantindo a largura correta
-        const originalCards = Array.from(track.children);
-        originalCards.forEach(card => track.appendChild(card.cloneNode(true)));
-
-        let isPaused = false;
-        let resumeTimer = null;
-        const speed = isIOS ? 0.35 : 0.5;
-
-        function animateCarousel() {
-          if (!isPaused) {
-            container.scrollLeft += speed;
-            if (container.scrollLeft >= (track.scrollWidth / 2)) {
-              container.scrollLeft = 0;
-            }
+          if (this.y > this.canvas.height - 100 && this.alpha < this.maxAlpha) {
+            this.alpha += this.fadeSpeed;
+          } else if (this.y < 150) {
+            this.alpha -= this.fadeSpeed;
+          } else {
+            this.alpha = this.maxAlpha;
           }
-          requestAnimationFrame(animateCarousel);
+
+          if (this.y < 0 || this.alpha <= 0 || this.x < 0 || this.x > this.canvas.width) {
+            this.reset();
+          }
         }
-
-        function startResumeTimer() {
-          clearTimeout(resumeTimer);
-          resumeTimer = setTimeout(() => { isPaused = false; }, 500);
+        draw(ctx) {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = `${this.baseColor}${this.alpha})`;
+          ctx.shadowBlur = this.size * 2;
+          ctx.shadowColor = "#c5a059";
+          ctx.fill();
         }
-
-        const pause = () => { isPaused = true; clearTimeout(resumeTimer); };
-        const resume = () => { startResumeTimer(); };
-
-        container.addEventListener('mouseenter', pause);
-        container.addEventListener('mouseleave', resume);
-        
-        // No touch events, pausa a animação e deixa o CSS overflow tratar do swipe!
-        container.addEventListener('touchstart', pause, { passive: true });
-        container.addEventListener('touchmove', pause, { passive: true });
-        container.addEventListener('touchend', resume, { passive: true });
-
-        requestAnimationFrame(animateCarousel);
-      })();
-
-      /* ── 5. VETORES DE CAPITAL DE SEGUNDO PLANO ── */
-      (function setupBackgroundVectorEngine() {
-        const c = document.getElementById('canvas-investment-back');
-        if (!c) return;
-        const cx = c.getContext('2d');
-
-        let w = c.width = c.parentElement.clientWidth;
-        let h = c.height = c.parentElement.clientHeight;
-
-        window.addEventListener('resize', () => {
-          w = c.width = c.parentElement.clientWidth;
-          h = c.height = c.parentElement.clientHeight;
-        }, { passive: true });
-
-        let vectors = [];
-        const vectorCount = isIOS ? 10 : (window.innerWidth < 768 ? 15 : 35);
-
-        for (let i = 0; i < vectorCount; i++) {
-          vectors.push({
-            x: Math.random() * w,
-            y: Math.random() * h + h * 0.2,
-            length: Math.random() * 80 + 40,
-            speed: Math.random() * 0.3 + 0.15,
-            opacity: Math.random() * 0.2 + 0.05,
-            lineWidth: Math.random() * 1.0 + 0.5,
-            angle: -Math.PI / 4 + (Math.random() * 0.05 - 0.025)
-          });
-        }
-
-        function drawBackgroundVectors() {
-          cx.clearRect(0, 0, w, h);
-          vectors.forEach(v => {
-            v.y -= v.speed;
-            v.x += v.speed * Math.tan(Math.abs(v.angle));
-
-            if (v.y < -v.length || v.x > w + v.length) {
-              v.y = h + Math.random() * 40;
-              v.x = Math.random() * w * 0.8;
-            }
-
-            cx.beginPath();
-            cx.moveTo(v.x, v.y);
-            cx.lineTo(v.x + Math.sin(Math.abs(v.angle)) * v.length, v.y + Math.cos(v.angle) * v.length);
-
-            let lineGlow = cx.createLinearGradient(v.x, v.y, v.x, v.y + v.length);
-            lineGlow.addColorStop(0, `rgba(197, 160, 89, ${v.opacity})`);
-            lineGlow.addColorStop(1, 'transparent');
-
-            cx.strokeStyle = lineGlow;
-            cx.lineWidth = v.lineWidth;
-            cx.stroke();
-          });
-          requestAnimationFrame(drawBackgroundVectors);
-        }
-        requestAnimationFrame(drawBackgroundVectors);
-      })();
-    })();
-
-    const mobileMenu = document.getElementById('mobile-menu');
-    const menuToggle = document.getElementById('menu-toggle');
-    const menuIcon = document.getElementById('menu-icon');
-    let isMenuOpen = false;
-
-    function toggleMenu() {
-      isMenuOpen = !isMenuOpen;
-      mobileMenu.classList.toggle('hidden', !isMenuOpen);
-      mobileMenu.classList.toggle('flex', isMenuOpen);
-
-      if (isMenuOpen) {
-        menuIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
-      } else {
-        menuIcon.setAttribute('d', 'M4 6h16M4 12h16m-7 6h7');
       }
-    }
 
-    document.addEventListener('click', (event) => {
-      if (isMenuOpen && !mobileMenu.contains(event.target) && !menuToggle.contains(event.target)) {
-        toggleMenu();
+      // Alimenta os arrays individuais para cada viewport rodar sua instância
+      for (let i = 0; i < particleCount; i++) {
+        particlesHero.push(new DustParticle(canvasHero));
+        particlesApp.push(new DustParticle(canvasApp));
       }
+
+      function animate() {
+        // Limpa e renderiza o Canvas da Hero
+        ctxHero.clearRect(0, 0, canvasHero.width, canvasHero.height);
+        ctxHero.shadowBlur = 0;
+        for (let i = 0; i < particlesHero.length; i++) {
+          particlesHero[i].update();
+          particlesHero[i].draw(ctxHero);
+        }
+
+        // Limpa e renderiza o Canvas da Plataforma
+        ctxApp.clearRect(0, 0, canvasApp.width, canvasApp.height);
+        ctxApp.shadowBlur = 0;
+        for (let i = 0; i < particlesApp.length; i++) {
+          particlesApp[i].update();
+          particlesApp[i].draw(ctxApp);
+        }
+
+        requestAnimationFrame(animate);
+      }
+      animate();
+
+      // =========================================================================
+      // O SEGREDO DO "ESTILO APPLE": INTERSECTION OBSERVER COM CURVA PREMIUM
+      // =========================================================================
+      const revealElements = document.querySelectorAll('.apple-reveal');
+
+      const revealOptions = {
+        root: null, // monitoriza o viewport global
+        rootMargin: "0px 0px -8% 0px", // ativa ligeiramente antes do elemento chegar totalmente à tela
+        threshold: 0.08 // exige que pelo menos 8% do componente esteja visível para disparar
+      };
+
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            // Desativa a observação do elemento após animar uma vez (padrão estrito da Apple)
+            observer.unobserve(entry.target);
+          }
+        });
+      }, revealOptions);
+
+      revealElements.forEach(element => {
+        revealObserver.observe(element);
+      });
     });
 
-    menuToggle.addEventListener('click', toggleMenu);
+    // --- ENGINE DE SCROLLSPY (ATIVA O LINK CONFORME A SEÇÃO) ---
+    const sections = document.querySelectorAll("section[id]");
+    const navLinks = document.querySelectorAll(".nav-link");
+
+    const observerOptions = {
+      root: null,
+      rootMargin: "-20% 0px -70% 0px",
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute("id");
+          navLinks.forEach((link) => {
+            link.classList.remove("active");
+            if (link.getAttribute("href") === `#${id}`) {
+              link.classList.add("active");
+            }
+          });
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach((section) => observer.observe(section));
   </script>
+
 </body>
+
 </html>
