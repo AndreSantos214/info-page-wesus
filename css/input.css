@@ -552,7 +552,7 @@
 }
 
 /* NOVA REGRA: Compactação tipográfica para ecrãs abaixo de 560px de altura */
-@media (max-height: 560px) {
+@media (max-height: 620px) {
   /* Reduz o título principal para não esmagar os elementos verticalmente */
   #hero-stage h1 {
     font-size: 3rem !important;
