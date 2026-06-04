@@ -38,22 +38,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Ativamos a escuta globalmente para que o Mobile/Tablet também alterne as classes.
-  // A performance será garantida pela leveza das propriedades aplicadas no CSS.
+  // Ativamos a escuta e inicialização de forma limpa e dinâmica para todos os ecrãs
   window.addEventListener("scroll", handleScroll, { passive: true });
   handleScroll();
-
-  // Se for Mobile/Tablet, o header já nasce fixo nativamente no CSS para evitar jank
-  if (!isMobileOrTablet) {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-  } else {
-    header.classList.add("scrolled");
-    headerLogo.classList.remove("logo-hidden");
-    console.log(
-      "Wesus Engine: Header imobilizado estaticamente para ganho de FPS.",
-    );
-  }
 
   // ─── 2. LÓGICA DO MENU HAMBÚRGUER MOBILE ───
   const mobileMenuBtn = document.getElementById("mobileMenuBtn");

@@ -73,35 +73,6 @@
 }
 
 @layer components {
-  /* --- LOGO CENTRAL HERO ULTRA-RESPONSIVO BLINDADO --- */
-  .wesus-hero-logo-container {
-    width: 85vw !important; /* Ocupa 85% da largura em telemóveis */
-    height: 85vw !important;
-    max-width: 580px !important; /* Teto máximo para não estourar */
-    max-height: 580px !important;
-    margin-top: -1rem !important;
-    margin-bottom: -1rem !important;
-    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) !important;
-  }
-
-  /* Breakpoint para TABLETS (Telas médias de transição) */
-  @media (min-width: 640px) {
-    .wesus-hero-logo-container {
-      width: 460px !important; /* Tamanho perfeito e imponente para o tablet */
-      height: 460px !important;
-    }
-  }
-
-  /* Breakpoint para DESKTOPS (Monitores grandes) */
-  @media (min-width: 1024px) {
-    .wesus-hero-logo-container {
-      width: 62vh !important; /* Proporção ideal baseada na altura da tela */
-      height: 62vh !important;
-      margin-top: -14vh !important;
-      margin-bottom: -10vh !important;
-    }
-  }
-
   /* --- VITRIFICAÇÃO ULTRA PREMIUM ACELERADA POR HARDWARE --- */
   .hero-card-crystal {
     position: relative;
@@ -528,16 +499,13 @@
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0) !important;
-  /* Transição ultra suave usando a curva clássica de engenharia premium */
   transition:
     background-color 0.6s cubic-bezier(0.16, 1, 0.3, 1),
     border-color 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-/* Substitui apenas este sub-bloco dentro do seu input.css */
 #mainHeader.scrolled {
   background-color: rgba(4, 14, 28, 0.94) !important;
-  /* Linha dourada alterada para o branco semitransparente discreto do desktop */
   border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
 }
 
@@ -545,7 +513,7 @@
 #headerLogo {
   opacity: 1 !important;
   pointer-events: auto !important;
-  transform: translateY(0) scale(1) !important; /* Posição final nominal */
+  transform: translateY(0) scale(1) !important;
   transition:
     opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
@@ -555,7 +523,7 @@
 #headerLogo.logo-hidden {
   opacity: 0 !important;
   pointer-events: none !important;
-  transform: translateY(12px) scale(0.96) !important; /* Nasce ligeiramente abaixo e sobe ao aparecer */
+  transform: translateY(12px) scale(0.96) !important;
 }
 
 /* Layout para TELEMÓVEIS (Breakpoint abaixo de 950px com logo centralizado) */
@@ -564,14 +532,13 @@
     position: absolute !important;
     left: 50% !important;
     top: 50% !important;
-    transform: translate(-50%, -50%) scale(1) !important; /* Mantém a centralização perfeita */
+    transform: translate(-50%, -50%) scale(1) !important;
   }
 
-  /* Esconde o logo no telemóvel fazendo-o emergir de baixo para cima suavemente */
   #headerLogo.logo-hidden {
     opacity: 0 !important;
     pointer-events: none !important;
-    transform: translate(-50%, -25%) scale(0.94) !important; /* Deslocamento vertical e escala harmónica */
+    transform: translate(-50%, -25%) scale(0.94) !important;
   }
 }
 
@@ -616,9 +583,7 @@
   }
 }
 
-/* COMO DEVE FICAR: */
 @media (min-width: 1024px) {
-  /* Blindagem contra redimensionamento de janela */
   #mobileMenu {
     display: none !important;
   }
@@ -656,10 +621,10 @@
       border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
 
-  /* Fundo translúcido safira com microborda em ouro champagne no scroll */
+  /* Fundo translúcido safira com microborda semitransparente discreta */
   #mainHeader.scrolled {
     background-color: rgba(4, 14, 28, 0.94) !important;
-    border-bottom: 1px solid rgba(197, 160, 89, 0.15) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
   }
 
   /* --- ENGINE DE TRANSLACÃO DO LOGO (APENAS FADE SUAVE NO MESMO LUGAR) --- */
@@ -667,7 +632,7 @@
     opacity: 1 !important;
     pointer-events: auto !important;
     transform: none !important; /* Totalmente imóvel no tablet */
-    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important; /* Transição ÚNICA de opacidade */
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
 
   /* Estado Oculto para TABLETS (Apenas esmaece no lugar) */
@@ -683,21 +648,14 @@
       position: absolute !important;
       left: 50% !important;
       top: 50% !important;
-      transform: translate(
-        -50%,
-        -50%
-      ) !important; /* Trava a centralização absoluta */
-      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important; /* Transição ÚNICA de opacidade */
+      transform: translate(-50%, -50%) !important;
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
 
-    /* Esconde o logo no telemóvel SEM MOVER UM ÚNICO PÍXEL de lugar */
     #headerLogo.logo-hidden {
       opacity: 0 !important;
       pointer-events: none !important;
-      transform: translate(
-        -50%,
-        -50%
-      ) !important; /* Mantém exatamente o mesmo transform para não haver saltos */
+      transform: translate(-50%, -50%) !important;
     }
   }
 
