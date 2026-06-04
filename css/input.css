@@ -551,6 +551,21 @@
   }
 }
 
+/* NOVA REGRA: Compactação tipográfica para ecrãs abaixo de 560px de altura */
+@media (max-height: 560px) {
+  /* Reduz o título principal para não esmagar os elementos verticalmente */
+  #hero-stage h1 {
+    font-size: 3rem !important;
+    line-height: 1.2 !important;
+  }
+
+  /* Diminui e ajusta o subtítulo para dar mais respiro */
+  #hero-stage p {
+    font-size: 10px !important;
+    letter-spacing: 0.22em !important;
+  }
+}
+
 /* =========================================================================
    HEADER: RESPONSIVIDADE ULTRA-PREMIUM (BREAKPOINT FIXO EM 950PX)
    ========================================================================= */
