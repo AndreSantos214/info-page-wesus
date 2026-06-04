@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const heroStage = document.getElementById("hero-stage");
   const videoHero = document.querySelector("#hero-stage video");
 
-  // ─── 1. CONTROLE DINÂMICO DO HEADER (SCROLL REFINED - DESKTOP ONLY) ───
+  // ─── 1. CONTROLE DINÂMICO DO HEADER (SCROLL REFINED - GLOBAL) ───
   const header = document.getElementById("mainHeader");
   const headerLogo = document.getElementById("headerLogo");
 
@@ -37,6 +37,11 @@ document.addEventListener("DOMContentLoaded", () => {
       headerLogo.classList.add("logo-hidden");
     }
   }
+
+  // Ativamos a escuta globalmente para que o Mobile/Tablet também alterne as classes.
+  // A performance será garantida pela leveza das propriedades aplicadas no CSS.
+  window.addEventListener("scroll", handleScroll, { passive: true });
+  handleScroll();
 
   // Se for Mobile/Tablet, o header já nasce fixo nativamente no CSS para evitar jank
   if (!isMobileOrTablet) {

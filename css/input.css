@@ -488,22 +488,66 @@
 /* =========================================================================
    HEADER: TRANSIÇÃO DINÂMICA (TRANSPARENTE -> VIDRO FOSCO PREMUM)
    ========================================================================= */
+/* 1. SISTEMA DINÂMICO DE HEADER LUXURY (CINEMÁTICA FLUIDA SEM BLUR) */
 #mainHeader {
-  background-color: transparent !important;
-  backdrop-filter: blur(0px);
-  -webkit-backdrop-filter: blur(0px);
-  border-bottom: 1px solid transparent;
+  background-color: rgba(
+    6,
+    19,
+    37,
+    0
+  ) !important; /* Totalmente invisível no topo */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0) !important;
+  /* Transição ultra suave usando a curva clássica de engenharia premium */
   transition:
-    background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-    backdrop-filter 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    background-color 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
+/* EFEITO LUXO MERECIDO: Subida do fundo com gradiente translúcido profundo e microborda dourada */
 #mainHeader.scrolled {
-  background-color: rgba(6, 19, 37, 0.85) !important;
-  backdrop-filter: blur(24px) saturate(160%) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(160%) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  background: linear-gradient(
+    to bottom,
+    rgba(4, 14, 28, 0.96) 0%,
+    rgba(6, 19, 37, 0.92) 100%
+  ) !important;
+  /* Substitui o sólido por uma linha fina de reflexo ouro champagne da Wesus */
+  border-bottom: 1px solid rgba(197, 160, 89, 0.15) !important;
+}
+
+/* --- ENGINE DE TRANSLACÃO DO LOGO (EFEITO SUAVE DE SUBIDA) --- */
+#headerLogo {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: translateY(0) scale(1) !important; /* Posição final nominal */
+  transition:
+    opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Layout para TABLETS (Logo alinhado à esquerda) */
+#headerLogo.logo-hidden {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateY(12px) scale(0.96) !important; /* Nasce ligeiramente abaixo e sobe ao aparecer */
+}
+
+/* Layout para TELEMÓVEIS (Breakpoint abaixo de 950px com logo centralizado) */
+@media (max-width: 950px) {
+  #headerLogo {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) scale(1) !important; /* Mantém a centralização perfeita */
+  }
+
+  /* Esconde o logo no telemóvel fazendo-o emergir de baixo para cima suavemente */
+  #headerLogo.logo-hidden {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translate(-50%, -25%) scale(0.94) !important; /* Deslocamento vertical e escala harmónica */
+  }
 }
 
 /* =========================================================================
@@ -547,13 +591,17 @@
   }
 }
 
-@media (min-width: 951px) {
+/* COMO DEVE FICAR: */
+@media (min-width: 1024px) {
+  /* Blindagem contra redimensionamento de janela */
   #mobileMenu {
     display: none !important;
   }
-  .logo-hidden {
+  /* FORÇA BRUTA DESKTOP: Garante o logo 100% visível no PC, mesmo com tela Touch */
+  #headerLogo.logo-hidden {
     opacity: 1 !important;
     pointer-events: auto !important;
+    transform: none !important;
   }
 }
 
@@ -561,7 +609,7 @@
    BLINDAGEM DE PERFORMANCE MÓVEL: ESTABILIZAÇÃO DE MEMÓRIA (MOBILE & TABLET)
    ========================================================================= */
 @media (max-width: 1023px), (pointer: coarse) {
-  /* ANTIDOTO DE FLICKER: Neutraliza transições e forças bitmaps bidimensionais puros */
+  /* ANTIDOTO DE FLICKER: Neutraliza transições e forças bitmaps puros nos cards */
   .apple-reveal,
   .apple-reveal *,
   .hero-card-crystal,
@@ -569,31 +617,62 @@
     transition: none !important;
     animation: none !important;
     will-change: auto !important;
-    transform: none !important; /* Desativa agressivamente qualquer camada 3D inicial */
+    transform: none !important;
   }
 
-  /* 1. CORREÇÃO DE ESPECIFICIDADE: DETONAR BLUR DO HEADER MESMO COM SCROLL */
-  #mainHeader,
-  #mainHeader.scrolled {
-    background-color: rgba(6, 19, 37, 0.98) !important;
+  /* 1. SISTEMA DINÂMICO DE HEADER LUXURY (CINEMÁTICA SIMÉTRICA DE ALTA FLUIDEZ) */
+  #mainHeader {
+    background-color: rgba(6, 19, 37, 0) !important; /* Invisível no topo */
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
-    transition: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0) !important;
+    transition:
+      background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
 
-  /* Garante que o logo e links fiquem prontos instantaneamente */
-  #headerLogo,
-  .logo-hidden {
+  /* Fundo translúcido safira com microborda em ouro champagne no scroll */
+  #mainHeader.scrolled {
+    background-color: rgba(4, 14, 28, 0.94) !important;
+    border-bottom: 1px solid rgba(197, 160, 89, 0.15) !important;
+  }
+
+  /* --- ENGINE DE TRANSLACÃO DO LOGO (APENAS FADE SUAVE NO MESMO LUGAR) --- */
+  #headerLogo {
     opacity: 1 !important;
     pointer-events: auto !important;
-    transition: none !important;
+    transform: none !important; /* Totalmente imóvel no tablet */
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important; /* Transição ÚNICA de opacidade */
   }
 
+  /* Estado Oculto para TABLETS (Apenas esmaece no lugar) */
+  #headerLogo.logo-hidden {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: none !important;
+  }
+
+  /* Estado para TELEMÓVEIS (Breakpoint de centralização abaixo de 950px) */
   @media (max-width: 950px) {
     #headerLogo {
-      transform: translate(-50%, -50%) scale(1) !important;
-      transition: none !important;
+      position: absolute !important;
+      left: 50% !important;
+      top: 50% !important;
+      transform: translate(
+        -50%,
+        -50%
+      ) !important; /* Trava a centralização absoluta */
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important; /* Transição ÚNICA de opacidade */
+    }
+
+    /* Esconde o logo no telemóvel SEM MOVER UM ÚNICO PÍXEL de lugar */
+    #headerLogo.logo-hidden {
+      opacity: 0 !important;
+      pointer-events: none !important;
+      transform: translate(
+        -50%,
+        -50%
+      ) !important; /* Mantém exatamente o mesmo transform para não haver saltos */
     }
   }
 
@@ -610,13 +689,12 @@
     filter: none !important;
   }
 
-  /* Desativa a flutuação contínua do mockup do telemóvel para poupar a thread gráfica */
   .mockup-saiyan-float {
     animation: none !important;
     transform: none !important;
   }
 
-  /* 3. ARQUITETURA PLANAR COMPLETA: REMOVE CAMADAS 3D CAUSADORAS DE GHOSTING */
+  /* 3. ARQUITETURA PLANAR COMPLETA: ZERO GHOSTING */
   .apple-reveal {
     opacity: 1 !important;
     transform: none !important;
@@ -633,7 +711,7 @@
     transition: none !important;
   }
 
-  /* 4. BLOQUEIO ABSOLUTO DE TRANSIÇÕES E ANULAÇÃO DE TRANSFORMS NOS ASSETS */
+  /* 4. BLOQUEIO ABSOLUTO DE TRANSIÇÕES NOS ASSETS HERÁLDICOS */
   .pilar-scroll-effect,
   .touro-scroll-effect,
   .apple-reveal .pilar-scroll-effect,
@@ -645,7 +723,6 @@
     transform: none !important;
   }
 
-  /* Fixação direta e definitiva dos valores heráldicos nativos */
   .pilar-scroll-effect {
     opacity: 0.5 !important;
     transform: scale(1.25) !important;
@@ -656,14 +733,14 @@
     transform: scale(1.15) !important;
   }
 
-  /* ANULAÇÃO CIRÚRGICA DOS TRANSFORMS INLINE DAS IMAGENS DA EQUIPA */
+  /* Anulação de transforms inline das imagens da equipa */
   .hero-card-crystal picture img,
   .hero-card-crystal img {
     transform: none !important;
     will-change: auto !important;
   }
 
-  /* 5. ACHATAMENTO COMPLETO DOS CARDS (PINTURA 2D DIRETA E SUAVE) */
+  /* 5. ACHATAMENTO COMPLETO DOS CARDS (PINTURA 2D DIRETA) */
   .hero-card-crystal {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
