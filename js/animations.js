@@ -83,6 +83,23 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // INJETAR LOGO ABAIXO DO FECHO DO BLOCO DO MENU HAMBÚRGUER:
+  if (mobileMenuBtn && mobileMenu) {
+    // ... (o teu código atual do toggleMenu e dos mobileLinks fica aqui) ...
+  }
+
+  // NOVO: Detetor de clique fora para fechar o menu automaticamente
+  document.addEventListener("click", (e) => {
+    if (mobileMenu && !mobileMenu.classList.contains("hidden")) {
+      // Se o clique NÃO foi no menu E NÃO foi no botão do menu, fecha!
+      if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+        mobileMenu.classList.add("hidden");
+        hamburgerIcon.classList.remove("hidden");
+        closeIcon.classList.add("hidden");
+      }
+    }
+  });
+
   // ─── 3. ENGINE DE PARTÍCULAS INTELIGENTE (CONSUMO ZERO FORA DE TELA) ───
   const canvasHero = document.getElementById("wesusGoldDustCanvas");
   const canvasApp = document.getElementById("plataformaGoldDustCanvas");
@@ -94,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let particlesHero = [];
     let particlesApp = [];
 
-    const particleCount = isMobileOrTablet ? 15 : 120;
+    const particleCount = isMobileOrTablet ? 45 : 120;
 
     let isHeroSectionVisible = true;
     let isAppSectionVisible = false;
@@ -133,9 +150,15 @@ document.addEventListener("DOMContentLoaded", () => {
       reset() {
         this.x = Math.random() * this.canvas.width;
         this.y = this.canvas.height + Math.random() * 20;
-        this.size = Math.random() * 1.4 + 0.4;
+
+        // CORREÇÃO: Partículas ligeiramente maiores no Mobile/Tablet para dar presença visual
+        this.size = Math.random() * 1.8 + 0.6;
+
         this.speedY = -(Math.random() * 0.25 + 0.05);
-        this.speedX = Math.random() * 0.16 - 0.08;
+
+        // CORREÇÃO: Dobrámos a dispersão horizontal (speedX) para que elas flutuem mais para os lados
+        this.speedX = Math.random() * 0.32 - 0.16;
+
         this.baseColor =
           goldColors[Math.floor(Math.random() * goldColors.length)];
         this.alpha = 0;

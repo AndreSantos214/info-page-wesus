@@ -73,6 +73,35 @@
 }
 
 @layer components {
+  /* --- LOGO CENTRAL HERO ULTRA-RESPONSIVO BLINDADO --- */
+  .wesus-hero-logo-container {
+    width: 85vw !important; /* Ocupa 85% da largura em telemóveis */
+    height: 85vw !important;
+    max-width: 580px !important; /* Teto máximo para não estourar */
+    max-height: 580px !important;
+    margin-top: -1rem !important;
+    margin-bottom: -1rem !important;
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  /* Breakpoint para TABLETS (Telas médias de transição) */
+  @media (min-width: 640px) {
+    .wesus-hero-logo-container {
+      width: 460px !important; /* Tamanho perfeito e imponente para o tablet */
+      height: 460px !important;
+    }
+  }
+
+  /* Breakpoint para DESKTOPS (Monitores grandes) */
+  @media (min-width: 1024px) {
+    .wesus-hero-logo-container {
+      width: 62vh !important; /* Proporção ideal baseada na altura da tela */
+      height: 62vh !important;
+      margin-top: -14vh !important;
+      margin-bottom: -10vh !important;
+    }
+  }
+
   /* --- VITRIFICAÇÃO ULTRA PREMIUM ACELERADA POR HARDWARE --- */
   .hero-card-crystal {
     position: relative;
@@ -505,15 +534,11 @@
     border-color 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-/* EFEITO LUXO MERECIDO: Subida do fundo com gradiente translúcido profundo e microborda dourada */
+/* Substitui apenas este sub-bloco dentro do seu input.css */
 #mainHeader.scrolled {
-  background: linear-gradient(
-    to bottom,
-    rgba(4, 14, 28, 0.96) 0%,
-    rgba(6, 19, 37, 0.92) 100%
-  ) !important;
-  /* Substitui o sólido por uma linha fina de reflexo ouro champagne da Wesus */
-  border-bottom: 1px solid rgba(197, 160, 89, 0.15) !important;
+  background-color: rgba(4, 14, 28, 0.94) !important;
+  /* Linha dourada alterada para o branco semitransparente discreto do desktop */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
 }
 
 /* --- ENGINE DE TRANSLACÃO DO LOGO (EFEITO SUAVE DE SUBIDA) --- */

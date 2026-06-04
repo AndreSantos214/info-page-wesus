@@ -27,14 +27,9 @@
   <header id="mainHeader" class="fixed top-0 left-0 right-0 z-50 py-4">
     <div class="max-w-7xl mx-auto px-6 h-12 flex items-center justify-between relative">
 
-      <!-- MODIFICADO: Sistema dinâmico para evitar pixelização em monitores grandes -->
       <a id="headerLogo" href="#" class="flex items-center group logo-hidden transition-all duration-500" aria-label="It's Wesus Home">
-        <picture class="h-[200px] w-auto object-contain filter drop-shadow-sm">
-          <!-- Monitores Desktop carregam a versão de alta densidade de pixels -->
-          <source media="(min-width: 1024px)" srcset="img/logo-its-wesus-branco-hd.webp" type="image/webp">
-          <!-- Telemóveis mantêm a versão leve atual para não prejudicar o score -->
-          <img src="img/logo-its-wesus-branco.webp" alt="It's Wesus" width="200" height="50" class="h-[200px] w-auto object-contain" />
-        </picture>
+        <!-- Imagem única em SVG vetorizado de alta nitidez -->
+        <img src="img/webp-logo-header.webp" alt="It's Wesus" width="200" height="50" class="h-[200px] w-auto object-contain filter drop-shadow-sm" />
       </a>
 
       <nav class="nav-desktop-custom items-center gap-10 text-[13px] font-semibold tracking-widest uppercase text-white/75" aria-label="Navegação Principal">
@@ -64,7 +59,7 @@
           <a href="#plataforma" class="hover:text-white transition-colors duration-200 py-2 border-b border-white/5">Plataforma</a>
           <a href="#contactos" class="hover:text-white transition-colors duration-200 py-2">Contactos</a>
         </nav>
-        <div class="pt-2 border-t border-white/10 w-full text-center">
+        <div class="pt-2 w-full text-center">
           <a href="https://andresantos214.github.io/its-wesus-app/www/index.html" class="btn-nav-cta inline-block w-full text-center">
             Portal do Cliente
           </a>
@@ -78,9 +73,8 @@
     <section id="hero-stage" class="relative w-full h-[100dvh] flex items-center justify-center overflow-hidden z-10 bg-[#061325]">
       <div class="absolute inset-0 z-0 w-full h-full pointer-events-none select-none overflow-hidden">
 
-        <!-- O VÍDEO VOLTOU: Disponível para todos os dispositivos nativamente -->
         <video loop muted playsinline fetchpriority="high" poster="img/hero-fallback-poster.webp" class="w-full h-full object-cover scale-105">
-          <source src="img/video-hero-2.webm" type="video/webm">
+          <source src="img/video-hero.mp4" type="video/webm">
         </video>
 
         <div class="absolute inset-0 bg-[#041124]/35 mix-blend-multiply z-10"></div>
@@ -91,15 +85,9 @@
 
       <!-- Removido o apple-reveal para forçar a pintura instantânea do LCP no milissegundo zero -->
       <div class="relative z-20 w-full max-w-5xl mx-auto px-6 flex flex-col items-center text-center gap-[2.5vh] pt-20">
-        <div class="w-[75vw] h-[75vw] max-w-[500px] sm:w-96 sm:h-96 lg:w-[55vh] lg:h-[55vh] -mt-4 -mb-4 lg:-mt-[14vh] lg:-mb-[10vh] flex items-center justify-center transform transition-transform duration-700 select-none">
-
-          <picture class="w-full h-full flex items-center justify-center">
-            <source media="(min-width: 1024px)" srcset="img/svg-logo-hero.svg" type="image/svg+xml">
-
-            <!-- CORRIGIDO: filter drop-shadow totalmente removido para acelerar a renderização do LCP -->
-            <img src="img/webp-logo-hero.webp" fetchpriority="high" alt="It's Wesus" width="500" height="500" class="w-full h-full object-contain max-lg:scale-110" />
-          </picture>
-
+        <!-- A SOLUÇÃO COMPACTA E CORRIGIDA: -->
+        <div class="w-[85vw] h-[85vw] max-w-[620px] sm:w-[460px] sm:h-[460px] lg:w-[65vh] lg:h-[65vh] -mt-[15vh] -mb-[8vh] lg:-mt-[22vh] lg:-mb-[12vh] flex items-center justify-center transform transition-transform duration-700 select-none">
+          <img src="img/svg-logo-hero.svg" fetchpriority="high" alt="It's Wesus" width="620" height="620" class="w-full h-full object-contain max-lg:scale-110" />
         </div>
 
         <div class="space-y-3">
