@@ -1,13 +1,25 @@
 /**
- * It's Wesus – Motor de Animação Unificado e Otimizado v2.1
+ * It's Wesus – Motor de Animação Unificado e Otimizado v2.2
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  // ─── 0. DETEÇÃO GLOBAL DE HARDWARE E SELETORES CRÍTICOS ───
+  // ─── 0. DETEÇÃO ULTRA-AVANÇADA DE HARDWARE (MÓVEL/TABLET REFORÇADO) ───
   const isTouchDevice =
     window.matchMedia("(pointer: coarse)").matches ||
     navigator.maxTouchPoints > 0;
-  const isMobileOrTablet = window.innerWidth < 1024 || isTouchDevice;
+
+  // Captura iPads modernos que se mascaram como "Macintosh" de Desktop e tablets Android
+  const isTabletUA =
+    (/iPad|Macintosh/i.test(navigator.userAgent) &&
+      navigator.maxTouchPoints > 1) ||
+    /Tablet|Android/i.test(navigator.userAgent);
+  const isMobileUA =
+    /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent,
+    );
+
+  const isMobileOrTablet =
+    window.innerWidth < 1024 || isTouchDevice || isTabletUA || isMobileUA;
 
   const heroStage = document.getElementById("hero-stage");
   const videoHero = document.querySelector("#hero-stage video");
@@ -26,8 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // BLINDAGEM DO HEADER: Se for Mobile/Tablet, o header já nasce no estado final fixo
-  // Isto evita que o browser recalcule o backdrop-filter pesado mid-scroll
+  // Se for Mobile/Tablet, o header já nasce fixo nativamente no CSS para evitar jank
   if (!isMobileOrTablet) {
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
@@ -191,14 +202,14 @@ document.addEventListener("DOMContentLoaded", () => {
         particlesApp.push(new DustParticle(canvasApp));
       }
       requestAnimationFrame(animate);
-      console.log("Wesus Engine: Motor de partículas ativado sem duplicações.");
+      console.log("Wesus Engine: Motor de partículas ativado de forma limpa.");
     }, 1000);
   }
 
   // ─── 4. INTERSECTION OBSERVER PARA REVELAÇÃO DAS SEÇÕES (DESKTOP SEM TOQUE) ───
   const revealElements = document.querySelectorAll(".apple-reveal");
 
-  if (window.matchMedia("(min-width: 1024px)").matches && !isTouchDevice) {
+  if (!isMobileOrTablet) {
     const revealObserver = new IntersectionObserver(
       (entries, observer) => {
         entries.forEach((entry) => {
@@ -212,11 +223,9 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     revealElements.forEach((element) => revealObserver.observe(element));
-  } else {
-    revealElements.forEach((element) => {
-      element.classList.add("is-visible");
-    });
   }
+  // SE FOR MOBILE/TABLET: O script ignora totalmente o loop de classes.
+  // Os elementos passam a ser forçados abertamente via CSS Puro instantaneamente.
 
   // ─── 5. ENGINE DE REFRAÇÃO DE LUZ CRISTALINA VIA SCROLL (DESKTOP ONLY) ───
   const crystalCards = document.querySelectorAll(".hero-card-crystal");
@@ -224,7 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const desktopMedia = window.matchMedia("(min-width: 1024px)");
 
   function updateGlassRefraction() {
-    if (!desktopMedia.matches || isTouchDevice) {
+    if (!desktopMedia.matches || isTouchDevice || isTabletUA) {
       ticking = false;
       return;
     }
