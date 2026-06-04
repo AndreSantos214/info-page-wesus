@@ -841,3 +841,20 @@
     transition: none !important;
   }
 }
+
+/* =========================================================================
+   SCROLLSPY: DESTAQUE DINÂMICO DOURADO LUXURY (PC & MÓVEL)
+   ========================================================================= */
+.nav-link-active {
+  color: #c5a059 !important; /* Ouro Wesus */
+  opacity: 1 !important;
+  text-shadow: 0 0 12px rgba(197, 160, 89, 0.4); /* Micro-brilho premium */
+}
+
+/* Garante que os links originais consigam transicionar a cor suavemente */
+#mainHeader nav a,
+#mobileMenu nav a {
+  transition:
+    color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    text-shadow 0.4s ease !important;
+}

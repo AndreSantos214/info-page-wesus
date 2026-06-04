@@ -312,3 +312,37 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 300);
   }
 });
+
+// ─── 8. ENGINE DE SCROLLSPY ULTRA-PERFORMANTE (INTERSECTION OBSERVER) ───
+const spyLinks = document.querySelectorAll(
+  '#mainHeader nav a[href^="#"], #mobileMenu nav a[href^="#"]',
+);
+const spySections = document.querySelectorAll("section[id]");
+
+if (spyLinks.length > 0 && spySections.length > 0) {
+  const scrollSpyObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        // Se a secção ocupar a zona central de leitura do ecrã
+        if (entry.isIntersecting) {
+          const currentId = entry.target.getAttribute("id");
+
+          spyLinks.forEach((link) => {
+            if (link.getAttribute("href") === `#${currentId}`) {
+              link.classList.add("nav-link-active");
+            } else {
+              link.classList.remove("nav-link-active");
+            }
+          });
+        }
+      });
+    },
+    {
+      // Zona de disparo calibrada: ativa quando a secção cruza o centro do visor (perfeito para Portrait e Landscape)
+      rootMargin: "-25% 0px -55% 0px",
+      threshold: 0,
+    },
+  );
+
+  spySections.forEach((section) => scrollSpyObserver.observe(section));
+}
