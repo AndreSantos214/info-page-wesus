@@ -603,3 +603,96 @@
     pointer-events: auto !important;
   }
 }
+
+/* =========================================================================
+   BLINDAGEM DE PERFORMANCE MÓVEL: ESTABILIZAÇÃO DE MEMÓRIA (MOBILE & TABLET)
+   ========================================================================= */
+
+@media (max-width: 1023px) {
+  /* 1. DESLIGAR OS BACKLIGHTS DE BLUR (ELIMINA SOBRECARGA DE OVERDRAW) */
+  .card-backlight-gold,
+  .card-backlight-blue {
+    display: none !important;
+  }
+
+  /* 2. FORÇAR EXIBIÇÃO IMEDIATA DOS CARDS (BYPASS DO OBSERVER) */
+  .apple-reveal {
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) translateZ(0) !important;
+    transition: none !important;
+  }
+
+  /* 3. RESGATAR PILAR E TOURO DO ESTADO OCULTO NO MOBILE */
+  .apple-reveal .pilar-scroll-effect {
+    opacity: 0.5 !important;
+    transform: scale(1.25) translateZ(0) !important;
+    transition: none !important;
+  }
+
+  .apple-reveal .touro-scroll-effect {
+    opacity: 0.09 !important;
+    transform: scale(1.15) translateZ(0) !important;
+    transition: none !important;
+  }
+
+  /* 4. OTIMIZAÇÃO CRÍTICA DO VIDRO PREMIUM */
+  .hero-card-crystal {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    will-change: auto !important;
+  }
+
+  /* 5. ILUMINAÇÃO ESTÁTICA ULTRA PREMIUM: CARD CHAMPAGNE / DOURADO */
+  .card-backlight-gold + .hero-card-crystal {
+    background:
+      linear-gradient(
+          135deg,
+          rgba(11, 27, 49, 0.96),
+          rgba(6, 17, 33, 0.98) 50%,
+          rgba(16, 32, 54, 0.94)
+        )
+        padding-box,
+      linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.4) 0%,
+          rgba(255, 255, 255, 0.05) 35%,
+          rgba(197, 160, 89, 0.2) 70%,
+          rgba(232, 208, 141, 0.45) 100%
+        )
+        border-box !important;
+
+    /* Sombra estática otimizada que simula o glow dourado sem peso na GPU */
+    box-shadow:
+      0 25px 50px -12px rgba(0, 0, 0, 0.95),
+      inset 0 1px 1px rgba(255, 255, 255, 0.15),
+      0 0 35px rgba(197, 160, 89, 0.16) !important;
+    transition: none !important;
+  }
+
+  /* 6. ILUMINAÇÃO ESTÁTICA ULTRA PREMIUM: CARD SAFIRA / AZUL REFORÇADO */
+  .card-backlight-blue + .hero-card-crystal {
+    background:
+      linear-gradient(
+          135deg,
+          rgba(8, 22, 43, 0.97),
+          rgba(4, 11, 23, 0.99) 50%,
+          rgba(12, 28, 54, 0.95)
+        )
+        padding-box,
+      linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.35) 0%,
+          rgba(255, 255, 255, 0.02) 35%,
+          rgba(0, 163, 255, 0.3) 70%,
+          rgba(0, 163, 255, 0.5) 100%
+        )
+        border-box !important;
+
+    /* Sombra estática otimizada que simula a retroiluminação azul contra o Touro */
+    box-shadow:
+      0 25px 50px -12px rgba(0, 0, 0, 0.95),
+      inset 0 1px 1px rgba(255, 255, 255, 0.12),
+      0 0 35px rgba(0, 163, 255, 0.2) !important;
+    transition: none !important;
+  }
+}

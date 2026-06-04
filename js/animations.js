@@ -58,7 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let particlesHero = [];
     let particlesApp = [];
 
-    // Aliviando o processador móvel: 15 partículas no mobile são ultra elegantes
     const isMobile = window.innerWidth < 1024;
     const particleCount = isMobile ? 15 : 120;
 
@@ -66,13 +65,11 @@ document.addEventListener("DOMContentLoaded", () => {
     let isAppSectionVisible = false;
 
     function resize() {
-      // FASE 1: LEITURA PURA (Sem alterar o DOM)
       const widthHero = canvasHero.offsetWidth;
       const heightHero = canvasHero.offsetHeight;
       const widthApp = canvasApp.offsetWidth;
       const heightApp = canvasApp.offsetHeight;
 
-      // FASE 2: ESCRITA PURA (Processada em bloco pela GPU)
       canvasHero.width = widthHero;
       canvasHero.height = heightHero;
       canvasApp.width = widthApp;
@@ -132,14 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    for (let i = 0; i < particleCount; i++) {
-      particlesHero.push(new DustParticle(canvasHero));
-      particlesApp.push(new DustParticle(canvasApp));
-    }
-
-    // MODIFICADO: Removemos os loops 'for' soltos daqui e colocamos dentro do bloco de ignição adiada
-
-    // Gerenciador de ciclo de vida: Desliga os loops se a seção sumir do ecrã
+    // Gerenciador de ciclo de vida das seções
     const heroSection = document.getElementById("hero-stage");
     if (heroSection) {
       new IntersectionObserver(
@@ -168,7 +158,6 @@ document.addEventListener("DOMContentLoaded", () => {
           particlesHero[i].draw(ctxHero);
         }
       }
-
       if (isAppSectionVisible) {
         ctxApp.clearRect(0, 0, canvasApp.width, canvasApp.height);
         for (let i = 0; i < particlesApp.length; i++) {
@@ -179,42 +168,49 @@ document.addEventListener("DOMContentLoaded", () => {
       requestAnimationFrame(animate);
     }
 
-    // IGNIÇÃO ADIADA REFINADA: Cria as instâncias e arranca o loop após 1 segundo
+    // IGNIÇÃO ÚNICA ADIADA: Instancia a quantidade correta apenas uma vez
     setTimeout(() => {
       for (let i = 0; i < particleCount; i++) {
         particlesHero.push(new DustParticle(canvasHero));
         particlesApp.push(new DustParticle(canvasApp));
       }
       requestAnimationFrame(animate);
-      console.log(
-        "Wesus Engine: Instanciação e motor de partículas ativados em background.",
-      );
+      console.log("Wesus Engine: Motor de partículas ativado sem duplicações.");
     }, 1000);
   }
 
-  // ─── 4. INTERSECTION OBSERVER PARA REVELAÇÃO DAS SEÇÕES ───
+  // ─── 4. INTERSECTION OBSERVER PARA REVELAÇÃO DAS SEÇÕES (DESKTOP ONLY) ───
   const revealElements = document.querySelectorAll(".apple-reveal");
-  const revealObserver = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target); // Executa a animação apenas uma vez para manter a performance estática
-        }
-      });
-    },
-    { root: null, rootMargin: "0px 0px -4% 0px", threshold: 0.01 },
-  );
 
-  revealElements.forEach((element) => revealObserver.observe(element));
+  // Condição estática de segurança: Só cria o Observer se for ecrã grande (Desktop)
+  if (window.matchMedia("(min-width: 1024px)").matches) {
+    const revealObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { root: null, rootMargin: "0px 0px -4% 0px", threshold: 0.01 },
+    );
 
-  // ─── 5. ENGINE DE REFRAÇÃO DE LUZ CRISTALINA VIA SCROLL ───
+    revealElements.forEach((element) => revealObserver.observe(element));
+  }
+
+  // ─── 5. ENGINE DE REFRAÇÃO DE LUZ CRISTALINA VIA SCROLL (DESKTOP ONLY) ───
   const crystalCards = document.querySelectorAll(".hero-card-crystal");
   let ticking = false;
+  const desktopMedia = window.matchMedia("(min-width: 1024px)");
 
   function updateGlassRefraction() {
-    const viewHeight = window.innerHeight;
+    if (!desktopMedia.matches) {
+      ticking = false;
+      return;
+    }
 
+    const viewHeight = window.innerHeight;
     const cardsToUpdate = Array.from(crystalCards).map((card) => {
       const rect = card.getBoundingClientRect();
       return {
@@ -239,6 +235,9 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener(
     "scroll",
     () => {
+      // CURTO-CIRCUITO IMEDIATO: Impede agendamento de RAF no Mobile/Tablet
+      if (window.innerWidth < 1024) return;
+
       if (!ticking) {
         requestAnimationFrame(updateGlassRefraction);
         ticking = true;
@@ -247,38 +246,18 @@ document.addEventListener("DOMContentLoaded", () => {
     { passive: true },
   );
 
-  // ─── 6. ENGINE DE SCROLLSPY & GATILHOS DE INICIALIZAÇÃO POST-PINTURA ───
-  const sections = document.querySelectorAll("section[id]");
-  const navLinks = document.querySelectorAll(".nav-link");
-
-  const observerOptions = {
-    root: null,
-    rootMargin: "-20% 0px -70% 0px",
-    threshold: 0,
-  };
-
-  const spyObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const id = entry.target.getAttribute("id");
-        navLinks.forEach((link) => {
-          link.classList.remove("active");
-          if (link.getAttribute("href") === `#${id}`) {
-            link.classList.add("active");
-          }
-        });
-      }
-    });
-  }, observerOptions);
-
-  // EXECUÇÃO DE SEGUNDO PLANO: Adia o mapeamento pesado para libertar a Main-Thread no milissegundo zero
-  setTimeout(() => {
-    sections.forEach((section) => spyObserver.observe(section));
-    requestAnimationFrame(updateGlassRefraction);
-  }, 50);
-
-  // ─── 7. ENGINE DE REPRODUÇÃO GLOBAL SUAVE (ANTI-STUTTER UNIVERSAL) ───
+  // ─── 7. ENGINE DE REPRODUÇÃO E FIXAÇÃO DE VIEWPORT (TRAVAMENTO ANTI-JANK) ───
+  const heroStage = document.getElementById("hero-stage");
   const videoHero = document.querySelector("#hero-stage video");
+
+  // Trava a altura imediatamente com base no cálculo real inicial da janela
+  if (heroStage && window.innerWidth < 1024) {
+    const realHeight = window.innerHeight;
+    heroStage.style.height = `${realHeight}px`;
+    console.log(
+      `Wesus Engine: Altura da Hero fixada estaticamente em ${realHeight}px.`,
+    );
+  }
 
   if (videoHero) {
     setTimeout(() => {
