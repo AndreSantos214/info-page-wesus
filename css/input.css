@@ -858,3 +858,18 @@
     color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
     text-shadow 0.4s ease !important;
 }
+
+/* =========================================================================
+   IOS BLINDAGEM: FORÇA BRUTA DE PRÉ-RENDERIZAÇÃO DA SOMBRA DO MOCKUP (GPU)
+   ========================================================================= */
+.mockup-saiyan-float img {
+  /* Força o iOS a criar uma camada de textura independente e fixa na memória */
+  will-change: filter, transform !important;
+
+  /* Ativa aceleração nativa em 3D diretamente no elemento da imagem */
+  transform: translateZ(0) !important;
+
+  /* Oculta as costas do plano para impedir que o Safari recalcule o bitmap no scroll */
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+}
