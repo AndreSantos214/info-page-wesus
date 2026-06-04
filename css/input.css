@@ -586,21 +586,29 @@
     }
   }
 
-  /* 2. EXTINGUIR ORBS DE BLUR MACRO E BRILHOS DINÂMICOS NA GPU */
+  /* 2. EXTINGUIR ORBS, GLOWS DE NEBULA, BRILHOS E ANIMAÇÕES NA GPU */
   .ambient-section-orb,
   .card-backlight-gold,
   .card-backlight-blue,
-  .hero-card-crystal::after {
+  .glow-aura-nebula,
+  .hero-card-crystal::after,
+  .space-comet {
     display: none !important;
     content: none !important;
     animation: none !important;
     filter: none !important;
   }
 
+  /* Desativa a flutuação contínua do mockup do telemóvel para poupar a thread gráfica */
+  .mockup-saiyan-float {
+    animation: none !important;
+    transform: none !important;
+  }
+
   /* 3. ARQUITETURA PLANAR COMPLETA: REMOVE CAMADAS 3D CAUSADORAS DE GHOSTING */
   .apple-reveal {
     opacity: 1 !important;
-    transform: none !important; /* Destrói a duplicação de textura na GPU */
+    transform: none !important;
     transition: none !important;
     will-change: auto !important;
   }
@@ -623,23 +631,32 @@
   .apple-reveal.is-visible .touro-scroll-effect {
     transition: none !important;
     animation: none !important;
+    transform: none !important;
   }
 
+  /* Fixação direta e definitiva dos valores heráldicos nativos */
   .pilar-scroll-effect {
     opacity: 0.5 !important;
-    transform: scale(1.25) !important; /* Mantém apenas a escala 2D estável */
+    transform: scale(1.25) !important;
   }
 
   .touro-scroll-effect {
     opacity: 0.09 !important;
-    transform: scale(1.15) !important; /* Mantém apenas a escala 2D estável */
+    transform: scale(1.15) !important;
+  }
+
+  /* ANULAÇÃO CIRÚRGICA DOS TRANSFORMS INLINE DAS IMAGENS DA EQUIPA */
+  .hero-card-crystal picture img,
+  .hero-card-crystal img {
+    transform: none !important;
+    will-change: auto !important;
   }
 
   /* 5. ACHATAMENTO COMPLETO DOS CARDS (PINTURA 2D DIRETA E SUAVE) */
   .hero-card-crystal {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    transform: none !important; /* Desliga o translateZ que quebrava o texto do tablet */
+    transform: none !important;
     will-change: auto !important;
     transition: none !important;
   }

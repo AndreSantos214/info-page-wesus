@@ -270,10 +270,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     revealElements.forEach((element) => revealObserver.observe(element));
   } else {
-    // SE FOR MOBILE/TABLET: Ignora o observer e força todos a nascerem ativos no milissegundo zero
-    revealElements.forEach((element) => {
-      element.classList.add("is-visible");
-    });
+    // SE FOR MOBILE/TABLET: Curto-circuito absoluto.
+    // O script não adiciona nenhuma classe para evitar recalculo tardio de layout.
+    console.log(
+      "Wesus Engine: Ignorando mutações de DOM para renderização nativa imediata.",
+    );
   }
 
   // ─── 5. ENGINE DE REFRAÇÃO DE LUZ CRISTALINA VIA SCROLL (DESKTOP ONLY) ───
