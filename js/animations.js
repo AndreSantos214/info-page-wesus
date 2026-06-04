@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const heroStage = document.getElementById("hero-stage");
   const videoHero = document.querySelector("#hero-stage video");
 
-  // ─── 1. CONTROLE DINÂMICO DO HEADER (SCROLL REFINED) ───
+  // ─── 1. CONTROLE DINÂMICO DO HEADER (SCROLL REFINED - DESKTOP ONLY) ───
   const header = document.getElementById("mainHeader");
   const headerLogo = document.getElementById("headerLogo");
 
@@ -25,8 +25,19 @@ document.addEventListener("DOMContentLoaded", () => {
       headerLogo.classList.add("logo-hidden");
     }
   }
-  window.addEventListener("scroll", handleScroll, { passive: true });
-  handleScroll();
+
+  // BLINDAGEM DO HEADER: Se for Mobile/Tablet, o header já nasce no estado final fixo
+  // Isto evita que o browser recalcule o backdrop-filter pesado mid-scroll
+  if (!isMobileOrTablet) {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+  } else {
+    header.classList.add("scrolled");
+    headerLogo.classList.remove("logo-hidden");
+    console.log(
+      "Wesus Engine: Header imobilizado estaticamente para ganho de FPS.",
+    );
+  }
 
   // ─── 2. LÓGICA DO MENU HAMBÚRGUER MOBILE ───
   const mobileMenuBtn = document.getElementById("mobileMenuBtn");
