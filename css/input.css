@@ -586,7 +586,7 @@
     }
   }
 
-  /* 2. EXTINGUIR ORBS DE BLUR MACRO (160px) E BRILHOS DINÂMICOS NA GPU */
+  /* 2. EXTINGUIR ORBS DE BLUR MACRO E BRILHOS DINÂMICOS NA GPU */
   .ambient-section-orb,
   .card-backlight-gold,
   .card-backlight-blue,
@@ -597,10 +597,10 @@
     filter: none !important;
   }
 
-  /* 3. ARQUITETURA ESTÁTICA TOTAL: DESATIVAR REVEALS E DELAYS (PRE-RENDER IMEDIATO) */
+  /* 3. ARQUITETURA PLANAR COMPLETA: REMOVE CAMADAS 3D CAUSADORAS DE GHOSTING */
   .apple-reveal {
     opacity: 1 !important;
-    transform: translateY(0) scale(1) translateZ(0) !important;
+    transform: none !important; /* Destrói a duplicação de textura na GPU */
     transition: none !important;
     will-change: auto !important;
   }
@@ -614,7 +614,7 @@
     transition: none !important;
   }
 
-  /* 4. BLOQUEIO ABSOLUTO DE TRANSIÇÕES NOS ASSETS INTERNOS */
+  /* 4. BLOQUEIO ABSOLUTO DE TRANSIÇÕES E ANULAÇÃO DE TRANSFORMS NOS ASSETS */
   .pilar-scroll-effect,
   .touro-scroll-effect,
   .apple-reveal .pilar-scroll-effect,
@@ -627,19 +627,19 @@
 
   .pilar-scroll-effect {
     opacity: 0.5 !important;
-    transform: scale(1.25) translateZ(0) !important;
+    transform: scale(1.25) !important; /* Mantém apenas a escala 2D estável */
   }
 
   .touro-scroll-effect {
     opacity: 0.09 !important;
-    transform: scale(1.15) translateZ(0) !important;
+    transform: scale(1.15) !important; /* Mantém apenas a escala 2D estável */
   }
 
-  /* 5. ACHATAMENTO DE CAMADA NA GPU (CONGELAR EM BITMAP) */
+  /* 5. ACHATAMENTO COMPLETO DOS CARDS (PINTURA 2D DIRETA E SUAVE) */
   .hero-card-crystal {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    transform: translateZ(0) !important;
+    transform: none !important; /* Desliga o translateZ que quebrava o texto do tablet */
     will-change: auto !important;
     transition: none !important;
   }
@@ -686,103 +686,6 @@
           rgba(0, 163, 255, 0.4) 100%
         )
         border-box !important;
-    box-shadow:
-      0 12px 24px rgba(0, 0, 0, 0.85),
-      inset 0 1px 1px rgba(255, 255, 255, 0.1) !important;
-    transition: none !important;
-  }
-
-  /* 3. ARQUITETURA ESTÁTICA TOTAL: DESATIVAR REVEALS E DELAYS (PRE-RENDER IMEDIATO) */
-  .apple-reveal {
-    opacity: 1 !important;
-    transform: translateY(0) scale(1) translateZ(0) !important;
-    transition: none !important;
-    will-change: auto !important;
-  }
-
-  .delay-100,
-  .delay-200,
-  .delay-300,
-  .delay-400,
-  .delay-500 {
-    transition-delay: 0ms !important;
-    transition: none !important;
-  }
-
-  /* 4. BLOQUEIO ABSOLUTO DE TRANSIÇÕES NOS ASSETS INTERNOS (ANTI-POP-IN DOS TABLETS) */
-  .pilar-scroll-effect,
-  .touro-scroll-effect,
-  .apple-reveal .pilar-scroll-effect,
-  .apple-reveal.is-visible .pilar-scroll-effect,
-  .apple-reveal .touro-scroll-effect,
-  .apple-reveal.is-visible .touro-scroll-effect {
-    transition: none !important;
-    animation: none !important;
-  }
-
-  .pilar-scroll-effect {
-    opacity: 0.5 !important;
-    transform: scale(1.25) translateZ(0) !important;
-  }
-
-  .touro-scroll-effect {
-    opacity: 0.09 !important;
-    transform: scale(1.15) translateZ(0) !important;
-  }
-
-  /* 5. ACHATAMENTO DE CAMADA NA GPU (CONGELAR EM BITMAP) */
-  .hero-card-crystal {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    transform: translateZ(0) !important;
-    will-change: auto !important;
-    transition: none !important;
-  }
-
-  /* 6. ILUMINAÇÃO PASSIVA LUXUOSA: CARD CHAMPAGNE / DOURADO */
-  .card-backlight-gold + .hero-card-crystal {
-    background:
-      linear-gradient(
-          135deg,
-          rgba(11, 27, 49, 0.96),
-          rgba(6, 17, 33, 0.98) 50%,
-          rgba(16, 32, 54, 0.94)
-        )
-        padding-box,
-      linear-gradient(
-          145deg,
-          rgba(255, 255, 255, 0.35) 0%,
-          rgba(255, 255, 255, 0.05) 35%,
-          rgba(197, 160, 89, 0.15) 70%,
-          rgba(232, 208, 141, 0.35) 100%
-        )
-        border-box !important;
-
-    box-shadow:
-      0 12px 24px rgba(0, 0, 0, 0.85),
-      inset 0 1px 1px rgba(255, 255, 255, 0.12) !important;
-    transition: none !important;
-  }
-
-  /* 7. ILUMINAÇÃO PASSIVA LUXUOSA: CARD SAFIRA / AZUL REFORÇADO */
-  .card-backlight-blue + .hero-card-crystal {
-    background:
-      linear-gradient(
-          135deg,
-          rgba(8, 22, 43, 0.97),
-          rgba(4, 11, 23, 0.99) 50%,
-          rgba(12, 28, 54, 0.95)
-        )
-        padding-box,
-      linear-gradient(
-          145deg,
-          rgba(255, 255, 255, 0.3) 0%,
-          rgba(255, 255, 255, 0.02) 35%,
-          rgba(0, 163, 255, 0.25) 70%,
-          rgba(0, 163, 255, 0.4) 100%
-        )
-        border-box !important;
-
     box-shadow:
       0 12px 24px rgba(0, 0, 0, 0.85),
       inset 0 1px 1px rgba(255, 255, 255, 0.1) !important;
