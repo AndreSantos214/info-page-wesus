@@ -1,8 +1,17 @@
 /**
- * It's Wesus – Motor de Animação Unificado e Otimizado v2
+ * It's Wesus – Motor de Animação Unificado e Otimizado v2.1
  */
 
 document.addEventListener("DOMContentLoaded", () => {
+  // ─── 0. DETEÇÃO GLOBAL DE HARDWARE E SELETORES CRÍTICOS ───
+  const isTouchDevice =
+    window.matchMedia("(pointer: coarse)").matches ||
+    navigator.maxTouchPoints > 0;
+  const isMobileOrTablet = window.innerWidth < 1024 || isTouchDevice;
+
+  const heroStage = document.getElementById("hero-stage");
+  const videoHero = document.querySelector("#hero-stage video");
+
   // ─── 1. CONTROLE DINÂMICO DO HEADER (SCROLL REFINED) ───
   const header = document.getElementById("mainHeader");
   const headerLogo = document.getElementById("headerLogo");
@@ -10,10 +19,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function handleScroll() {
     if (window.scrollY > 50) {
       header.classList.add("scrolled");
-      headerLogo.classList.remove("logo-hidden"); // Remove o estado oculto
+      headerLogo.classList.remove("logo-hidden");
     } else {
       header.classList.remove("scrolled");
-      headerLogo.classList.add("logo-hidden"); // Injeta o estado oculto
+      headerLogo.classList.add("logo-hidden");
     }
   }
   window.addEventListener("scroll", handleScroll, { passive: true });
@@ -58,8 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let particlesHero = [];
     let particlesApp = [];
 
-    const isMobile = window.innerWidth < 1024;
-    const particleCount = isMobile ? 15 : 120;
+    const particleCount = isMobileOrTablet ? 15 : 120;
 
     let isHeroSectionVisible = true;
     let isAppSectionVisible = false;
@@ -129,15 +137,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // Gerenciador de ciclo de vida das seções
-    const heroSection = document.getElementById("hero-stage");
-    if (heroSection) {
+    if (heroStage) {
       new IntersectionObserver(
         (entries) => {
           isHeroSectionVisible = entries[0].isIntersecting;
         },
         { threshold: 0.01 },
-      ).observe(heroSection);
+      ).observe(heroStage);
     }
 
     const plataformaSection = document.getElementById("plataforma");
@@ -168,7 +174,6 @@ document.addEventListener("DOMContentLoaded", () => {
       requestAnimationFrame(animate);
     }
 
-    // IGNIÇÃO ÚNICA ADIADA: Instancia a quantidade correta apenas uma vez
     setTimeout(() => {
       for (let i = 0; i < particleCount; i++) {
         particlesHero.push(new DustParticle(canvasHero));
@@ -179,11 +184,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1000);
   }
 
-  // ─── 4. INTERSECTION OBSERVER PARA REVELAÇÃO DAS SEÇÕES (DESKTOP ONLY) ───
+  // ─── 4. INTERSECTION OBSERVER PARA REVELAÇÃO DAS SEÇÕES (DESKTOP SEM TOQUE) ───
   const revealElements = document.querySelectorAll(".apple-reveal");
 
-  // Condição estática de segurança: Só cria o Observer se for ecrã grande (Desktop)
-  if (window.matchMedia("(min-width: 1024px)").matches) {
+  if (window.matchMedia("(min-width: 1024px)").matches && !isTouchDevice) {
     const revealObserver = new IntersectionObserver(
       (entries, observer) => {
         entries.forEach((entry) => {
@@ -197,6 +201,10 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     revealElements.forEach((element) => revealObserver.observe(element));
+  } else {
+    revealElements.forEach((element) => {
+      element.classList.add("is-visible");
+    });
   }
 
   // ─── 5. ENGINE DE REFRAÇÃO DE LUZ CRISTALINA VIA SCROLL (DESKTOP ONLY) ───
@@ -205,7 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const desktopMedia = window.matchMedia("(min-width: 1024px)");
 
   function updateGlassRefraction() {
-    if (!desktopMedia.matches) {
+    if (!desktopMedia.matches || isTouchDevice) {
       ticking = false;
       return;
     }
@@ -235,8 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener(
     "scroll",
     () => {
-      // CURTO-CIRCUITO IMEDIATO: Impede agendamento de RAF no Mobile/Tablet
-      if (window.innerWidth < 1024) return;
+      if (isMobileOrTablet) return;
 
       if (!ticking) {
         requestAnimationFrame(updateGlassRefraction);
@@ -246,16 +253,12 @@ document.addEventListener("DOMContentLoaded", () => {
     { passive: true },
   );
 
-  // ─── 7. ENGINE DE REPRODUÇÃO E FIXAÇÃO DE VIEWPORT (TRAVAMENTO ANTI-JANK) ───
-  const heroStage = document.getElementById("hero-stage");
-  const videoHero = document.querySelector("#hero-stage video");
-
-  // Trava a altura imediatamente com base no cálculo real inicial da janela
-  if (heroStage && window.innerWidth < 1024) {
+  // ─── 7. ENGINE DE REPRODUÇÃO E FIXAÇÃO DE VIEWPORT ───
+  if (heroStage && isMobileOrTablet) {
     const realHeight = window.innerHeight;
     heroStage.style.height = `${realHeight}px`;
     console.log(
-      `Wesus Engine: Altura da Hero fixada estaticamente em ${realHeight}px.`,
+      `Wesus Engine: Altura da Hero protegida no tablet/mobile: ${realHeight}px.`,
     );
   }
 

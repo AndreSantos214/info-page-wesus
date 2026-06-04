@@ -608,7 +608,7 @@
    BLINDAGEM DE PERFORMANCE MÓVEL: ESTABILIZAÇÃO DE MEMÓRIA (MOBILE & TABLET)
    ========================================================================= */
 
-@media (max-width: 1023px) {
+@media (max-width: 1023px), (pointer: coarse) {
   /* 1. DESLIGAR OS BACKLIGHTS DE BLUR (ELIMINA SOBRECARGA DE OVERDRAW) */
   .card-backlight-gold,
   .card-backlight-blue {
