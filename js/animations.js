@@ -1,5 +1,5 @@
 /**
- * It's Wesus – Motor de Animação Unificado e Otimizado v2.2
+ * It's Wesus – Motor de Animação Unificado e Otimizado v2.3
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -209,7 +209,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // ─── 4. INTERSECTION OBSERVER PARA REVELAÇÃO DAS SEÇÕES (DESKTOP SEM TOQUE) ───
   const revealElements = document.querySelectorAll(".apple-reveal");
 
-  // Localize este bloco no seu js/animations.min.js
   if (!isMobileOrTablet) {
     const revealObserver = new IntersectionObserver(
       (entries, observer) => {
@@ -220,12 +219,15 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         });
       },
-      // Mude de '-4%' para '-20%' ou '-30%'
-      // Isso garante que a animação dispare quando o elemento ainda está 20-30% fora da tela
       { root: null, rootMargin: "0px 0px -20% 0px", threshold: 0.01 },
     );
 
     revealElements.forEach((element) => revealObserver.observe(element));
+  } else {
+    // SE FOR MOBILE/TABLET: Ignora o observer e força todos a nascerem ativos no milissegundo zero
+    revealElements.forEach((element) => {
+      element.classList.add("is-visible");
+    });
   }
 
   // ─── 5. ENGINE DE REFRAÇÃO DE LUZ CRISTALINA VIA SCROLL (DESKTOP ONLY) ───

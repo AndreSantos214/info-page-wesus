@@ -157,7 +157,7 @@
     filter: drop-shadow(0 2px 15px rgba(197, 160, 89, 0.3));
   }
 
-  /* --- ANIMAÇÕES OTIMIZADAS COM TRANSFORM (GPU NATIVA) --- */
+  /* --- ANIMAÇÕES OTIMIZADAS WITH TRANSFORM (GPU NATIVA) --- */
   .btn-nav-cta {
     position: relative;
     overflow: hidden;
@@ -186,7 +186,6 @@
       rgba(255, 255, 255, 0.25) 50%,
       rgba(255, 255, 255, 0) 100%
     );
-    /* Correção do Lighthouse: left alterado para transform para evitar jank */
     transform: translateX(-150%) skewX(-25deg);
     will-change: transform;
     animation: gold-shine-optimized 5.5s infinite ease-in-out;
@@ -254,7 +253,6 @@
 
 /* --- MÁSCARA DE OPACIDADE EM GRADIENTE PARA O PILAR --- */
 .mask-pilar-fade {
-  /* Faz o pilar suavizar horizontalmente e sumir antes de tocar no texto */
   -webkit-mask-image: linear-gradient(
     to right,
     black 20%,
@@ -276,14 +274,12 @@
   }
 
   .apple-reveal.is-visible .pilar-scroll-effect {
-    opacity: 0.5 !important; /* Ganho de presença heráldica */
+    opacity: 0.5 !important;
     transform: scale(1.25) translateZ(0) !important;
   }
 }
 
 /* ─── ENGENHARIA DE EFEITO DO TOURO GRÁFICO ─── */
-
-/* Estado inicial global (Antes do Scroll revelar o card) */
 .touro-scroll-effect {
   opacity: 0 !important;
   transform: scale(0.95) translateZ(0);
@@ -293,13 +289,11 @@
   will-change: transform, opacity;
 }
 
-/* Modo Desktop (Acima de 1200px): Suavizado para dar contraste absoluto ao texto */
 .apple-reveal.is-visible .touro-scroll-effect {
   opacity: 0.14 !important;
   transform: scale(1) translateZ(0);
 }
 
-/* Modo Mobile/Notebook (Abaixo de 1200px): Alinhado com a lógica heráldica do pilar */
 @media (max-width: 1200px) {
   .apple-reveal .touro-scroll-effect {
     opacity: 0 !important;
@@ -307,14 +301,12 @@
   }
 
   .apple-reveal.is-visible .touro-scroll-effect {
-    /* Opacidade calibrada para manter a aura azul visível sem prejudicar a leitura no smartphone */
     opacity: 0.09 !important;
     transform: scale(1.15) translateZ(0) !important;
   }
 }
 
-/* ─── SISTEMA DE CONTRA-LUZ PRESETS (CHAMPAGNE & SAPPHIRE GLOW - CALIBRAÇÃO REFORÇADA) ─── */
-
+/* ─── SISTEMA DE CONTRA-LUZ PRESETS ─── */
 .card-backlight-gold,
 .card-backlight-blue {
   position: absolute;
@@ -322,15 +314,12 @@
   pointer-events: none;
   z-index: 0;
   opacity: 0;
-  filter: blur(
-    75px
-  ); /* Aumentado ligeiramente para espalhar melhor o ganho de luz */
+  filter: blur(75px);
   transition: opacity 2.5s cubic-bezier(0.16, 1, 0.3, 1);
   transform: translateZ(0);
   will-change: opacity;
 }
 
-/* Aura Dourada: Centro subiu de 0.20 para 0.28 e meio de 0.08 para 0.12 */
 .card-backlight-gold {
   background: radial-gradient(
     circle at 35% 35%,
@@ -340,7 +329,6 @@
   );
 }
 
-/* Aura Azul: Centro subiu de 0.22 para 0.35 e meio de 0.08 para 0.15 para dar mais contraste ao Touro */
 .card-backlight-blue {
   background: radial-gradient(
     circle at 65% 65%,
@@ -362,7 +350,6 @@
     opacity: 0;
   }
   15% {
-    /* O cometa ganha corpo e acende ao subir */
     transform: translate(-40px, 40px) scaleX(2);
     opacity: 1;
   }
@@ -371,7 +358,6 @@
     opacity: 0.5;
   }
   100% {
-    /* Desvanece completamente no topo direito */
     transform: translate(240px, -240px) scaleX(0);
     opacity: 0;
   }
@@ -387,14 +373,12 @@
     #ffffff
   );
   transform-origin: left center;
-  /* Ângulo de inclinação ajustado para subida diagonal perfeita */
   rotate: -35deg;
   pointer-events: none;
   z-index: 1;
   will-change: transform, opacity;
 }
 
-/* Calibração de posicionamento estratégico na seção da plataforma */
 .comet-1 {
   width: 140px;
   bottom: 15%;
@@ -421,15 +405,12 @@
 /* =========================================================================
    MOCKUP APP: SISTEMA DE ILUMINAÇÃO NEBULA & FLUTUAÇÃO CINEMATOGRÁFICA
    ========================================================================= */
-
-/* --- AURA DE ENERGIA (NEBULA) ATRÁS DO TELEFONE --- */
 .glow-aura-nebula {
   position: absolute;
   width: 130%;
   height: 130%;
   top: -15%;
   left: -15%;
-  /* Fusão premium de azul safira com reflexo champagne */
   background: radial-gradient(
     circle at center,
     rgba(0, 163, 255, 0.45) 0%,
@@ -443,109 +424,92 @@
   transform: translateZ(0);
 }
 
-/* --- MOTOR DE FLUTUAÇÃO PURA POR HARDWARE (MOCKUP FLOATING) --- */
 @keyframes saiyan-float-hardware {
   0%,
   100% {
     transform: translateY(0) translateZ(0);
   }
   50% {
-    transform: translateY(-16px) translateZ(0); /* Subida fluída e amanteigada */
+    transform: translateY(-16px) translateZ(0);
   }
 }
 
 .mockup-saiyan-float {
-  /* Aplica a animação diretamente no bloco que envelopa o telemóvel e a nébula */
   animation: saiyan-float-hardware 5s infinite ease-in-out;
   will-change: transform;
   transform: translateZ(0);
 }
 
 /* =========================================================================
-   APPLE-STYLE STAGE REVEAL ENGINE (CINEMATIC INERTIA)
+   APPLE-STYLE STAGE REVEAL ENGINE (CINEMATIC INERTIA - DESKTOP ONLY)
    ========================================================================= */
 
-/* Estado Inicial: O elemento fica invisível, ligeiramente abaixo e recuado em 3D */
-.apple-reveal {
-  opacity: 0;
-  transform: translateY(35px) scale(0.98) translateZ(0);
-  /* A curva cubic-bezier(0.16, 1, 0.3, 1) imita a desaceleração magnética de hardware */
-  transition:
-    opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity;
-  backface-visibility: hidden;
+/* Gated: Esta animação e estado oculto SÓ existem se for desktop puro com rato */
+@media (min-width: 1024px) and (pointer: fine) {
+  .apple-reveal {
+    opacity: 0;
+    transform: translateY(35px) scale(0.98) translateZ(0);
+    transition:
+      opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+  }
+
+  .apple-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1) translateZ(0);
+  }
+
+  .apple-reveal.hero-card-crystal {
+    will-change: transform, opacity, backdrop-filter;
+  }
 }
 
-/* Estado Ativo: O Intersection Observer injeta esta classe quando entra no ecrã */
-.apple-reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0) scale(1) translateZ(0);
-}
-
-/* --- ESCALONAMENTO DE ATRASO (STAGGERED DELAYS) --- */
-/* Garante que os cards e itens em grid apareçam em sequência fluída */
-.delay-100 {
-  transition-delay: 100ms !important;
-}
-
-.delay-200 {
-  transition-delay: 200ms !important;
-}
-
-.delay-300 {
-  transition-delay: 300ms !important;
-}
-
-.delay-400 {
-  transition-delay: 400ms !important;
-}
-
-.delay-500 {
-  transition-delay: 500ms !important;
-}
-
-/* Otimização para o Safari (iOS WebKit) não engasgar com filtros complexos durante o reveal */
-.apple-reveal.hero-card-crystal {
-  will-change: transform, opacity, backdrop-filter;
+/* --- ESCALONAMENTO DE ATRASO (STAGGERED DELAYS - DESKTOP ONLY) --- */
+@media (min-width: 1024px) and (pointer: fine) {
+  .delay-100 {
+    transition-delay: 100ms !important;
+  }
+  .delay-200 {
+    transition-delay: 200ms !important;
+  }
+  .delay-300 {
+    transition-delay: 300ms !important;
+  }
+  .delay-400 {
+    transition-delay: 400ms !important;
+  }
+  .delay-500 {
+    transition-delay: 500ms !important;
+  }
 }
 
 /* =========================================================================
    HEADER: TRANSIÇÃO DINÂMICA (TRANSPARENTE -> VIDRO FOSCO PREMUM)
    ========================================================================= */
-
-/* Estado Inicial (Topo da página) */
 #mainHeader {
   background-color: transparent !important;
   backdrop-filter: blur(0px);
   -webkit-backdrop-filter: blur(0px);
   border-bottom: 1px solid transparent;
-  /* Transição suave de 500ms simulando a física da Apple */
   transition:
     background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
     backdrop-filter 0.5s cubic-bezier(0.16, 1, 0.3, 1),
     border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-/* Estado Ativo (Após rolar 50px de scroll) */
 #mainHeader.scrolled {
-  /* Fundo azul de alta densidade contra absorção de luz */
   background-color: rgba(6, 19, 37, 0.85) !important;
-
-  /* Desfoque pesado (vidro fosco denso) e ganho de saturação macro */
   backdrop-filter: blur(24px) saturate(160%) !important;
   -webkit-backdrop-filter: blur(24px) saturate(160%) !important;
-
-  /* Linha inferior milimétrica para delimitar o vidro */
   border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
 }
 
 /* =========================================================================
    CONTROLO INTELIGENTE DE ALTURA (ANTI-COLISÃO NA HERO SECTION)
    ========================================================================= */
-
 @media (max-height: 850px) {
-  /* Se o ecrã for curto (como em notebooks), esconde o indicador para não colidir com o botão */
   .scroll-indicator-hint {
     display: none !important;
   }
@@ -554,8 +518,6 @@
 /* =========================================================================
    HEADER: RESPONSIVIDADE ULTRA-PREMIUM (BREAKPOINT FIXO EM 950PX)
    ========================================================================= */
-
-/* Layout padrão para telas largas (Acima de 950px) */
 .nav-desktop-custom {
   display: flex;
 }
@@ -563,18 +525,14 @@
   display: none;
 }
 
-/* Alteração de comportamento para qualquer tela menor que 950px */
 @media (max-width: 950px) {
   .nav-desktop-custom {
-    display: none !important; /* Esconde links e botão do portal */
+    display: none !important;
   }
-
   .btn-menu-custom {
-    display: flex !important; /* Força o botão hambúrguer a aparecer */
+    display: flex !important;
     margin-left: auto !important;
   }
-
-  /* Centralização absoluta do Logo (Efeito Mobile) */
   #headerLogo {
     position: absolute !important;
     left: 50% !important;
@@ -582,22 +540,17 @@
     transform: translate(-50%, -50%) !important;
     will-change: transform, opacity;
   }
-
-  /* Controle de ignição do fade disparado pelo JS */
   .logo-hidden {
     opacity: 0 !important;
     pointer-events: none !important;
-    /* Efeito Apple: Dá uma leve descida elástica ao sumir */
     transform: translate(-50%, -35%) scale(0.96) !important;
   }
 }
 
 @media (min-width: 951px) {
-  /* Blindagem contra redimensionamento de janela */
   #mobileMenu {
     display: none !important;
   }
-  /* Acima de 950px o logo nunca se esconde no topo */
   .logo-hidden {
     opacity: 1 !important;
     pointer-events: auto !important;
@@ -607,9 +560,31 @@
 /* =========================================================================
    BLINDAGEM DE PERFORMANCE MÓVEL: ESTABILIZAÇÃO DE MEMÓRIA (MOBILE & TABLET)
    ========================================================================= */
-
 @media (max-width: 1023px), (pointer: coarse) {
-  /* 1. DESLIGAR OS BACKLIGHTS DE BLUR E BRILHOS DINÂMICOS (ZERO OVERDRAW) */
+  /* 1. ANULAR TRANSIÇÕES DO HEADER E FORÇAR EXIBIÇÃO IMEDIATA DO LOGO */
+  #mainHeader {
+    background-color: rgba(6, 19, 37, 0.96) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+    transition: none !important;
+  }
+
+  #headerLogo,
+  .logo-hidden {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transition: none !important;
+  }
+
+  @media (max-width: 950px) {
+    #headerLogo {
+      transform: translate(-50%, -50%) scale(1) !important;
+      transition: none !important;
+    }
+  }
+
+  /* 2. DESLIGAR OS BACKLIGHTS DE BLUR E BRILHOS DINÂMICOS (ZERO OVERDRAW) */
   .card-backlight-gold,
   .card-backlight-blue,
   .hero-card-crystal::after {
@@ -618,7 +593,7 @@
     animation: none !important;
   }
 
-  /* 2. FORÇAR EXIBIÇÃO IMEDIATA E DESATIVAR TRANSIÇÕES VISUAIS (PRE-RENDER) */
+  /* 3. ARQUITETURA ESTÁTICA TOTAL: DESATIVAR REVEALS E DELAYS (PRE-RENDER IMEDIATO) */
   .apple-reveal {
     opacity: 1 !important;
     transform: translateY(0) scale(1) translateZ(0) !important;
@@ -626,31 +601,46 @@
     will-change: auto !important;
   }
 
-  /* 3. RESGATAR PILAR E TOURO DO ESTADO OCULTO NO MOBILE */
-  .apple-reveal .pilar-scroll-effect {
+  .delay-100,
+  .delay-200,
+  .delay-300,
+  .delay-400,
+  .delay-500 {
+    transition-delay: 0ms !important;
+    transition: none !important;
+  }
+
+  /* 4. BLOQUEIO ABSOLUTO DE TRANSIÇÕES NOS ASSETS INTERNOS (ANTI-POP-IN DOS TABLETS) */
+  .pilar-scroll-effect,
+  .touro-scroll-effect,
+  .apple-reveal .pilar-scroll-effect,
+  .apple-reveal.is-visible .pilar-scroll-effect,
+  .apple-reveal .touro-scroll-effect,
+  .apple-reveal.is-visible .touro-scroll-effect {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .pilar-scroll-effect {
     opacity: 0.5 !important;
     transform: scale(1.25) translateZ(0) !important;
-    transition: none !important;
   }
 
-  .apple-reveal .touro-scroll-effect {
+  .touro-scroll-effect {
     opacity: 0.09 !important;
     transform: scale(1.15) translateZ(0) !important;
-    transition: none !important;
   }
 
-  /* 4. OTIMIZAÇÃO CRÍTICA: ACHATAMENTO DE CAMADA NA GPU (CONGELAR EM MEMÓRIA) */
+  /* 5. ACHATAMENTO DE CAMADA NA GPU (CONGELAR EM BITMAP) */
   .hero-card-crystal {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    transform: translateZ(
-      0
-    ) !important; /* Força o navegador a salvar o elemento como imagem na memória de vídeo */
+    transform: translateZ(0) !important;
     will-change: auto !important;
     transition: none !important;
   }
 
-  /* 5. ILUMINAÇÃO ESTÁTICA EXCLUSIVA: CARD CHAMPAGNE / DOURADO */
+  /* 6. ILUMINAÇÃO PASSIVA LUXUOSA: CARD CHAMPAGNE / DOURADO */
   .card-backlight-gold + .hero-card-crystal {
     background:
       linear-gradient(
@@ -669,14 +659,13 @@
         )
         border-box !important;
 
-    /* Sombra otimizada de alta performance (raio reduzido para não saturar pixels em ecrãs Retina) */
     box-shadow:
       0 12px 24px rgba(0, 0, 0, 0.85),
       inset 0 1px 1px rgba(255, 255, 255, 0.12) !important;
     transition: none !important;
   }
 
-  /* 6. ILUMINAÇÃO ESTÁTICA EXCLUSIVA: CARD SAFIRA / AZUL REFORÇADO */
+  /* 7. ILUMINAÇÃO PASSIVA LUXUOSA: CARD SAFIRA / AZUL REFORÇADO */
   .card-backlight-blue + .hero-card-crystal {
     background:
       linear-gradient(
@@ -695,7 +684,6 @@
         )
         border-box !important;
 
-    /* Sombra otimizada de alta performance para o layout do Touro */
     box-shadow:
       0 12px 24px rgba(0, 0, 0, 0.85),
       inset 0 1px 1px rgba(255, 255, 255, 0.1) !important;
