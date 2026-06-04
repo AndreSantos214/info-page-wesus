@@ -796,3 +796,16 @@
     transition: none !important;
   }
 }
+
+/* =========================================================================
+   PROTECÇÃO DE CASCATA: LOGO SEMPRE VISÍVEL NO HORIZONTAL (DESKTOP & TABLET DEITADO)
+   ========================================================================= */
+@media (min-width: 1024px) {
+  #headerLogo,
+  #headerLogo.logo-hidden {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
