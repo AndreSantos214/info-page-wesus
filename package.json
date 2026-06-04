@@ -1,0 +1,26 @@
+{
+  "name": "info-page-wesus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "tailwind.config.js",
+  "scripts": {
+    "dev": "tailwindcss -i ./css/input.css -o ./css/dist/styles.css --watch",
+    "build": "tailwindcss -i ./css/input.css -o ./css/dist/styles.css --minify && terser js/animations.js -o js/animations.min.js --compress --mangle"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndreSantos214/info-page-wesus.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/AndreSantos214/info-page-wesus/issues"
+  },
+  "homepage": "https://github.com/AndreSantos214/info-page-wesus#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.4.17",
+    "terser": "^5.48.0"
+  }
+}

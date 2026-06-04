@@ -1,3 +1,605 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  /* INTER */
+  @font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: url("../fonts/Inter18pt-Light.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../fonts/Inter18pt-Regular.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url("../fonts/Inter18pt-Medium.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url("../fonts/Inter18pt-SemiBold.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("../fonts/Inter18pt-Bold.woff2") format("woff2");
+  }
+
+  /* PLAYFAIR DISPLAY */
+  @font-face {
+    font-family: "Playfair Display";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../fonts/Playfair144pt-Regular.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "Playfair Display";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url("../fonts/Playfair144pt-SemiBold.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "Playfair Display";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("../fonts/Playfair144pt-Bold.woff2") format("woff2");
+  }
+
+  body {
+    background-color: #061325;
+    font-family: "Inter", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    color: #ffffff;
+  }
+}
+
+@layer components {
+  /* --- VITRIFICAÇÃO ULTRA PREMIUM ACELERADA POR HARDWARE --- */
+  .hero-card-crystal {
+    position: relative;
+    backdrop-filter: blur(30px) saturate(220%);
+    -webkit-backdrop-filter: blur(30px) saturate(220%);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    isolation: isolate;
+    border: 2px solid transparent;
+    background:
+      linear-gradient(
+          135deg,
+          rgba(9, 25, 46, 0.95),
+          rgba(6, 15, 31, 0.98) 50%,
+          rgba(9, 25, 46, 0.93)
+        )
+        padding-box,
+      linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.45) 0%,
+          rgba(255, 255, 255, 0.05) 35%,
+          rgba(197, 160, 89, 0.15) 70%,
+          rgba(232, 208, 141, 0.45) 100%
+        )
+        border-box;
+    box-shadow:
+      0 40px 80px -20px rgba(0, 0, 0, 0.9),
+      inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  .hero-card-crystal::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: linear-gradient(
+        115deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.01) 30%,
+        rgba(255, 255, 255, 0.08) 50%,
+        rgba(255, 255, 255, 0.01) 70%,
+        transparent 100%
+      )
+      no-repeat !important;
+    background-size: 200% 100% !important;
+    background-position: var(--shine-x, -50%) 0% !important;
+    pointer-events: none !important;
+    z-index: 2 !important;
+  }
+
+  /* --- BLINDAGEM ANTI-BLEEDING EXCLUSIVA SARA --- */
+  .card-sara-rigid {
+    background:
+      linear-gradient(
+          135deg,
+          rgba(5, 16, 31, 0.99),
+          rgba(3, 10, 20, 1) 50%,
+          rgba(5, 16, 31, 0.99)
+        )
+        padding-box,
+      linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.4) 0%,
+          rgba(255, 255, 255, 0.02) 35%,
+          rgba(0, 163, 255, 0.25) 70%,
+          rgba(0, 163, 255, 0.45) 100%
+        )
+        border-box !important;
+  }
+
+  .text-gold-liquid {
+    background: linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #f5e3b5 35%,
+      #c5a059 70%,
+      #8a662d 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 15px rgba(197, 160, 89, 0.3));
+  }
+
+  /* --- ANIMAÇÕES OTIMIZADAS COM TRANSFORM (GPU NATIVA) --- */
+  .btn-nav-cta {
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+    border: 1px solid #c5a059;
+    color: #c5a059;
+    padding: 0.6rem 1.4rem;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    border-radius: 0.5rem;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .btn-nav-cta::after,
+  .btn-hero-main::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.25) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    /* Correção do Lighthouse: left alterado para transform para evitar jank */
+    transform: translateX(-150%) skewX(-25deg);
+    will-change: transform;
+    animation: gold-shine-optimized 5.5s infinite ease-in-out;
+  }
+
+  .btn-hero-main {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(
+      135deg,
+      #8b6a2e 0%,
+      #c5a059 45%,
+      #e8d08d 55%,
+      #c5a059 100%
+    );
+    background-size: 200% auto;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 1.1rem 3rem;
+    border-radius: 0.6rem;
+    border: 1px solid rgba(232, 208, 141, 0.4);
+    cursor: pointer;
+    display: inline-block;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow:
+      0 8px 25px rgba(197, 160, 89, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-hero-main::after {
+    animation-delay: 1s;
+  }
+
+  .btn-hero-main:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow:
+      0 20px 40px rgba(197, 160, 89, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    background-position: right center;
+  }
+}
+
+@keyframes gold-shine-optimized {
+  0% {
+    transform: translateX(-200%) skewX(-25deg);
+  }
+  30%,
+  100% {
+    transform: translateX(300%) skewX(-25deg);
+  }
+}
+
+.ambient-section-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(160px);
+  opacity: 0.06;
+  transform: translateZ(0);
+}
+
+/* --- MÁSCARA DE OPACIDADE EM GRADIENTE PARA O PILAR --- */
+.mask-pilar-fade {
+  /* Faz o pilar suavizar horizontalmente e sumir antes de tocar no texto */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    black 20%,
+    rgba(0, 0, 0, 0.4) 55%,
+    transparent 80%
+  );
+  mask-image: linear-gradient(
+    to right,
+    black 20%,
+    rgba(0, 0, 0, 0.4) 55%,
+    transparent 80%
+  );
+}
+
+@media (max-width: 1200px) {
+  .apple-reveal .pilar-scroll-effect {
+    opacity: 0 !important;
+    transform: scale(1.1) translateZ(0) !important;
+  }
+
+  .apple-reveal.is-visible .pilar-scroll-effect {
+    opacity: 0.5 !important; /* Ganho de presença heráldica */
+    transform: scale(1.25) translateZ(0) !important;
+  }
+}
+
+/* ─── ENGENHARIA DE EFEITO DO TOURO GRÁFICO ─── */
+
+/* Estado inicial global (Antes do Scroll revelar o card) */
+.touro-scroll-effect {
+  opacity: 0 !important;
+  transform: scale(0.95) translateZ(0);
+  transition:
+    transform 2.5s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 2.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  will-change: transform, opacity;
+}
+
+/* Modo Desktop (Acima de 1200px): Suavizado para dar contraste absoluto ao texto */
+.apple-reveal.is-visible .touro-scroll-effect {
+  opacity: 0.14 !important;
+  transform: scale(1) translateZ(0);
+}
+
+/* Modo Mobile/Notebook (Abaixo de 1200px): Alinhado com a lógica heráldica do pilar */
+@media (max-width: 1200px) {
+  .apple-reveal .touro-scroll-effect {
+    opacity: 0 !important;
+    transform: scale(1.05) translateZ(0) !important;
+  }
+
+  .apple-reveal.is-visible .touro-scroll-effect {
+    /* Opacidade calibrada para manter a aura azul visível sem prejudicar a leitura no smartphone */
+    opacity: 0.09 !important;
+    transform: scale(1.15) translateZ(0) !important;
+  }
+}
+
+/* ─── SISTEMA DE CONTRA-LUZ PRESETS (CHAMPAGNE & SAPPHIRE GLOW - CALIBRAÇÃO REFORÇADA) ─── */
+
+.card-backlight-gold,
+.card-backlight-blue {
+  position: absolute;
+  inset: -100px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  filter: blur(
+    75px
+  ); /* Aumentado ligeiramente para espalhar melhor o ganho de luz */
+  transition: opacity 2.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateZ(0);
+  will-change: opacity;
+}
+
+/* Aura Dourada: Centro subiu de 0.20 para 0.28 e meio de 0.08 para 0.12 */
+.card-backlight-gold {
+  background: radial-gradient(
+    circle at 35% 35%,
+    rgba(232, 208, 141, 0.28) 0%,
+    rgba(197, 160, 89, 0.12) 40%,
+    transparent 70%
+  );
+}
+
+/* Aura Azul: Centro subiu de 0.22 para 0.35 e meio de 0.08 para 0.15 para dar mais contraste ao Touro */
+.card-backlight-blue {
+  background: radial-gradient(
+    circle at 65% 65%,
+    rgba(0, 163, 255, 0.35) 0%,
+    rgba(0, 78, 255, 0.15) 45%,
+    transparent 70%
+  );
+}
+
+.apple-reveal.is-visible .card-backlight-gold,
+.apple-reveal.is-visible .card-backlight-blue {
+  opacity: 1;
+}
+
+/* ─── ANIMAÇÃO: RISCOS DE COMETAS DIAGONAIS ASCENDENTES ─── */
+@keyframes cosmic-rising-comet {
+  0% {
+    transform: translate(-100px, 100px) scaleX(0);
+    opacity: 0;
+  }
+  15% {
+    /* O cometa ganha corpo e acende ao subir */
+    transform: translate(-40px, 40px) scaleX(2);
+    opacity: 1;
+  }
+  70% {
+    transform: translate(120px, -120px) scaleX(2);
+    opacity: 0.5;
+  }
+  100% {
+    /* Desvanece completamente no topo direito */
+    transform: translate(240px, -240px) scaleX(0);
+    opacity: 0;
+  }
+}
+
+.space-comet {
+  position: absolute;
+  height: 1.5px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(197, 160, 89, 0.6),
+    #ffffff
+  );
+  transform-origin: left center;
+  /* Ângulo de inclinação ajustado para subida diagonal perfeita */
+  rotate: -35deg;
+  pointer-events: none;
+  z-index: 1;
+  will-change: transform, opacity;
+}
+
+/* Calibração de posicionamento estratégico na seção da plataforma */
+.comet-1 {
+  width: 140px;
+  bottom: 15%;
+  left: 10%;
+  animation: cosmic-rising-comet 9s infinite linear;
+}
+
+.comet-2 {
+  width: 180px;
+  bottom: 40%;
+  left: 25%;
+  animation: cosmic-rising-comet 13s infinite linear;
+  animation-delay: 3s;
+}
+
+.comet-3 {
+  width: 110px;
+  bottom: 25%;
+  right: 20%;
+  animation: cosmic-rising-comet 7s infinite linear;
+  animation-delay: 5s;
+}
+
+/* =========================================================================
+   MOCKUP APP: SISTEMA DE ILUMINAÇÃO NEBULA & FLUTUAÇÃO CINEMATOGRÁFICA
+   ========================================================================= */
+
+/* --- AURA DE ENERGIA (NEBULA) ATRÁS DO TELEFONE --- */
+.glow-aura-nebula {
+  position: absolute;
+  width: 130%;
+  height: 130%;
+  top: -15%;
+  left: -15%;
+  /* Fusão premium de azul safira com reflexo champagne */
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 163, 255, 0.45) 0%,
+    rgba(197, 160, 89, 0.15) 45%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: screen;
+  filter: blur(50px);
+  transform: translateZ(0);
+}
+
+/* --- MOTOR DE FLUTUAÇÃO PURA POR HARDWARE (MOCKUP FLOATING) --- */
+@keyframes saiyan-float-hardware {
+  0%,
+  100% {
+    transform: translateY(0) translateZ(0);
+  }
+  50% {
+    transform: translateY(-16px) translateZ(0); /* Subida fluída e amanteigada */
+  }
+}
+
+.mockup-saiyan-float {
+  /* Aplica a animação diretamente no bloco que envelopa o telemóvel e a nébula */
+  animation: saiyan-float-hardware 5s infinite ease-in-out;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* =========================================================================
+   APPLE-STYLE STAGE REVEAL ENGINE (CINEMATIC INERTIA)
+   ========================================================================= */
+
+/* Estado Inicial: O elemento fica invisível, ligeiramente abaixo e recuado em 3D */
+.apple-reveal {
+  opacity: 0;
+  transform: translateY(35px) scale(0.98) translateZ(0);
+  /* A curva cubic-bezier(0.16, 1, 0.3, 1) imita a desaceleração magnética de hardware */
+  transition:
+    opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+/* Estado Ativo: O Intersection Observer injeta esta classe quando entra no ecrã */
+.apple-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1) translateZ(0);
+}
+
+/* --- ESCALONAMENTO DE ATRASO (STAGGERED DELAYS) --- */
+/* Garante que os cards e itens em grid apareçam em sequência fluída */
+.delay-100 {
+  transition-delay: 100ms !important;
+}
+
+.delay-200 {
+  transition-delay: 200ms !important;
+}
+
+.delay-300 {
+  transition-delay: 300ms !important;
+}
+
+.delay-400 {
+  transition-delay: 400ms !important;
+}
+
+.delay-500 {
+  transition-delay: 500ms !important;
+}
+
+/* Otimização para o Safari (iOS WebKit) não engasgar com filtros complexos durante o reveal */
+.apple-reveal.hero-card-crystal {
+  will-change: transform, opacity, backdrop-filter;
+}
+
+/* =========================================================================
+   HEADER: TRANSIÇÃO DINÂMICA (TRANSPARENTE -> VIDRO FOSCO PREMUM)
+   ========================================================================= */
+
+/* Estado Inicial (Topo da página) */
+#mainHeader {
+  background-color: transparent !important;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  border-bottom: 1px solid transparent;
+  /* Transição suave de 500ms simulando a física da Apple */
+  transition:
+    background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    backdrop-filter 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Estado Ativo (Após rolar 50px de scroll) */
+#mainHeader.scrolled {
+  /* Fundo azul de alta densidade contra absorção de luz */
+  background-color: rgba(6, 19, 37, 0.85) !important;
+
+  /* Desfoque pesado (vidro fosco denso) e ganho de saturação macro */
+  backdrop-filter: blur(24px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(160%) !important;
+
+  /* Linha inferior milimétrica para delimitar o vidro */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+/* =========================================================================
+   CONTROLO INTELIGENTE DE ALTURA (ANTI-COLISÃO NA HERO SECTION)
+   ========================================================================= */
+
+@media (max-height: 850px) {
+  /* Se o ecrã for curto (como em notebooks), esconde o indicador para não colidir com o botão */
+  .scroll-indicator-hint {
+    display: none !important;
+  }
+}
+
+/* =========================================================================
+   HEADER: RESPONSIVIDADE ULTRA-PREMIUM (BREAKPOINT FIXO EM 950PX)
+   ========================================================================= */
+
+/* Layout padrão para telas largas (Acima de 950px) */
+.nav-desktop-custom {
+  display: flex;
+}
+.btn-menu-custom {
+  display: none;
+}
+
+/* Alteração de comportamento para qualquer tela menor que 950px */
+@media (max-width: 950px) {
+  .nav-desktop-custom {
+    display: none !important; /* Esconde links e botão do portal */
+  }
+
+  .btn-menu-custom {
+    display: flex !important; /* Força o botão hambúrguer a aparecer */
+    margin-left: auto !important;
+  }
+
+  /* Centralização absoluta do Logo (Efeito Mobile) */
+  #headerLogo {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    will-change: transform, opacity;
+  }
+
+  /* Controle de ignição do fade disparado pelo JS */
+  .logo-hidden {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    /* Efeito Apple: Dá uma leve descida elástica ao sumir */
+    transform: translate(-50%, -35%) scale(0.96) !important;
+  }
+}
+
+@media (min-width: 951px) {
+  /* Blindagem contra redimensionamento de janela */
+  #mobileMenu {
+    display: none !important;
+  }
+  /* Acima de 950px o logo nunca se esconde no topo */
+  .logo-hidden {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+}

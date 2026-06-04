@@ -1,100 +1,288 @@
 /**
- * It's Wesus – Motor de Animação Cinematográfica V1
- * Foco: Performance Estática, Renderização 60FPS nativa por hardware.
+ * It's Wesus – Motor de Animação Unificado e Otimizado v2
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  
-  // ─── 1. REVEAL DE SEÇÕES EM VIEWPORT (Estilo Apple Stage) ───
-  const stages = document.querySelectorAll(".apple-stage");
-  
-  const stageObserverOptions = {
-    root: null, // Viewport padrão
-    threshold: 0.15, // Ativa quando 15% da seção estiver visível
-    rootMargin: "0px 0px -50px 0px"
-  };
+  // ─── 1. CONTROLE DINÂMICO DO HEADER (SCROLL REFINED) ───
+  const header = document.getElementById("mainHeader");
+  const headerLogo = document.getElementById("headerLogo");
 
-  const stageObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("revealed");
-        // Opcional: para animar apenas uma vez, descomente a linha abaixo
-        // observer.unobserve(entry.target);
+  function handleScroll() {
+    if (window.scrollY > 50) {
+      header.classList.add("scrolled");
+      headerLogo.classList.remove("logo-hidden"); // Remove o estado oculto
+    } else {
+      header.classList.remove("scrolled");
+      headerLogo.classList.add("logo-hidden"); // Injeta o estado oculto
+    }
+  }
+  window.addEventListener("scroll", handleScroll, { passive: true });
+  handleScroll();
+
+  // ─── 2. LÓGICA DO MENU HAMBÚRGUER MOBILE ───
+  const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+  const mobileMenu = document.getElementById("mobileMenu");
+  const hamburgerIcon = document.getElementById("hamburgerIcon");
+  const closeIcon = document.getElementById("closeIcon");
+
+  if (mobileMenuBtn && mobileMenu) {
+    const toggleMenu = () => {
+      const isMenuHidden = mobileMenu.classList.contains("hidden");
+      if (isMenuHidden) {
+        mobileMenu.classList.remove("hidden");
+        hamburgerIcon.classList.add("hidden");
+        closeIcon.classList.remove("hidden");
       } else {
-        entry.target.classList.remove("revealed");
+        mobileMenu.classList.add("hidden");
+        hamburgerIcon.classList.remove("hidden");
+        closeIcon.classList.add("hidden");
       }
+    };
+
+    mobileMenuBtn.addEventListener("click", toggleMenu);
+
+    const mobileLinks = mobileMenu.querySelectorAll("a");
+    mobileLinks.forEach((link) => {
+      link.addEventListener("click", toggleMenu);
     });
-  }, stageObserverOptions);
+  }
 
-  stages.forEach(stage => stageObserver.observe(stage));
+  // ─── 3. ENGINE DE PARTÍCULAS INTELIGENTE (CONSUMO ZERO FORA DE TELA) ───
+  const canvasHero = document.getElementById("wesusGoldDustCanvas");
+  const canvasApp = document.getElementById("plataformaGoldDustCanvas");
 
+  if (canvasHero && canvasApp) {
+    const ctxHero = canvasHero.getContext("2d");
+    const ctxApp = canvasApp.getContext("2d");
 
-  // ─── 2. INTERPOLAÇÃO DE SCROLL (Efeito Parallax Amanteigado) ───
-  let currentScroll = 0;
-  let targetScroll = 0;
-  const ease = 0.08; // Quanto menor o valor, mais "amanteigado" é o deslize
+    let particlesHero = [];
+    let particlesApp = [];
 
-  const heroVideoWrap = document.getElementById("heroVideoContainer");
-  const interactiveCard = document.getElementById("interactiveCard");
+    // Aliviando o processador móvel: 15 partículas no mobile são ultra elegantes
+    const isMobile = window.innerWidth < 1024;
+    const particleCount = isMobile ? 15 : 120;
 
-  function smoothScrollAnimation() {
-    // Cálculo do LERP (Linear Interpolation)
-    currentScroll += (targetScroll - currentScroll) * ease;
+    let isHeroSectionVisible = true;
+    let isAppSectionVisible = false;
 
-    // Apenas aplica transformações se houver movimentação significativa para poupar GPU
-    if (Math.abs(targetScroll - currentScroll) > 0.05) {
-      
-      // Efeito 1: Zoom out sutil no background do Hero baseado no scroll
-      if (heroVideoWrap && currentScroll < window.innerHeight) {
-        const zoomFactor = 1.1 - (currentScroll / window.innerHeight) * 0.1;
-        heroVideoWrap.style.transform = `scale(${Math.max(1, zoomFactor)}) translate3d(0, ${currentScroll * 0.15}px, 0)`;
+    function resize() {
+      // FASE 1: LEITURA PURA (Sem alterar o DOM)
+      const widthHero = canvasHero.offsetWidth;
+      const heightHero = canvasHero.offsetHeight;
+      const widthApp = canvasApp.offsetWidth;
+      const heightApp = canvasApp.offsetHeight;
+
+      // FASE 2: ESCRITA PURA (Processada em bloco pela GPU)
+      canvasHero.width = widthHero;
+      canvasHero.height = heightHero;
+      canvasApp.width = widthApp;
+      canvasApp.height = heightApp;
+    }
+    window.addEventListener("resize", resize, { passive: true });
+    resize();
+
+    const goldColors = [
+      "rgba(197, 160, 89,",
+      "rgba(232, 208, 141,",
+      "rgba(245, 227, 181,",
+    ];
+
+    class DustParticle {
+      constructor(targetCanvas) {
+        this.canvas = targetCanvas;
+        this.reset();
+        this.y = Math.random() * this.canvas.height;
       }
-
-      // Efeito 2: Parallax reverso no Card de Vidro da Seção Quem Somos
-      if (interactiveCard) {
-        const cardRect = interactiveCard.getBoundingClientRect();
-        if (cardRect.top < window.innerHeight && cardRect.bottom > 0) {
-          const cardOffset = (window.innerHeight / 2 - cardRect.top) * 0.08;
-          interactiveCard.style.transform = `translate3d(0, ${cardOffset}px, 0) rotateX(${-cardOffset * 0.1}deg)`;
+      reset() {
+        this.x = Math.random() * this.canvas.width;
+        this.y = this.canvas.height + Math.random() * 20;
+        this.size = Math.random() * 1.4 + 0.4;
+        this.speedY = -(Math.random() * 0.25 + 0.05);
+        this.speedX = Math.random() * 0.16 - 0.08;
+        this.baseColor =
+          goldColors[Math.floor(Math.random() * goldColors.length)];
+        this.alpha = 0;
+        this.maxAlpha = Math.random() * 0.35 + 0.15;
+        this.fadeSpeed = Math.random() * 0.004 + 0.002;
+      }
+      update() {
+        this.y += this.speedY;
+        this.x += this.speedX;
+        if (this.y > this.canvas.height - 100 && this.alpha < this.maxAlpha) {
+          this.alpha += this.fadeSpeed;
+        } else if (this.y < 150) {
+          this.alpha -= this.fadeSpeed;
+        } else {
+          this.alpha = this.maxAlpha;
         }
+        if (
+          this.y < 0 ||
+          this.alpha <= 0 ||
+          this.x < 0 ||
+          this.x > this.canvas.width
+        ) {
+          this.reset();
+        }
+      }
+      draw(ctx) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `${this.baseColor}${this.alpha})`;
+        ctx.fill();
       }
     }
 
-    requestAnimationFrame(smoothScrollAnimation);
+    for (let i = 0; i < particleCount; i++) {
+      particlesHero.push(new DustParticle(canvasHero));
+      particlesApp.push(new DustParticle(canvasApp));
+    }
+
+    // MODIFICADO: Removemos os loops 'for' soltos daqui e colocamos dentro do bloco de ignição adiada
+
+    // Gerenciador de ciclo de vida: Desliga os loops se a seção sumir do ecrã
+    const heroSection = document.getElementById("hero-stage");
+    if (heroSection) {
+      new IntersectionObserver(
+        (entries) => {
+          isHeroSectionVisible = entries[0].isIntersecting;
+        },
+        { threshold: 0.01 },
+      ).observe(heroSection);
+    }
+
+    const plataformaSection = document.getElementById("plataforma");
+    if (plataformaSection) {
+      new IntersectionObserver(
+        (entries) => {
+          isAppSectionVisible = entries[0].isIntersecting;
+        },
+        { threshold: 0.01 },
+      ).observe(plataformaSection);
+    }
+
+    function animate() {
+      if (isHeroSectionVisible) {
+        ctxHero.clearRect(0, 0, canvasHero.width, canvasHero.height);
+        for (let i = 0; i < particlesHero.length; i++) {
+          particlesHero[i].update();
+          particlesHero[i].draw(ctxHero);
+        }
+      }
+
+      if (isAppSectionVisible) {
+        ctxApp.clearRect(0, 0, canvasApp.width, canvasApp.height);
+        for (let i = 0; i < particlesApp.length; i++) {
+          particlesApp[i].update();
+          particlesApp[i].draw(ctxApp);
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    // IGNIÇÃO ADIADA REFINADA: Cria as instâncias e arranca o loop após 1 segundo
+    setTimeout(() => {
+      for (let i = 0; i < particleCount; i++) {
+        particlesHero.push(new DustParticle(canvasHero));
+        particlesApp.push(new DustParticle(canvasApp));
+      }
+      requestAnimationFrame(animate);
+      console.log(
+        "Wesus Engine: Instanciação e motor de partículas ativados em background.",
+      );
+    }, 1000);
   }
 
-  // Escuta o scroll da janela de forma passiva (essencial para performance mobile)
-  window.addEventListener("scroll", () => {
-    targetScroll = window.scrollY;
-  }, { passive: true });
+  // ─── 4. INTERSECTION OBSERVER PARA REVELAÇÃO DAS SEÇÕES ───
+  const revealElements = document.querySelectorAll(".apple-reveal");
+  const revealObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target); // Executa a animação apenas uma vez para manter a performance estática
+        }
+      });
+    },
+    { root: null, rootMargin: "0px 0px -4% 0px", threshold: 0.01 },
+  );
 
-  // Inicializa o loop de animação contínuo
-  requestAnimationFrame(smoothScrollAnimation);
+  revealElements.forEach((element) => revealObserver.observe(element));
 
+  // ─── 5. ENGINE DE REFRAÇÃO DE LUZ CRISTALINA VIA SCROLL ───
+  const crystalCards = document.querySelectorAll(".hero-card-crystal");
+  let ticking = false;
 
-  // ─── 3. EFEITO INTERATIVO MOUSEMOVE (Desktop Dark Luxury) ───
-  // Adiciona um reflexo de luz dourada dinâmico ao card quando o mouse passa por cima
-  if (interactiveCard && window.innerWidth >= 1024) {
-    interactiveCard.addEventListener("mousemove", (e) => {
-      const rect = interactiveCard.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      // Injeta variáveis de posição direto no CSS para o gradiente de reflexo
-      interactiveCard.style.setProperty("--mx", `${x}px`);
-      interactiveCard.style.setProperty("--my", `${y}px`);
-      
-      // Leve rotação 3D baseada na posição do cursor
-      const xc = rect.width / 2;
-      const yc = rect.height / 2;
-      const rotateX = (yc - y) / 15;
-      const rotateY = (x - xc) / 15;
-      
-      interactiveCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+  function updateGlassRefraction() {
+    const viewHeight = window.innerHeight;
+
+    const cardsToUpdate = Array.from(crystalCards).map((card) => {
+      const rect = card.getBoundingClientRect();
+      return {
+        card,
+        rect,
+        offsetHeight: card.offsetHeight,
+        isVisible: rect.top < viewHeight && rect.bottom > 0,
+      };
     });
 
-    interactiveCard.addEventListener("mouseleave", () => {
-      interactiveCard.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)`;
+    cardsToUpdate.forEach(({ card, rect, offsetHeight, isVisible }) => {
+      if (isVisible) {
+        const progress = (viewHeight - rect.top) / (viewHeight + offsetHeight);
+        const shineX = progress * 260 - 80;
+        card.style.setProperty("--shine-x", `${shineX}%`);
+      }
     });
+
+    ticking = false;
+  }
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        requestAnimationFrame(updateGlassRefraction);
+        ticking = true;
+      }
+    },
+    { passive: true },
+  );
+
+  // ─── 6. ENGINE DE SCROLLSPY & GATILHOS DE INICIALIZAÇÃO POST-PINTURA ───
+  const sections = document.querySelectorAll("section[id]");
+  const navLinks = document.querySelectorAll(".nav-link");
+
+  const observerOptions = {
+    root: null,
+    rootMargin: "-20% 0px -70% 0px",
+    threshold: 0,
+  };
+
+  const spyObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute("id");
+        navLinks.forEach((link) => {
+          link.classList.remove("active");
+          if (link.getAttribute("href") === `#${id}`) {
+            link.classList.add("active");
+          }
+        });
+      }
+    });
+  }, observerOptions);
+
+  // EXECUÇÃO DE SEGUNDO PLANO: Adia o mapeamento pesado para libertar a Main-Thread no milissegundo zero
+  setTimeout(() => {
+    sections.forEach((section) => spyObserver.observe(section));
+    requestAnimationFrame(updateGlassRefraction);
+  }, 50);
+
+  // ─── 7. ENGINE DE REPRODUÇÃO GLOBAL SUAVE (ANTI-STUTTER UNIVERSAL) ───
+  const videoHero = document.querySelector("#hero-stage video");
+
+  if (videoHero) {
+    setTimeout(() => {
+      videoHero.play().catch((err) => console.log("Aviso de Autoplay:", err));
+    }, 300);
   }
 });
