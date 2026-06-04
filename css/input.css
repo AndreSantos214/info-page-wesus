@@ -561,6 +561,17 @@
    BLINDAGEM DE PERFORMANCE MÓVEL: ESTABILIZAÇÃO DE MEMÓRIA (MOBILE & TABLET)
    ========================================================================= */
 @media (max-width: 1023px), (pointer: coarse) {
+  /* ANTIDOTO DE FLICKER: Neutraliza transições e forças bitmaps bidimensionais puros */
+  .apple-reveal,
+  .apple-reveal *,
+  .hero-card-crystal,
+  .hero-card-crystal * {
+    transition: none !important;
+    animation: none !important;
+    will-change: auto !important;
+    transform: none !important; /* Desativa agressivamente qualquer camada 3D inicial */
+  }
+
   /* 1. CORREÇÃO DE ESPECIFICIDADE: DETONAR BLUR DO HEADER MESMO COM SCROLL */
   #mainHeader,
   #mainHeader.scrolled {

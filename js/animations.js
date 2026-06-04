@@ -152,7 +152,12 @@ document.addEventListener("DOMContentLoaded", () => {
       canvasApp.height = heightApp;
     }
     window.addEventListener("resize", resize, { passive: true });
-    resize();
+
+    // CORREÇÃO: Adia a leitura geométrica para o próximo frame livre da GPU
+    // Isto elimina os 37ms de Forced Reflow acusados no Lighthouse!
+    requestAnimationFrame(() => {
+      resize();
+    });
 
     const goldColors = [
       "rgba(197, 160, 89,",
@@ -270,8 +275,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     revealElements.forEach((element) => revealObserver.observe(element));
   } else {
-    // SE FOR MOBILE/TABLET: Curto-circuito absoluto.
-    // O script não adiciona nenhuma classe para evitar recalculo tardio de layout.
+    // SOLIDIFICAÇÃO MOBILE: Não alteramos nenhuma classe via JS.
+    // Deixamos o DOM totalmente intocado para evitar re-rasterização.
     console.log(
       "Wesus Engine: Ignorando mutações de DOM para renderização nativa imediata.",
     );
