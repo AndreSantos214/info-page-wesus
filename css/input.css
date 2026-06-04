@@ -615,20 +615,31 @@
    BLINDAGEM DE PERFORMANCE MÓVEL: ESTABILIZAÇÃO DE MEMÓRIA (MOBILE & TABLET)
    ========================================================================= */
 @media (max-width: 1023px), (pointer: coarse) {
-  /* ANTIDOTO DE FLICKER: Neutraliza transições e forças bitmaps puros nos cards */
+  /* ANTIDOTO DE FLICKER E LIMITAÇÃO ANATÓMICA DE LARGURA DOS CARDS */
   .apple-reveal,
+  .hero-card-crystal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    will-change: auto !important;
+
+    /* FIX 3: Impede que os cards fiquem esticados na vertical (Portrait) */
+    max-width: 540px !important;
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
   .apple-reveal *,
-  .hero-card-crystal,
   .hero-card-crystal * {
     transition: none !important;
     animation: none !important;
     will-change: auto !important;
-    transform: none !important;
   }
 
-  /* 1. SISTEMA DINÂMICO DE HEADER LUXURY (CINEMÁTICA SIMÉTRICA DE ALTA FLUIDEZ) */
+  /* 1. SISTEMA DINÂMICO DE HEADER LUXURY (CINEMÁTICA SIMÉTRICA) */
   #mainHeader {
-    background-color: rgba(6, 19, 37, 0) !important; /* Invisível no topo */
+    background-color: rgba(6, 19, 37, 0) !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0) !important;
@@ -637,28 +648,24 @@
       border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
 
-  /* Fundo translúcido safira com microborda semitransparente discreta */
   #mainHeader.scrolled {
     background-color: rgba(4, 14, 28, 0.94) !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
   }
 
-  /* --- ENGINE DE TRANSLACÃO DO LOGO (APENAS FADE SUAVE NO MESMO LUGAR) --- */
   #headerLogo {
     opacity: 1 !important;
     pointer-events: auto !important;
-    transform: none !important; /* Totalmente imóvel no tablet */
+    transform: none !important;
     transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
 
-  /* Estado Oculto para TABLETS (Apenas esmaece no lugar) */
   #headerLogo.logo-hidden {
     opacity: 0 !important;
     pointer-events: none !important;
     transform: none !important;
   }
 
-  /* Estado para TELEMÓVEIS (Breakpoint de centralização abaixo de 950px) */
   @media (max-width: 950px) {
     #headerLogo {
       position: absolute !important;
@@ -667,7 +674,6 @@
       transform: translate(-50%, -50%) !important;
       transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
-
     #headerLogo.logo-hidden {
       opacity: 0 !important;
       pointer-events: none !important;
@@ -675,7 +681,7 @@
     }
   }
 
-  /* 2. EXTINGUIR ORBS, GLOWS DE NEBULA, BRILHOS E ANIMAÇÕES NA GPU */
+  /* 2. EXTINGUIR FILTROS DE BLUR DINÂMICOS DA PROPRIEDADE FILTER (ZERO LAG) */
   .ambient-section-orb,
   .card-backlight-gold,
   .card-backlight-blue,
@@ -693,14 +699,6 @@
     transform: none !important;
   }
 
-  /* 3. ARQUITETURA PLANAR COMPLETA: ZERO GHOSTING */
-  .apple-reveal {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-    will-change: auto !important;
-  }
-
   .delay-100,
   .delay-200,
   .delay-300,
@@ -710,26 +708,22 @@
     transition: none !important;
   }
 
-  /* 4. BLOQUEIO ABSOLUTO DE TRANSIÇÕES NOS ASSETS HERÁLDICOS */
-  .pilar-scroll-effect,
-  .touro-scroll-effect,
-  .apple-reveal .pilar-scroll-effect,
-  .apple-reveal.is-visible .pilar-scroll-effect,
-  .apple-reveal .touro-scroll-effect,
-  .apple-reveal.is-visible .touro-scroll-effect {
+  /* FIX 1: RESGATAR O PILAR E O TOURO DO ESTADO OCULTO (OPACIDADE FIXA PREMIUM) */
+  .hero-card-crystal .pilar-scroll-effect,
+  .hero-card-crystal .touro-scroll-effect {
+    display: block !important;
+    visibility: visible !important;
     transition: none !important;
-    animation: none !important;
-    transform: none !important;
   }
 
-  .pilar-scroll-effect {
-    opacity: 0.5 !important;
-    transform: scale(1.25) !important;
+  .hero-card-crystal .pilar-scroll-effect {
+    opacity: 0.35 !important; /* Presença heráldica nítida e estável */
+    transform: scale(1.25) translate(0, 0) !important;
   }
 
-  .touro-scroll-effect {
-    opacity: 0.09 !important;
-    transform: scale(1.15) !important;
+  .hero-card-crystal .touro-scroll-effect {
+    opacity: 0.14 !important; /* Presença safira estável de fundo */
+    transform: scale(1.15) translate(0, 0) !important;
   }
 
   /* Anulação de transforms inline das imagens da equipa */
@@ -743,12 +737,12 @@
   .hero-card-crystal {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    transform: none !important;
     will-change: auto !important;
     transition: none !important;
   }
 
-  /* 6. ILUMINAÇÃO PASSIVA LUXUOSA: CARD CHAMPAGNE / DOURADO */
+  /* FIX 2: GANHO DE VIVACIDADE PRESTÍGIO COM AURAS DE SOMBRA COMPOSITAS FAST-GPU */
+  /* ILUMINAÇÃO PASSIVA LUXUOSA: CARD CHAMPAGNE / DOURADO */
   .card-backlight-gold + .hero-card-crystal {
     background:
       linear-gradient(
@@ -762,17 +756,19 @@
           145deg,
           rgba(255, 255, 255, 0.35) 0%,
           rgba(255, 255, 255, 0.05) 35%,
-          rgba(197, 160, 89, 0.15) 70%,
-          rgba(232, 208, 141, 0.35) 100%
+          rgba(197, 160, 89, 0.25) 70,
+          rgba(232, 208, 141, 0.45) 100%
         )
         border-box !important;
+
+    /* Injeção de aura de brilho dourado nativo sem perda de frames */
     box-shadow:
-      0 12px 24px rgba(0, 0, 0, 0.85),
+      0 30px 60px -15px rgba(0, 0, 0, 0.95),
+      0 0 40px rgba(197, 160, 89, 0.22),
       inset 0 1px 1px rgba(255, 255, 255, 0.12) !important;
-    transition: none !important;
   }
 
-  /* 7. ILUMINAÇÃO PASSIVA LUXUOSA: CARD SAFIRA / AZUL REFORÇADO */
+  /* ILUMINAÇÃO PASSIVA LUXUOSA: CARD SAFIRA / AZUL REFORÇADO */
   .card-backlight-blue + .hero-card-crystal {
     background:
       linear-gradient(
@@ -786,13 +782,26 @@
           145deg,
           rgba(255, 255, 255, 0.3) 0%,
           rgba(255, 255, 255, 0.02) 35%,
-          rgba(0, 163, 255, 0.25) 70%,
-          rgba(0, 163, 255, 0.4) 100%
+          rgba(0, 163, 255, 0.35) 70%,
+          rgba(0, 163, 255, 0.5) 100%
         )
         border-box !important;
+
+    /* Injeção de aura de brilho safira nativo sem perda de frames */
     box-shadow:
-      0 12px 24px rgba(0, 0, 0, 0.85),
+      0 30px 60px -15px rgba(0, 0, 0, 0.95),
+      0 0 40px rgba(0, 163, 255, 0.25),
       inset 0 1px 1px rgba(255, 255, 255, 0.1) !important;
+  }
+}
+
+/* PROTECÇÃO DE CASCATA PARA MONITOR/TABLET DEITADO */
+@media (min-width: 1024px) {
+  #headerLogo,
+  #headerLogo.logo-hidden {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: none !important;
     transition: none !important;
   }
 }
