@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let particlesHero = [];
     let particlesApp = [];
 
-    const particleCount = isMobileOrTablet ? 45 : 120;
+    const particleCount = isMobileOrTablet ? 90 : 120;
 
     let isHeroSectionVisible = true;
     let isAppSectionVisible = false;

@@ -616,7 +616,7 @@
    ========================================================================= */
 @media (max-width: 1023px), (pointer: coarse) {
   /* ANTIDOTO DE FLICKER E LIMITAÇÃO ANATÓMICA DE LARGURA DOS CARDS */
-  .apple-reveal,
+  .apple-reveal:not(.mockup-saiyan-float),
   .hero-card-crystal {
     opacity: 1 !important;
     transform: none !important;
@@ -686,17 +686,40 @@
   .card-backlight-gold,
   .card-backlight-blue,
   .glow-aura-nebula,
-  .hero-card-crystal::after,
-  .space-comet {
+  .hero-card-crystal::after {
     display: none !important;
     content: none !important;
     animation: none !important;
     filter: none !important;
   }
 
+  /* ✔ COMO DEVE FICAR (Ancoragem no topo para limpar a tipografia): */
+  .space-comet {
+    display: block !important;
+  }
+
+  /* Força os cometas a nascerem na metade superior (zona do mockup) e limpa o bottom */
+  .comet-1 {
+    top: 10% !important;
+    bottom: auto !important;
+    left: 5% !important;
+  }
+
+  .comet-2 {
+    top: 25% !important;
+    bottom: auto !important;
+    left: 15% !important;
+  }
+
+  .comet-3 {
+    top: 18% !important;
+    bottom: auto !important;
+    right: 8% !important;
+  }
+
   .mockup-saiyan-float {
-    animation: none !important;
-    transform: none !important;
+    animation: saiyan-float-hardware 5s infinite ease-in-out !important;
+    will-change: transform !important;
   }
 
   .delay-100,

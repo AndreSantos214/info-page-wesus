@@ -378,16 +378,11 @@
         <canvas id="plataformaGoldDustCanvas" class="absolute inset-0 z-10 pointer-events-none w-full h-full opacity-60 mix-blend-screen"></canvas>
         <div class="max-w-6xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           <!-- Wrapper mantido -->
+          <!-- SUBSTITUI O BLOCO DO MOCKUP POR ESTE HD UNIFICADO: -->
           <div class="lg:col-span-6 flex justify-center relative mockup-saiyan-float apple-reveal">
             <div class="glow-aura-nebula transform -translate-y-6"></div>
-
-            <!-- CORRIGIDO: O filtro foi removido do picture e injetado na tag img abaixo -->
-            <picture class="w-full h-auto object-contain">
-              <source media="(min-width: 1024px)" srcset="img/phone-mockup-desktop.webp" type="image/webp">
-
-              <!-- AQUI: filter drop-shadow movido para o elemento que o WebKit realmente renderiza -->
-              <img src="img/phone-mockup-app.webp" alt="It's Wesus App" width="360" height="740" class="w-full h-auto object-contain filter drop-shadow-[0_45px_50px_rgba(0,0,0,0.9)]" />
-            </picture>
+            <!-- Imagem única em altíssima definição vetorizada para todos os ecrãs -->
+            <img src="img/phone-mockup-desktop.webp" alt="It's Wesus App" width="360" height="740" class="w-full h-auto object-contain filter drop-shadow-[0_45px_50px_rgba(0,0,0,0.9)]" />
           </div>
 
           <div class="lg:col-span-6 text-center lg:text-left flex flex-col items-center lg:items-start justify-center apple-reveal delay-200">
