@@ -209,6 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ─── 4. INTERSECTION OBSERVER PARA REVELAÇÃO DAS SEÇÕES (DESKTOP SEM TOQUE) ───
   const revealElements = document.querySelectorAll(".apple-reveal");
 
+  // Localize este bloco no seu js/animations.min.js
   if (!isMobileOrTablet) {
     const revealObserver = new IntersectionObserver(
       (entries, observer) => {
@@ -219,13 +220,13 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         });
       },
-      { root: null, rootMargin: "0px 0px -4% 0px", threshold: 0.01 },
+      // Mude de '-4%' para '-20%' ou '-30%'
+      // Isso garante que a animação dispare quando o elemento ainda está 20-30% fora da tela
+      { root: null, rootMargin: "0px 0px -20% 0px", threshold: 0.01 },
     );
 
     revealElements.forEach((element) => revealObserver.observe(element));
   }
-  // SE FOR MOBILE/TABLET: O script ignora totalmente o loop de classes.
-  // Os elementos passam a ser forçados abertamente via CSS Puro instantaneamente.
 
   // ─── 5. ENGINE DE REFRAÇÃO DE LUZ CRISTALINA VIA SCROLL (DESKTOP ONLY) ───
   const crystalCards = document.querySelectorAll(".hero-card-crystal");
