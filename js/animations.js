@@ -24,6 +24,52 @@ document.addEventListener("DOMContentLoaded", () => {
   const heroStage = document.getElementById("hero-stage");
   const videoHero = document.querySelector("#hero-stage video");
 
+  // ─── BANNER DE DEBUG VISUAL (REMOVER ANTES DE IR PARA PRODUÇÃO) ───
+  (() => {
+    const debugBox = document.createElement("div");
+    debugBox.style.position = "fixed";
+    debugBox.style.bottom = "20px";
+    debugBox.style.right = "20px";
+    debugBox.style.zIndex = "999999";
+    debugBox.style.backgroundColor = "rgba(4, 17, 36, 0.95)";
+    debugBox.style.border = "2px solid #c5a059";
+    debugBox.style.borderRadius = "12px";
+    debugBox.style.padding = "16px";
+    debugBox.style.fontFamily = "monospace";
+    debugBox.style.fontSize = "11px";
+    debugBox.style.color = "#ffffff";
+    debugBox.style.boxShadow = "0 20px 40px rgba(0,0,0,0.8)";
+    debugBox.style.pointerEvents = "none"; // Não atrapalha os cliques na página
+
+    debugBox.innerHTML = `
+      <b style="color: #c5a059; font-size: 12px;">WESUS HARDWARE ENGINE</b><br>
+      <hr style="border-color: rgba(255,255,255,0.1); margin: 8px 0;">
+      <b>Largura da Tela:</b> ${window.innerWidth}px<br>
+      <b>Dispositivo Touch (pointer: coarse):</b> ${window.matchMedia("(pointer: coarse)").matches}<br>
+      <b>maxTouchPoints:</b> ${navigator.maxTouchPoints}<br>
+      <hr style="border-color: rgba(255,255,255,0.1); margin: 8px 0;">
+      <b>Deteção por UserAgent:</b><br>
+      - Is Tablet UA: <span style="color: ${isTabletUA ? "#55ff55" : "#ff5555"}">${isTabletUA}</span><br>
+      - Is Mobile UA: <span style="color: ${isMobileUA ? "#55ff55" : "#ff5555"}">${isMobileUA}</span><br>
+      <hr style="border-color: rgba(255,255,255,0.1); margin: 8px 0;">
+      <b>VEREDITO FINAL:</b><br>
+      <span style="font-size: 13px; color: ${isMobileOrTablet ? "#55ff55" : "#ffea55"}">
+        <b>isMobileOrTablet = ${isMobileOrTablet}</b>
+      </span><br>
+      <span style="font-size: 10px; color: #888;">
+        (${isMobileOrTablet ? "Modo Estático Ativado" : "Modo Desktop Ativado"})
+      </span>
+    `;
+    document.body.appendChild(debugBox);
+
+    // Mantém o Log clássico no console caso precises ligar o cabo
+    console.log("=== WESUS RADAR ===");
+    console.log("Largura:", window.innerWidth);
+    console.log("Touch:", isTouchDevice, "Points:", navigator.maxTouchPoints);
+    console.log("TabletUA:", isTabletUA, "MobileUA:", isMobileUA);
+    console.log("Resultado isMobileOrTablet:", isMobileOrTablet);
+  })();
+
   // ─── 1. CONTROLE DINÂMICO DO HEADER (SCROLL REFINED - DESKTOP ONLY) ───
   const header = document.getElementById("mainHeader");
   const headerLogo = document.getElementById("headerLogo");
